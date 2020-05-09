@@ -113,7 +113,7 @@ viewNavbar model =
                 , span [ class "icon-bar" ]
                     []
                 ]
-            , a [ class "navbar-brand", href "#Home" ]
+            , a [ class "navbar-brand", href "/Home" ]
                 [ text "Honest Living" ]
             ]
         , div [ class "navbar-collapse collapse", id "navbar" ]
@@ -137,16 +137,10 @@ viewCurrentPage model =
             div [ class "jumbotron" ]
                 [ h1 [] [ text "Songs" ]
                 , p []
-                    [ iframe
-                        [ attribute "frameborder" "0"
-                        , attribute "height" "200"
-                        , src "https://drive.google.com/file/d/1XHvfbaR5zQliqErhuTRua6UGfJoUinDt/preview"
-                        , attribute "width" "400"
-                        ]
-                        []
-                    , a
-                        [ href "https://drive.google.com/u/0/uc?id=1XHvfbaR5zQliqErhuTRua6UGfJoUinDt&export=download", download "Honest Living Song" ]
-                        [ text "Seasonal" ]
+                    [ viewSong "Seasonal" "1qKTDdmhHrC7_2p2l1IQta7d_YIJOyz3W"
+                    , viewSong "Hope and Olney" "1xMRM-0heaytWptb66yFG0jyofXGI2AXD"
+                    , viewSong "I Should Start Writing These Things Down" "1L7YOr9L4gvARk6orSxbdkLflOWXfNKZF"
+                    , viewSong "Never a Closer" "1XHvfbaR5zQliqErhuTRua6UGfJoUinDt"
                     ]
                 ]
 
@@ -159,6 +153,30 @@ viewCurrentPage model =
 
         Videos ->
             div [ class "jumbotron" ] [ text "Coming Soon!" ]
+
+
+
+-- SONGS
+-- https://drive.google.com/open?id=1qKTDdmhHrC7_2p2l1IQta7d_YIJOyz3W Seasonal
+-- https://drive.google.com/open?id=1L7YOr9L4gvARk6orSxbdkLflOWXfNKZF isswttd
+-- https://drive.google.com/open?id=1xMRM-0heaytWptb66yFG0jyofXGI2AXD Hope and Olney
+-- 1XHvfbaR5zQliqErhuTRua6UGfJoUinDt Closer
+
+
+viewSong : String -> String -> Html Msg
+viewSong songTitle songId =
+    div []
+        [ iframe
+            [ attribute "frameborder" "0"
+            , attribute "height" "200"
+            , src ("https://drive.google.com/file/d/" ++ songId ++ "/preview")
+            , attribute "width" "400"
+            ]
+            []
+        , a
+            [ href ("https://drive.google.com/u/0/uc?id=" ++ songId ++ "&export=download"), download songTitle ]
+            [ text songTitle ]
+        ]
 
 
 

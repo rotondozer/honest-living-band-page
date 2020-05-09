@@ -5263,33 +5263,8 @@ var $elm$html$Html$Attributes$stringProperty = F2(
 	});
 var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
 var $elm$html$Html$div = _VirtualDom_node('div');
-var $elm$html$Html$a = _VirtualDom_node('a');
-var $elm$virtual_dom$VirtualDom$attribute = F2(
-	function (key, value) {
-		return A2(
-			_VirtualDom_attribute,
-			_VirtualDom_noOnOrFormAction(key),
-			_VirtualDom_noJavaScriptOrHtmlUri(value));
-	});
-var $elm$html$Html$Attributes$attribute = $elm$virtual_dom$VirtualDom$attribute;
-var $elm$html$Html$Attributes$download = function (fileName) {
-	return A2($elm$html$Html$Attributes$stringProperty, 'download', fileName);
-};
 var $elm$html$Html$h1 = _VirtualDom_node('h1');
-var $elm$html$Html$Attributes$href = function (url) {
-	return A2(
-		$elm$html$Html$Attributes$stringProperty,
-		'href',
-		_VirtualDom_noJavaScriptUri(url));
-};
-var $elm$html$Html$iframe = _VirtualDom_node('iframe');
 var $elm$html$Html$p = _VirtualDom_node('p');
-var $elm$html$Html$Attributes$src = function (url) {
-	return A2(
-		$elm$html$Html$Attributes$stringProperty,
-		'src',
-		_VirtualDom_noJavaScriptOrHtmlUri(url));
-};
 var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
 var $author$project$Main$Home = {$: 'Home'};
@@ -6051,6 +6026,61 @@ var $author$project$Main$toRoute = function (url) {
 		$author$project$Main$Home,
 		A2($elm$url$Url$Parser$parse, $author$project$Main$routeParser, url));
 };
+var $elm$html$Html$a = _VirtualDom_node('a');
+var $elm$virtual_dom$VirtualDom$attribute = F2(
+	function (key, value) {
+		return A2(
+			_VirtualDom_attribute,
+			_VirtualDom_noOnOrFormAction(key),
+			_VirtualDom_noJavaScriptOrHtmlUri(value));
+	});
+var $elm$html$Html$Attributes$attribute = $elm$virtual_dom$VirtualDom$attribute;
+var $elm$html$Html$Attributes$download = function (fileName) {
+	return A2($elm$html$Html$Attributes$stringProperty, 'download', fileName);
+};
+var $elm$html$Html$Attributes$href = function (url) {
+	return A2(
+		$elm$html$Html$Attributes$stringProperty,
+		'href',
+		_VirtualDom_noJavaScriptUri(url));
+};
+var $elm$html$Html$iframe = _VirtualDom_node('iframe');
+var $elm$html$Html$Attributes$src = function (url) {
+	return A2(
+		$elm$html$Html$Attributes$stringProperty,
+		'src',
+		_VirtualDom_noJavaScriptOrHtmlUri(url));
+};
+var $author$project$Main$viewSong = F2(
+	function (songTitle, songId) {
+		return A2(
+			$elm$html$Html$div,
+			_List_Nil,
+			_List_fromArray(
+				[
+					A2(
+					$elm$html$Html$iframe,
+					_List_fromArray(
+						[
+							A2($elm$html$Html$Attributes$attribute, 'frameborder', '0'),
+							A2($elm$html$Html$Attributes$attribute, 'height', '200'),
+							$elm$html$Html$Attributes$src('https://drive.google.com/file/d/' + (songId + '/preview')),
+							A2($elm$html$Html$Attributes$attribute, 'width', '400')
+						]),
+					_List_Nil),
+					A2(
+					$elm$html$Html$a,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$href('https://drive.google.com/u/0/uc?id=' + (songId + '&export=download')),
+							$elm$html$Html$Attributes$download(songTitle)
+						]),
+					_List_fromArray(
+						[
+							$elm$html$Html$text(songTitle)
+						]))
+				]));
+	});
 var $author$project$Main$viewCurrentPage = function (model) {
 	var _v0 = $author$project$Main$toRoute(model.url);
 	switch (_v0.$) {
@@ -6068,34 +6098,17 @@ var $author$project$Main$viewCurrentPage = function (model) {
 						_List_Nil,
 						_List_fromArray(
 							[
-								$elm$html$Html$text('Songs')
+								$elm$html$Html$text('Songz')
 							])),
 						A2(
 						$elm$html$Html$p,
 						_List_Nil,
 						_List_fromArray(
 							[
-								A2(
-								$elm$html$Html$iframe,
-								_List_fromArray(
-									[
-										A2($elm$html$Html$Attributes$attribute, 'frameborder', '0'),
-										A2($elm$html$Html$Attributes$attribute, 'height', '200'),
-										$elm$html$Html$Attributes$src('https://drive.google.com/file/d/1XHvfbaR5zQliqErhuTRua6UGfJoUinDt/preview'),
-										A2($elm$html$Html$Attributes$attribute, 'width', '400')
-									]),
-								_List_Nil),
-								A2(
-								$elm$html$Html$a,
-								_List_fromArray(
-									[
-										$elm$html$Html$Attributes$href('https://drive.google.com/u/0/uc?id=1XHvfbaR5zQliqErhuTRua6UGfJoUinDt&export=download'),
-										$elm$html$Html$Attributes$download('Honest Living Song')
-									]),
-								_List_fromArray(
-									[
-										$elm$html$Html$text('Seasonal')
-									]))
+								A2($author$project$Main$viewSong, 'Seasonal', '1qKTDdmhHrC7_2p2l1IQta7d_YIJOyz3W'),
+								A2($author$project$Main$viewSong, 'Hope and Olney', '1xMRM-0heaytWptb66yFG0jyofXGI2AXD'),
+								A2($author$project$Main$viewSong, 'I Should Start Writing These Things Down', '1L7YOr9L4gvARk6orSxbdkLflOWXfNKZF'),
+								A2($author$project$Main$viewSong, 'Never a Closer', '1XHvfbaR5zQliqErhuTRua6UGfJoUinDt')
 							]))
 					]));
 		case 'About':
@@ -6234,7 +6247,7 @@ var $author$project$Main$viewNavbar = function (model) {
 						_List_fromArray(
 							[
 								$elm$html$Html$Attributes$class('navbar-brand'),
-								$elm$html$Html$Attributes$href('#Home')
+								$elm$html$Html$Attributes$href('/Home')
 							]),
 						_List_fromArray(
 							[
