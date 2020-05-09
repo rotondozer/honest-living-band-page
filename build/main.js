@@ -5907,6 +5907,7 @@ var $elm$url$Url$Parser$parse = F2(
 					$elm$core$Basics$identity)));
 	});
 var $author$project$Main$About = {$: 'About'};
+var $author$project$Main$Photos = {$: 'Photos'};
 var $author$project$Main$Videos = {$: 'Videos'};
 var $elm$url$Url$Parser$Parser = function (a) {
 	return {$: 'Parser', a: a};
@@ -6010,6 +6011,10 @@ var $author$project$Main$routeParser = $elm$url$Url$Parser$oneOf(
 			$elm$url$Url$Parser$map,
 			$author$project$Main$About,
 			$elm$url$Url$Parser$s('About')),
+			A2(
+			$elm$url$Url$Parser$map,
+			$author$project$Main$Photos,
+			$elm$url$Url$Parser$s('Photos')),
 			A2(
 			$elm$url$Url$Parser$map,
 			$author$project$Main$Videos,
@@ -6179,6 +6184,17 @@ var $author$project$Main$viewCurrentPage = function (model) {
 								$elm$html$Html$text('Two dudes from Providence, Rhode Island who slang mostly instrumental hits from 2015 to 2017.')
 							]))
 					]));
+		case 'Photos':
+			return A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('jumbotron')
+					]),
+				_List_fromArray(
+					[
+						$elm$html$Html$text('Photos Coming Soon!')
+					]));
 		default:
 			return A2(
 				$elm$html$Html$div,
@@ -6188,7 +6204,7 @@ var $author$project$Main$viewCurrentPage = function (model) {
 					]),
 				_List_fromArray(
 					[
-						$elm$html$Html$text('Coming Soon!')
+						$elm$html$Html$text('Videos Coming Soon!')
 					]));
 	}
 };
@@ -6309,6 +6325,7 @@ var $author$project$Main$viewNavbar = function (model) {
 						_List_fromArray(
 							[
 								$author$project$Main$viewRouteLink('About'),
+								$author$project$Main$viewRouteLink('Photos'),
 								$author$project$Main$viewRouteLink('Videos')
 							]))
 					]))

@@ -120,15 +120,11 @@ viewNavbar model =
         , div [ class "navbar-collapse collapse", id "navbar" ]
             [ ul [ class "nav navbar-nav" ]
                 [ viewRouteLink "About"
+                , viewRouteLink "Photos"
                 , viewRouteLink "Videos"
                 ]
             ]
         ]
-
-
-viewRouteLink : String -> Html msg
-viewRouteLink routeName =
-    li [] [ a [ href ("/" ++ routeName) ] [ text routeName ] ]
 
 
 viewCurrentPage : Model -> Html Msg
@@ -152,8 +148,11 @@ viewCurrentPage model =
                 , p [] [ text "Two dudes from Providence, Rhode Island who slang mostly instrumental hits from 2015 to 2017." ]
                 ]
 
+        Photos ->
+            div [ class "jumbotron" ] [ text "Photos Coming Soon!" ]
+
         Videos ->
-            div [ class "jumbotron" ] [ text "Coming Soon!" ]
+            div [ class "jumbotron" ] [ text "Videos Coming Soon!" ]
 
 
 viewSong : Song.Song -> Html Msg
@@ -179,7 +178,13 @@ viewSong song =
 type Route
     = Home
     | About
+    | Photos
     | Videos
+
+
+viewRouteLink : String -> Html msg
+viewRouteLink routeName =
+    li [] [ a [ href ("/" ++ routeName) ] [ text routeName ] ]
 
 
 routeParser : Parser.Parser (Route -> a) a
@@ -187,6 +192,7 @@ routeParser =
     Parser.oneOf
         [ Parser.map Home Parser.top
         , Parser.map About (Parser.s "About")
+        , Parser.map Photos (Parser.s "Photos")
         , Parser.map Videos (Parser.s "Videos")
         ]
 
