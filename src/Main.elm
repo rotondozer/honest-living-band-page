@@ -4,6 +4,7 @@ import Browser
 import Browser.Navigation as Navigation
 import Html exposing (Html, a, button, div, h1, iframe, li, nav, p, span, text, ul)
 import Html.Attributes exposing (attribute, class, download, href, id, src, type_)
+import Song
 import Url
 import Url.Parser as Parser
 
@@ -137,10 +138,10 @@ viewCurrentPage model =
             div [ class "jumbotron" ]
                 [ h1 [] [ text "Songs" ]
                 , p []
-                    [ viewSong "Seasonal" "1qKTDdmhHrC7_2p2l1IQta7d_YIJOyz3W"
-                    , viewSong "Hope and Olney" "1xMRM-0heaytWptb66yFG0jyofXGI2AXD"
-                    , viewSong "I Should Start Writing These Things Down" "1L7YOr9L4gvARk6orSxbdkLflOWXfNKZF"
-                    , viewSong "Never a Closer" "1XHvfbaR5zQliqErhuTRua6UGfJoUinDt"
+                    [ viewSong Song.Seasonal
+                    , viewSong Song.HopeAndOlney
+                    , viewSong Song.Isswttd
+                    , viewSong Song.NeverACloser
                     ]
                 ]
 
@@ -155,27 +156,19 @@ viewCurrentPage model =
             div [ class "jumbotron" ] [ text "Coming Soon!" ]
 
 
-
--- SONGS
--- https://drive.google.com/open?id=1qKTDdmhHrC7_2p2l1IQta7d_YIJOyz3W Seasonal
--- https://drive.google.com/open?id=1L7YOr9L4gvARk6orSxbdkLflOWXfNKZF isswttd
--- https://drive.google.com/open?id=1xMRM-0heaytWptb66yFG0jyofXGI2AXD Hope and Olney
--- 1XHvfbaR5zQliqErhuTRua6UGfJoUinDt Closer
-
-
-viewSong : String -> String -> Html Msg
-viewSong songTitle songId =
+viewSong : Song.Song -> Html Msg
+viewSong song =
     div []
         [ iframe
             [ attribute "frameborder" "0"
             , attribute "height" "200"
-            , src ("https://drive.google.com/file/d/" ++ songId ++ "/preview")
+            , src (Song.previewLink song)
             , attribute "width" "400"
             ]
             []
         , a
-            [ href ("https://drive.google.com/u/0/uc?id=" ++ songId ++ "&export=download"), download songTitle ]
-            [ text songTitle ]
+            [ href (Song.downloadLink song), download (Song.getTitle song) ]
+            [ text (Song.getTitle song) ]
         ]
 
 

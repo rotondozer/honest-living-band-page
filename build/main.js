@@ -5263,6 +5263,10 @@ var $elm$html$Html$Attributes$stringProperty = F2(
 	});
 var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
 var $elm$html$Html$div = _VirtualDom_node('div');
+var $author$project$Song$HopeAndOlney = {$: 'HopeAndOlney'};
+var $author$project$Song$Isswttd = {$: 'Isswttd'};
+var $author$project$Song$NeverACloser = {$: 'NeverACloser'};
+var $author$project$Song$Seasonal = {$: 'Seasonal'};
 var $elm$html$Html$h1 = _VirtualDom_node('h1');
 var $elm$html$Html$p = _VirtualDom_node('p');
 var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
@@ -6038,6 +6042,33 @@ var $elm$html$Html$Attributes$attribute = $elm$virtual_dom$VirtualDom$attribute;
 var $elm$html$Html$Attributes$download = function (fileName) {
 	return A2($elm$html$Html$Attributes$stringProperty, 'download', fileName);
 };
+var $author$project$Song$getId = function (song) {
+	switch (song.$) {
+		case 'Seasonal':
+			return '1qKTDdmhHrC7_2p2l1IQta7d_YIJOyz3W';
+		case 'Isswttd':
+			return '1L7YOr9L4gvARk6orSxbdkLflOWXfNKZF';
+		case 'HopeAndOlney':
+			return '1xMRM-0heaytWptb66yFG0jyofXGI2AXD';
+		default:
+			return '1XHvfbaR5zQliqErhuTRua6UGfJoUinDt';
+	}
+};
+var $author$project$Song$downloadLink = function (song) {
+	return 'https://drive.google.com/u/0/uc?id=' + ($author$project$Song$getId(song) + '&export=download');
+};
+var $author$project$Song$getTitle = function (song) {
+	switch (song.$) {
+		case 'Seasonal':
+			return 'Seasonal';
+		case 'Isswttd':
+			return 'I Should Start Writing These Things Down';
+		case 'HopeAndOlney':
+			return 'Hope and Olney';
+		default:
+			return 'Never a Closer';
+	}
+};
 var $elm$html$Html$Attributes$href = function (url) {
 	return A2(
 		$elm$html$Html$Attributes$stringProperty,
@@ -6045,42 +6076,48 @@ var $elm$html$Html$Attributes$href = function (url) {
 		_VirtualDom_noJavaScriptUri(url));
 };
 var $elm$html$Html$iframe = _VirtualDom_node('iframe');
+var $author$project$Song$previewLink = function (song) {
+	return 'https://drive.google.com/file/d/' + ($author$project$Song$getId(song) + '/preview');
+};
 var $elm$html$Html$Attributes$src = function (url) {
 	return A2(
 		$elm$html$Html$Attributes$stringProperty,
 		'src',
 		_VirtualDom_noJavaScriptOrHtmlUri(url));
 };
-var $author$project$Main$viewSong = F2(
-	function (songTitle, songId) {
-		return A2(
-			$elm$html$Html$div,
-			_List_Nil,
-			_List_fromArray(
-				[
-					A2(
-					$elm$html$Html$iframe,
-					_List_fromArray(
-						[
-							A2($elm$html$Html$Attributes$attribute, 'frameborder', '0'),
-							A2($elm$html$Html$Attributes$attribute, 'height', '200'),
-							$elm$html$Html$Attributes$src('https://drive.google.com/file/d/' + (songId + '/preview')),
-							A2($elm$html$Html$Attributes$attribute, 'width', '400')
-						]),
-					_List_Nil),
-					A2(
-					$elm$html$Html$a,
-					_List_fromArray(
-						[
-							$elm$html$Html$Attributes$href('https://drive.google.com/u/0/uc?id=' + (songId + '&export=download')),
-							$elm$html$Html$Attributes$download(songTitle)
-						]),
-					_List_fromArray(
-						[
-							$elm$html$Html$text(songTitle)
-						]))
-				]));
-	});
+var $author$project$Main$viewSong = function (song) {
+	return A2(
+		$elm$html$Html$div,
+		_List_Nil,
+		_List_fromArray(
+			[
+				A2(
+				$elm$html$Html$iframe,
+				_List_fromArray(
+					[
+						A2($elm$html$Html$Attributes$attribute, 'frameborder', '0'),
+						A2($elm$html$Html$Attributes$attribute, 'height', '200'),
+						$elm$html$Html$Attributes$src(
+						$author$project$Song$previewLink(song)),
+						A2($elm$html$Html$Attributes$attribute, 'width', '400')
+					]),
+				_List_Nil),
+				A2(
+				$elm$html$Html$a,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$href(
+						$author$project$Song$downloadLink(song)),
+						$elm$html$Html$Attributes$download(
+						$author$project$Song$getTitle(song))
+					]),
+				_List_fromArray(
+					[
+						$elm$html$Html$text(
+						$author$project$Song$getTitle(song))
+					]))
+			]));
+};
 var $author$project$Main$viewCurrentPage = function (model) {
 	var _v0 = $author$project$Main$toRoute(model.url);
 	switch (_v0.$) {
@@ -6098,17 +6135,17 @@ var $author$project$Main$viewCurrentPage = function (model) {
 						_List_Nil,
 						_List_fromArray(
 							[
-								$elm$html$Html$text('Songz')
+								$elm$html$Html$text('Songs')
 							])),
 						A2(
 						$elm$html$Html$p,
 						_List_Nil,
 						_List_fromArray(
 							[
-								A2($author$project$Main$viewSong, 'Seasonal', '1qKTDdmhHrC7_2p2l1IQta7d_YIJOyz3W'),
-								A2($author$project$Main$viewSong, 'Hope and Olney', '1xMRM-0heaytWptb66yFG0jyofXGI2AXD'),
-								A2($author$project$Main$viewSong, 'I Should Start Writing These Things Down', '1L7YOr9L4gvARk6orSxbdkLflOWXfNKZF'),
-								A2($author$project$Main$viewSong, 'Never a Closer', '1XHvfbaR5zQliqErhuTRua6UGfJoUinDt')
+								$author$project$Main$viewSong($author$project$Song$Seasonal),
+								$author$project$Main$viewSong($author$project$Song$HopeAndOlney),
+								$author$project$Main$viewSong($author$project$Song$Isswttd),
+								$author$project$Main$viewSong($author$project$Song$NeverACloser)
 							]))
 					]));
 		case 'About':
