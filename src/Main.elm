@@ -2,9 +2,10 @@ module Main exposing (init, main)
 
 import Browser
 import Browser.Navigation as Navigation
-import Html exposing (a, button, div, h1, li, nav, p, span, text, ul)
-import Html.Attributes exposing (attribute, class, href, id, type_)
+import Html exposing (Html, a, button, div, h1, iframe, li, nav, p, span, text, ul)
+import Html.Attributes exposing (attribute, class, download, href, id, src, type_)
 import Url
+import Url.Parser as Parser
 
 
 
@@ -81,98 +82,83 @@ subscriptions _ =
 
 view : Model -> Browser.Document Msg
 view model =
-    { title = "Honest Living Band"
+    { title = "Honest Living"
     , body =
-        [ nav [ class "navbar navbar-default navbar-fixed-top" ]
-            [ div [ class "container" ]
-                [ div [ class "navbar-header" ]
-                    [ button
-                        [ attribute "aria-controls" "navbar"
-                        , attribute "aria-expanded" "false"
-                        , class "navbar-toggle collapsed"
-                        , attribute "data-target" "#navbar"
-                        , attribute "data-toggle" "collapse"
-                        , type_ "button"
-                        ]
-                        [ span [ class "sr-only" ]
-                            [ text "Toggle navigation" ]
-                        , span [ class "icon-bar" ]
-                            []
-                        , span [ class "icon-bar" ]
-                            []
-                        , span [ class "icon-bar" ]
-                            []
-                        ]
-                    , a [ class "navbar-brand", href "#" ]
-                        [ text "Project name" ]
-                    ]
-                , div [ class "navbar-collapse collapse", id "navbar" ]
-                    [ ul [ class "nav navbar-nav" ]
-                        [ li [ class "active" ]
-                            [ a [ href "#" ]
-                                [ text "Home" ]
-                            ]
-                        , li []
-                            [ a [ href "#" ]
-                                [ text "About" ]
-                            ]
-                        , li []
-                            [ a [ href "#" ]
-                                [ text "Contact" ]
-                            ]
-                        , li [ class "dropdown" ]
-                            [ a [ attribute "aria-expanded" "false", attribute "aria-haspopup" "true", class "dropdown-toggle", attribute "data-toggle" "dropdown", href "#", attribute "role" "button" ]
-                                [ text "Dropdown "
-                                , span [ class "caret" ]
-                                    []
-                                ]
-                            , ul [ class "dropdown-menu" ]
-                                [ li []
-                                    [ a [ href "#" ]
-                                        [ text "Action" ]
-                                    ]
-                                , li []
-                                    [ a [ href "#" ]
-                                        [ text "Another action" ]
-                                    ]
-                                , li []
-                                    [ a [ href "#" ]
-                                        [ text "Something else here" ]
-                                    ]
-                                , li [ class "divider", attribute "role" "separator" ]
-                                    []
-                                , li [ class "dropdown-header" ]
-                                    [ text "Nav header" ]
-                                , li []
-                                    [ a [ href "#" ]
-                                        [ text "Separated link" ]
-                                    ]
-                                , li []
-                                    [ a [ href "#" ]
-                                        [ text "One more separated link" ]
-                                    ]
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
-            ]
-        , div [ class "container" ]
-            [ div [ class "jumbotron" ]
-                [ h1 []
-                    [ text "Navbar example" ]
-                , p []
-                    [ text "This example is a quick exercise to illustrate how the default, static and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device." ]
-                , p []
-                    [ text "To see the difference between static and fixed top navbars, just scroll." ]
-                , p []
-                    [ a [ class "btn btn-lg btn-primary", href "../../components/#navbar", attribute "role" "button" ]
-                        [ text "View navbar docs »" ]
-                    ]
-                ]
+        [ div [ class "container" ]
+            [ viewNavbar model
+            , viewCurrentPage model
             ]
         ]
     }
+
+
+viewNavbar : Model -> Html Msg
+viewNavbar model =
+    nav [ class "navbar navbar-default navbar-fixed-top" ]
+        [ div [ class "navbar-header" ]
+            [ button
+                [ attribute "aria-controls" "navbar"
+                , attribute "aria-expanded" "false"
+                , class "navbar-toggle collapsed"
+                , attribute "data-target" "#navbar"
+                , attribute "data-toggle" "collapse"
+                , type_ "button"
+                ]
+                [ span [ class "sr-only" ]
+                    [ text "Toggle navigation" ]
+                , span [ class "icon-bar" ]
+                    []
+                , span [ class "icon-bar" ]
+                    []
+                , span [ class "icon-bar" ]
+                    []
+                ]
+            , a [ class "navbar-brand", href "#Home" ]
+                [ text "Honest Living" ]
+            ]
+        , div [ class "navbar-collapse collapse", id "navbar" ]
+            [ ul [ class "nav navbar-nav" ]
+                [ viewRouteLink "About"
+                , viewRouteLink "Videos"
+                ]
+            ]
+        ]
+
+
+viewRouteLink : String -> Html msg
+viewRouteLink routeName =
+    li [] [ a [ href ("/" ++ routeName) ] [ text routeName ] ]
+
+
+viewCurrentPage : Model -> Html Msg
+viewCurrentPage model =
+    case toRoute model.url of
+        Home ->
+            div [ class "jumbotron" ]
+                [ h1 [] [ text "Songs" ]
+                , p []
+                    [ iframe
+                        [ attribute "frameborder" "0"
+                        , attribute "height" "200"
+                        , src "https://drive.google.com/file/d/1XHvfbaR5zQliqErhuTRua6UGfJoUinDt/preview"
+                        , attribute "width" "400"
+                        ]
+                        []
+                    , a
+                        [ href "https://drive.google.com/u/0/uc?id=1XHvfbaR5zQliqErhuTRua6UGfJoUinDt&export=download", download "Honest Living Song" ]
+                        [ text "Seasonal" ]
+                    ]
+                ]
+
+        About ->
+            div [ class "jumbotron" ]
+                [ h1 [] [ text "About" ]
+                , p [] [ text "Strings/Vocals: David Marcotte\nDrums: Nick Rotondo" ]
+                , p [] [ text "Two dudes from Providence, Rhode Island who slang mostly instrumental hits from 2015 to 2017." ]
+                ]
+
+        Videos ->
+            div [ class "jumbotron" ] [ text "Coming Soon!" ]
 
 
 
@@ -183,3 +169,17 @@ type Route
     = Home
     | About
     | Videos
+
+
+routeParser : Parser.Parser (Route -> a) a
+routeParser =
+    Parser.oneOf
+        [ Parser.map Home Parser.top
+        , Parser.map About (Parser.s "About")
+        , Parser.map Videos (Parser.s "Videos")
+        ]
+
+
+toRoute : Url.Url -> Route
+toRoute url =
+    Maybe.withDefault Home (Parser.parse routeParser url)
