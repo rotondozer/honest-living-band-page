@@ -15,12 +15,12 @@ The `src/` directory contains all Elm files for development. Elm is compiled to 
 
 To compile into JS, run:
 
-`elm make src/Main.elm --output=build/main.js`
+`elm make src/Main.elm --output=main.js`
 
 Then you can host the html in a local http server. To do so,
 Install python and run `python -m SimpleHTTPServer 7800` and go to `localhost:7800` in your browser.
 
-Or, you can run `elm-reactor` in `build/` directory.
+Or, you can run `elm-reactor` in project root.
 
 
 
