@@ -1,9 +1,15 @@
 module Main exposing (init, main)
 
+import Bootstrap.Button as Button
+import Bootstrap.Card as Card
+import Bootstrap.Card.Block as Block
+import Bootstrap.Grid as Grid
+import Bootstrap.Navbar as Navbar
 import Browser
 import Browser.Navigation as Navigation
-import Html exposing (Html, a, button, div, h1, iframe, li, nav, p, span, text, ul)
-import Html.Attributes exposing (attribute, class, download, href, id, src, type_)
+import Html exposing (Html, div, h1, iframe, p, text)
+import Html.Attributes exposing (attribute, class, href, src, style)
+import Html.Events exposing (onClick)
 import Song
 import Url
 import Url.Parser as Parser
@@ -31,16 +37,23 @@ main =
 
 init : () -> Url.Url -> Navigation.Key -> ( Model, Cmd Msg )
 init _ url key =
+    let
+        ( navbarState, navbarCmd ) =
+            Navbar.initialState NavbarMsg
+    in
+    -- Can I use a Model constructor? i.e. ( { Model url key navbarState }, navbarCmd )
     ( { url = url
       , key = key
+      , navbarState = navbarState
       }
-    , Cmd.none
+    , navbarCmd
     )
 
 
 type alias Model =
     { url : Url.Url
     , key : Navigation.Key
+    , navbarState : Navbar.State
     }
 
 
@@ -51,6 +64,8 @@ type alias Model =
 type Msg
     = LinkClicked Browser.UrlRequest
     | UrlChanged Url.Url
+    | NavbarMsg Navbar.State
+    | Download Song.Song
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -67,14 +82,20 @@ update msg model =
         UrlChanged url ->
             ( { model | url = url }, Cmd.none )
 
+        NavbarMsg state ->
+            ( { model | navbarState = state }, Cmd.none )
+
+        Download song ->
+            ( model, Navigation.load (Song.downloadLink song) )
+
 
 
 -- SUBSCRIPTIONS
 
 
 subscriptions : Model -> Sub Msg
-subscriptions _ =
-    Sub.none
+subscriptions model =
+    Navbar.subscriptions model.navbarState NavbarMsg
 
 
 
@@ -85,7 +106,7 @@ view : Model -> Browser.Document Msg
 view model =
     { title = "Honest Living"
     , body =
-        [ div [ class "container" ]
+        [ div []
             [ viewNavbar model
             , viewCurrentPage model
             ]
@@ -95,35 +116,18 @@ view model =
 
 viewNavbar : Model -> Html Msg
 viewNavbar model =
-    nav [ class "navbar navbar-default navbar-fixed-top" ]
-        [ div [ class "navbar-header" ]
-            [ button
-                [ attribute "aria-controls" "navbar"
-                , attribute "aria-expanded" "false"
-                , class "navbar-toggle collapsed"
-                , attribute "data-target" "#navbar"
-                , attribute "data-toggle" "collapse"
-                , type_ "button"
+    Grid.container
+        []
+        [ Navbar.config NavbarMsg
+            |> Navbar.withAnimation
+            |> Navbar.container
+            |> Navbar.brand [ href "/Home" ] [ text "Honest Living" ]
+            |> Navbar.items
+                [ Navbar.itemLink [ href "/About" ] [ text "About" ]
+                , Navbar.itemLink [ href "/Photos" ] [ text "Photos" ]
+                , Navbar.itemLink [ href "/Videos" ] [ text "Videos" ]
                 ]
-                [ span [ class "sr-only" ]
-                    [ text "Toggle navigation" ]
-                , span [ class "icon-bar" ]
-                    []
-                , span [ class "icon-bar" ]
-                    []
-                , span [ class "icon-bar" ]
-                    []
-                ]
-            , a [ class "navbar-brand", href "/Home" ]
-                [ text "Honest Living" ]
-            ]
-        , div [ class "navbar-collapse collapse", id "navbar" ]
-            [ ul [ class "nav navbar-nav" ]
-                [ viewRouteLink "About"
-                , viewRouteLink "Photos"
-                , viewRouteLink "Videos"
-                ]
-            ]
+            |> Navbar.view model.navbarState
         ]
 
 
@@ -131,9 +135,12 @@ viewCurrentPage : Model -> Html Msg
 viewCurrentPage model =
     case toRoute model.url of
         Home ->
-            div [ class "jumbotron" ]
-                [ h1 [] [ text "Songs" ]
-                , p []
+            Grid.container []
+                [ Grid.row []
+                    [ Grid.col []
+                        [ h1 [] [ text "Songs" ] ]
+                    ]
+                , Grid.row []
                     [ viewSong Song.Seasonal
                     , viewSong Song.HopeAndOlney
                     , viewSong Song.Isswttd
@@ -155,19 +162,22 @@ viewCurrentPage model =
             div [ class "jumbotron" ] [ text "Videos Coming Soon!" ]
 
 
-viewSong : Song.Song -> Html Msg
+viewSong : Song.Song -> Grid.Column Msg
 viewSong song =
-    div []
-        [ iframe
-            [ attribute "frameborder" "0"
-            , attribute "height" "200"
-            , src (Song.previewLink song)
-            , attribute "width" "400"
-            ]
-            []
-        , a
-            [ href (Song.downloadLink song), download (Song.getTitle song) ]
-            [ text (Song.getTitle song) ]
+    Grid.col []
+        [ Card.config [ Card.attrs [ style "width" "20rem" ] ]
+            |> Card.header []
+                -- TODO: Song.getImage //// Create assets folder for band pics, song photos, etc.
+                [ iframe
+                    [ src (Song.previewLink song), attribute "frameborder" "0" ]
+                    []
+                ]
+            |> Card.block []
+                [ Block.titleH2 [] [ text (Song.getTitle song) ]
+                , Block.custom <|
+                    Button.button [ Button.primary, Button.attrs [ onClick (Download song) ] ] [ text "Download" ]
+                ]
+            |> Card.view
         ]
 
 
@@ -180,11 +190,6 @@ type Route
     | About
     | Photos
     | Videos
-
-
-viewRouteLink : String -> Html msg
-viewRouteLink routeName =
-    li [] [ a [ href ("/" ++ routeName) ] [ text routeName ] ]
 
 
 routeParser : Parser.Parser (Route -> a) a
