@@ -5914,21 +5914,6 @@ var $rundis$elm_bootstrap$Bootstrap$Navbar$subscriptions = F2(
 var $author$project$Main$subscriptions = function (model) {
 	return A2($rundis$elm_bootstrap$Bootstrap$Navbar$subscriptions, model.navbarState, $author$project$Main$NavbarMsg);
 };
-var $author$project$Song$getId = function (song) {
-	switch (song.$) {
-		case 'Seasonal':
-			return '1qKTDdmhHrC7_2p2l1IQta7d_YIJOyz3W';
-		case 'Isswttd':
-			return '1L7YOr9L4gvARk6orSxbdkLflOWXfNKZF';
-		case 'HopeAndOlney':
-			return '1xMRM-0heaytWptb66yFG0jyofXGI2AXD';
-		default:
-			return '1XHvfbaR5zQliqErhuTRua6UGfJoUinDt';
-	}
-};
-var $author$project$Song$downloadLink = function (song) {
-	return 'https://drive.google.com/u/0/uc?id=' + ($author$project$Song$getId(song) + '&export=download');
-};
 var $elm$browser$Browser$Navigation$load = _Browser_load;
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
@@ -6003,22 +5988,18 @@ var $author$project$Main$update = F2(
 						model,
 						{url: url}),
 					$elm$core$Platform$Cmd$none);
-			case 'NavbarMsg':
+			default:
 				var state = msg.a;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{navbarState: state}),
 					$elm$core$Platform$Cmd$none);
-			default:
-				var song = msg.a;
-				return _Utils_Tuple2(
-					model,
-					$elm$browser$Browser$Navigation$load(
-						$author$project$Song$downloadLink(song)));
 		}
 	});
 var $elm$html$Html$div = _VirtualDom_node('div');
+var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
+var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
 var $elm$json$Json$Encode$string = _Json_wrap;
 var $elm$html$Html$Attributes$stringProperty = F2(
 	function (key, string) {
@@ -7537,177 +7518,7 @@ var $author$project$Main$toRoute = function (url) {
 		$author$project$Main$Home,
 		A2($elm$url$Url$Parser$parse, $author$project$Main$routeParser, url));
 };
-var $author$project$Main$Download = function (a) {
-	return {$: 'Download', a: a};
-};
-var $rundis$elm_bootstrap$Bootstrap$Internal$Button$Attrs = function (a) {
-	return {$: 'Attrs', a: a};
-};
-var $rundis$elm_bootstrap$Bootstrap$Button$attrs = function (attrs_) {
-	return $rundis$elm_bootstrap$Bootstrap$Internal$Button$Attrs(attrs_);
-};
 var $elm$html$Html$audio = _VirtualDom_node('audio');
-var $elm$html$Html$button = _VirtualDom_node('button');
-var $elm$core$Maybe$andThen = F2(
-	function (callback, maybeValue) {
-		if (maybeValue.$ === 'Just') {
-			var value = maybeValue.a;
-			return callback(value);
-		} else {
-			return $elm$core$Maybe$Nothing;
-		}
-	});
-var $rundis$elm_bootstrap$Bootstrap$Internal$Button$applyModifier = F2(
-	function (modifier, options) {
-		switch (modifier.$) {
-			case 'Size':
-				var size = modifier.a;
-				return _Utils_update(
-					options,
-					{
-						size: $elm$core$Maybe$Just(size)
-					});
-			case 'Coloring':
-				var coloring = modifier.a;
-				return _Utils_update(
-					options,
-					{
-						coloring: $elm$core$Maybe$Just(coloring)
-					});
-			case 'Block':
-				return _Utils_update(
-					options,
-					{block: true});
-			case 'Disabled':
-				var val = modifier.a;
-				return _Utils_update(
-					options,
-					{disabled: val});
-			default:
-				var attrs = modifier.a;
-				return _Utils_update(
-					options,
-					{
-						attributes: _Utils_ap(options.attributes, attrs)
-					});
-		}
-	});
-var $elm$core$List$filter = F2(
-	function (isGood, list) {
-		return A3(
-			$elm$core$List$foldr,
-			F2(
-				function (x, xs) {
-					return isGood(x) ? A2($elm$core$List$cons, x, xs) : xs;
-				}),
-			_List_Nil,
-			list);
-	});
-var $elm$core$Tuple$second = function (_v0) {
-	var y = _v0.b;
-	return y;
-};
-var $elm$html$Html$Attributes$classList = function (classes) {
-	return $elm$html$Html$Attributes$class(
-		A2(
-			$elm$core$String$join,
-			' ',
-			A2(
-				$elm$core$List$map,
-				$elm$core$Tuple$first,
-				A2($elm$core$List$filter, $elm$core$Tuple$second, classes))));
-};
-var $rundis$elm_bootstrap$Bootstrap$Internal$Button$defaultOptions = {attributes: _List_Nil, block: false, coloring: $elm$core$Maybe$Nothing, disabled: false, size: $elm$core$Maybe$Nothing};
-var $elm$json$Json$Encode$bool = _Json_wrap;
-var $elm$html$Html$Attributes$boolProperty = F2(
-	function (key, bool) {
-		return A2(
-			_VirtualDom_property,
-			key,
-			$elm$json$Json$Encode$bool(bool));
-	});
-var $elm$html$Html$Attributes$disabled = $elm$html$Html$Attributes$boolProperty('disabled');
-var $rundis$elm_bootstrap$Bootstrap$Internal$Button$roleClass = function (role) {
-	switch (role.$) {
-		case 'Primary':
-			return 'primary';
-		case 'Secondary':
-			return 'secondary';
-		case 'Success':
-			return 'success';
-		case 'Info':
-			return 'info';
-		case 'Warning':
-			return 'warning';
-		case 'Danger':
-			return 'danger';
-		case 'Dark':
-			return 'dark';
-		case 'Light':
-			return 'light';
-		default:
-			return 'link';
-	}
-};
-var $rundis$elm_bootstrap$Bootstrap$Internal$Button$buttonAttributes = function (modifiers) {
-	var options = A3($elm$core$List$foldl, $rundis$elm_bootstrap$Bootstrap$Internal$Button$applyModifier, $rundis$elm_bootstrap$Bootstrap$Internal$Button$defaultOptions, modifiers);
-	return _Utils_ap(
-		_List_fromArray(
-			[
-				$elm$html$Html$Attributes$classList(
-				_List_fromArray(
-					[
-						_Utils_Tuple2('btn', true),
-						_Utils_Tuple2('btn-block', options.block),
-						_Utils_Tuple2('disabled', options.disabled)
-					])),
-				$elm$html$Html$Attributes$disabled(options.disabled)
-			]),
-		_Utils_ap(
-			function () {
-				var _v0 = A2($elm$core$Maybe$andThen, $rundis$elm_bootstrap$Bootstrap$General$Internal$screenSizeOption, options.size);
-				if (_v0.$ === 'Just') {
-					var s = _v0.a;
-					return _List_fromArray(
-						[
-							$elm$html$Html$Attributes$class('btn-' + s)
-						]);
-				} else {
-					return _List_Nil;
-				}
-			}(),
-			_Utils_ap(
-				function () {
-					var _v1 = options.coloring;
-					if (_v1.$ === 'Just') {
-						if (_v1.a.$ === 'Roled') {
-							var role = _v1.a.a;
-							return _List_fromArray(
-								[
-									$elm$html$Html$Attributes$class(
-									'btn-' + $rundis$elm_bootstrap$Bootstrap$Internal$Button$roleClass(role))
-								]);
-						} else {
-							var role = _v1.a.a;
-							return _List_fromArray(
-								[
-									$elm$html$Html$Attributes$class(
-									'btn-outline-' + $rundis$elm_bootstrap$Bootstrap$Internal$Button$roleClass(role))
-								]);
-						}
-					} else {
-						return _List_Nil;
-					}
-				}(),
-				options.attributes)));
-};
-var $rundis$elm_bootstrap$Bootstrap$Button$button = F2(
-	function (options, children) {
-		return A2(
-			$elm$html$Html$button,
-			$rundis$elm_bootstrap$Bootstrap$Internal$Button$buttonAttributes(options),
-			children);
-	});
 var $rundis$elm_bootstrap$Bootstrap$Grid$Column = function (a) {
 	return {$: 'Column', a: a};
 };
@@ -7715,6 +7526,14 @@ var $rundis$elm_bootstrap$Bootstrap$Grid$col = F2(
 	function (options, children) {
 		return $rundis$elm_bootstrap$Bootstrap$Grid$Column(
 			{children: children, options: options});
+	});
+var $elm$json$Json$Encode$bool = _Json_wrap;
+var $elm$html$Html$Attributes$boolProperty = F2(
+	function (key, bool) {
+		return A2(
+			_VirtualDom_property,
+			key,
+			$elm$json$Json$Encode$bool(bool));
 	});
 var $elm$html$Html$Attributes$controls = $elm$html$Html$Attributes$boolProperty('controls');
 var $elm$html$Html$Attributes$height = function (n) {
@@ -7736,23 +7555,6 @@ var $author$project$Song$imageSrc = function (song) {
 	}
 };
 var $elm$html$Html$img = _VirtualDom_node('img');
-var $elm$virtual_dom$VirtualDom$Normal = function (a) {
-	return {$: 'Normal', a: a};
-};
-var $elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
-var $elm$html$Html$Events$on = F2(
-	function (event, decoder) {
-		return A2(
-			$elm$virtual_dom$VirtualDom$on,
-			event,
-			$elm$virtual_dom$VirtualDom$Normal(decoder));
-	});
-var $elm$html$Html$Events$onClick = function (msg) {
-	return A2(
-		$elm$html$Html$Events$on,
-		'click',
-		$elm$json$Json$Decode$succeed(msg));
-};
 var $author$project$Song$previewLink = function (song) {
 	switch (song.$) {
 		case 'Seasonal':
@@ -7765,29 +7567,18 @@ var $author$project$Song$previewLink = function (song) {
 			return '../assets/songs/never_a_closer.mp3';
 	}
 };
-var $rundis$elm_bootstrap$Bootstrap$Internal$Button$Coloring = function (a) {
-	return {$: 'Coloring', a: a};
-};
-var $rundis$elm_bootstrap$Bootstrap$Internal$Button$Primary = {$: 'Primary'};
-var $rundis$elm_bootstrap$Bootstrap$Internal$Button$Roled = function (a) {
-	return {$: 'Roled', a: a};
-};
-var $rundis$elm_bootstrap$Bootstrap$Button$primary = $rundis$elm_bootstrap$Bootstrap$Internal$Button$Coloring(
-	$rundis$elm_bootstrap$Bootstrap$Internal$Button$Roled($rundis$elm_bootstrap$Bootstrap$Internal$Button$Primary));
 var $elm$html$Html$Attributes$src = function (url) {
 	return A2(
 		$elm$html$Html$Attributes$stringProperty,
 		'src',
 		_VirtualDom_noJavaScriptOrHtmlUri(url));
 };
-var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
-var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
 var $author$project$Song$title = function (song) {
 	switch (song.$) {
 		case 'Seasonal':
 			return 'Seasonal';
 		case 'Isswttd':
-			return 'I Should Start Writing These Things Down';
+			return 'I should start writing these things down.';
 		case 'HopeAndOlney':
 			return 'Hope and Olney';
 		default:
@@ -7810,7 +7601,6 @@ var $author$project$Main$viewSong = function (song) {
 				$elm$html$Html$div,
 				_List_fromArray(
 					[
-						A2($elm$html$Html$Attributes$style, 'border', '1px solid blue'),
 						A2($elm$html$Html$Attributes$style, 'display', 'flex'),
 						A2($elm$html$Html$Attributes$style, 'flex-direction', 'column')
 					]),
@@ -7839,41 +7629,14 @@ var $author$project$Main$viewSong = function (song) {
 								$author$project$Song$title(song))
 							])),
 						A2(
-						$elm$html$Html$div,
+						$elm$html$Html$audio,
 						_List_fromArray(
 							[
-								A2($elm$html$Html$Attributes$style, 'border', '1px solid yellow'),
-								A2($elm$html$Html$Attributes$style, 'display', 'flex'),
-								A2($elm$html$Html$Attributes$style, 'flex-direction', 'row')
+								$elm$html$Html$Attributes$src(
+								$author$project$Song$previewLink(song)),
+								$elm$html$Html$Attributes$controls(true)
 							]),
-						_List_fromArray(
-							[
-								A2(
-								$elm$html$Html$audio,
-								_List_fromArray(
-									[
-										$elm$html$Html$Attributes$src(
-										$author$project$Song$previewLink(song)),
-										$elm$html$Html$Attributes$controls(true)
-									]),
-								_List_Nil),
-								A2(
-								$rundis$elm_bootstrap$Bootstrap$Button$button,
-								_List_fromArray(
-									[
-										$rundis$elm_bootstrap$Bootstrap$Button$primary,
-										$rundis$elm_bootstrap$Bootstrap$Button$attrs(
-										_List_fromArray(
-											[
-												$elm$html$Html$Events$onClick(
-												$author$project$Main$Download(song))
-											]))
-									]),
-								_List_fromArray(
-									[
-										$elm$html$Html$text('Download')
-									]))
-							]))
+						_List_Nil)
 					]))
 			]));
 };
@@ -8034,6 +7797,26 @@ var $rundis$elm_bootstrap$Bootstrap$Navbar$container = function (conf) {
 		},
 		conf);
 };
+var $rundis$elm_bootstrap$Bootstrap$Internal$Role$Dark = {$: 'Dark'};
+var $rundis$elm_bootstrap$Bootstrap$Navbar$Dark = {$: 'Dark'};
+var $rundis$elm_bootstrap$Bootstrap$Navbar$scheme = F3(
+	function (modifier, bgColor, conf) {
+		return A2(
+			$rundis$elm_bootstrap$Bootstrap$Navbar$updateOptions,
+			function (opt) {
+				return _Utils_update(
+					opt,
+					{
+						scheme: $elm$core$Maybe$Just(
+							{bgColor: bgColor, modifier: modifier})
+					});
+			},
+			conf);
+	});
+var $rundis$elm_bootstrap$Bootstrap$Navbar$dark = A2(
+	$rundis$elm_bootstrap$Bootstrap$Navbar$scheme,
+	$rundis$elm_bootstrap$Bootstrap$Navbar$Dark,
+	$rundis$elm_bootstrap$Bootstrap$Navbar$Roled($rundis$elm_bootstrap$Bootstrap$Internal$Role$Dark));
 var $rundis$elm_bootstrap$Bootstrap$Navbar$Item = function (a) {
 	return {$: 'Item', a: a};
 };
@@ -8053,6 +7836,7 @@ var $rundis$elm_bootstrap$Bootstrap$Navbar$items = F2(
 			},
 			config_);
 	});
+var $elm$html$Html$button = _VirtualDom_node('button');
 var $rundis$elm_bootstrap$Bootstrap$Navbar$maybeBrand = function (brand_) {
 	if (brand_.$ === 'Just') {
 		var b = brand_.a.a;
@@ -8063,6 +7847,17 @@ var $rundis$elm_bootstrap$Bootstrap$Navbar$maybeBrand = function (brand_) {
 	}
 };
 var $elm$core$Basics$not = _Basics_not;
+var $elm$virtual_dom$VirtualDom$Normal = function (a) {
+	return {$: 'Normal', a: a};
+};
+var $elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
+var $elm$html$Html$Events$on = F2(
+	function (event, decoder) {
+		return A2(
+			$elm$virtual_dom$VirtualDom$on,
+			event,
+			$elm$virtual_dom$VirtualDom$Normal(decoder));
+	});
 var $rundis$elm_bootstrap$Bootstrap$Navbar$sizeToComparable = function (size) {
 	switch (size.$) {
 		case 'XS':
@@ -8279,6 +8074,31 @@ var $rundis$elm_bootstrap$Bootstrap$Navbar$menuWrapperAttributes = F2(
 		}
 	});
 var $elm$html$Html$nav = _VirtualDom_node('nav');
+var $elm$core$List$filter = F2(
+	function (isGood, list) {
+		return A3(
+			$elm$core$List$foldr,
+			F2(
+				function (x, xs) {
+					return isGood(x) ? A2($elm$core$List$cons, x, xs) : xs;
+				}),
+			_List_Nil,
+			list);
+	});
+var $elm$core$Tuple$second = function (_v0) {
+	var y = _v0.b;
+	return y;
+};
+var $elm$html$Html$Attributes$classList = function (classes) {
+	return $elm$html$Html$Attributes$class(
+		A2(
+			$elm$core$String$join,
+			' ',
+			A2(
+				$elm$core$List$map,
+				$elm$core$Tuple$first,
+				A2($elm$core$List$filter, $elm$core$Tuple$second, classes))));
+};
 var $rundis$elm_bootstrap$Bootstrap$Navbar$expandOption = function (size) {
 	var toClass = function (sz) {
 		return $elm$html$Html$Attributes$class(
@@ -8857,8 +8677,9 @@ var $author$project$Main$viewNavbar = function (model) {
 								$elm$html$Html$text('Honest Living')
 							]),
 						$rundis$elm_bootstrap$Bootstrap$Navbar$container(
-							$rundis$elm_bootstrap$Bootstrap$Navbar$withAnimation(
-								$rundis$elm_bootstrap$Bootstrap$Navbar$config($author$project$Main$NavbarMsg))))))
+							$rundis$elm_bootstrap$Bootstrap$Navbar$dark(
+								$rundis$elm_bootstrap$Bootstrap$Navbar$withAnimation(
+									$rundis$elm_bootstrap$Bootstrap$Navbar$config($author$project$Main$NavbarMsg)))))))
 			]));
 };
 var $author$project$Main$view = function (model) {
@@ -8867,7 +8688,11 @@ var $author$project$Main$view = function (model) {
 			[
 				A2(
 				$elm$html$Html$div,
-				_List_Nil,
+				_List_fromArray(
+					[
+						A2($elm$html$Html$Attributes$style, 'color', '#AAAAAA'),
+						A2($elm$html$Html$Attributes$style, 'background-color', '#272B30')
+					]),
 				_List_fromArray(
 					[
 						$rundis$elm_bootstrap$Bootstrap$CDN$stylesheet,

@@ -1,6 +1,5 @@
 module Main exposing (init, main)
 
-import Bootstrap.Button as Button
 import Bootstrap.CDN as CDN
 import Bootstrap.Grid as Grid
 import Bootstrap.Navbar as Navbar
@@ -8,7 +7,6 @@ import Browser
 import Browser.Navigation as Navigation
 import Html
 import Html.Attributes exposing (class, controls, height, href, src, style, width)
-import Html.Events exposing (onClick)
 import Song
 import Url
 import Url.Parser as Parser
@@ -64,7 +62,6 @@ type Msg
     = LinkClicked Browser.UrlRequest
     | UrlChanged Url.Url
     | NavbarMsg Navbar.State
-    | Download Song.Song
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -84,9 +81,6 @@ update msg model =
         NavbarMsg state ->
             ( { model | navbarState = state }, Cmd.none )
 
-        Download song ->
-            ( model, Navigation.load (Song.downloadLink song) )
-
 
 
 -- SUBSCRIPTIONS
@@ -105,7 +99,7 @@ view : Model -> Browser.Document Msg
 view model =
     { title = "Honest Living"
     , body =
-        [ Html.div []
+        [ Html.div [ style "color" "#AAAAAA", style "background-color" "#272B30" ]
             [ CDN.stylesheet -- TODO remove dev stylesheet
             , viewNavbar model
             , viewCurrentPage model
@@ -120,6 +114,7 @@ viewNavbar model =
         []
         [ Navbar.config NavbarMsg
             |> Navbar.withAnimation
+            |> Navbar.dark
             |> Navbar.container
             |> Navbar.brand [ href "/Home" ] [ Html.text "Honest Living" ]
             |> Navbar.items
@@ -162,24 +157,10 @@ viewSong : Song.Song -> Grid.Column Msg
 viewSong song =
     Grid.col []
         [ Html.div
-            [ style "border" "1px solid blue" -- TODO remove dev border
-            , style "display" "flex"
-            , style "flex-direction" "column"
-            ]
-            [ Html.img
-                [ src (Song.imageSrc song), width 250, height 250 ]
-                []
+            [ style "display" "flex", style "flex-direction" "column" ]
+            [ Html.img [ src (Song.imageSrc song), width 250, height 250 ] []
             , Html.div [ style "position" "absolute", style "color" "white" ] [ Html.text (Song.title song) ]
-            , Html.div
-                [ style "border" "1px solid yellow" -- TODO remove dev border
-                , style "display" "flex"
-                , style "flex-direction" "row"
-                ]
-                [ Html.audio [ src (Song.previewLink song), controls True ] []
-                , Button.button
-                    [ Button.primary, Button.attrs [ onClick (Download song) ] ]
-                    [ Html.text "Download" ]
-                ]
+            , Html.audio [ src (Song.previewLink song), controls True ] [] -- Audio has the option to download
             ]
         ]
 
