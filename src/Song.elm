@@ -1,4 +1,4 @@
-module Song exposing (Song(..), downloadLink, getTitle, previewLink)
+module Song exposing (Song(..), downloadLink, imageSrc, previewLink, title)
 
 -- Songs are stored in a personal google drive.
 -- https://drive.google.com/open?id=1qKTDdmhHrC7_2p2l1IQta7d_YIJOyz3W Seasonal
@@ -30,8 +30,8 @@ getId song =
             "1XHvfbaR5zQliqErhuTRua6UGfJoUinDt"
 
 
-getTitle : Song -> String
-getTitle song =
+title : Song -> String
+title song =
     case song of
         Seasonal ->
             "Seasonal"
@@ -44,6 +44,22 @@ getTitle song =
 
         NeverACloser ->
             "Never a Closer"
+
+
+imageSrc : Song -> String
+imageSrc song =
+    case song of
+        Seasonal ->
+            "../assets/images/leaf_changing_color.jpg"
+
+        Isswttd ->
+            "../assets/images/isswttd_david_recording.jpg"
+
+        HopeAndOlney ->
+            "../assets/images/pond_late_summer.jpg"
+
+        NeverACloser ->
+            "../assets/images/never_a_closer.jpg"
 
 
 previewLink : Song -> String

@@ -7527,14 +7527,6 @@ var $author$project$Main$toRoute = function (url) {
 var $author$project$Main$Download = function (a) {
 	return {$: 'Download', a: a};
 };
-var $elm$virtual_dom$VirtualDom$attribute = F2(
-	function (key, value) {
-		return A2(
-			_VirtualDom_attribute,
-			_VirtualDom_noOnOrFormAction(key),
-			_VirtualDom_noJavaScriptOrHtmlUri(value));
-	});
-var $elm$html$Html$Attributes$attribute = $elm$virtual_dom$VirtualDom$attribute;
 var $rundis$elm_bootstrap$Bootstrap$Internal$Button$Attrs = function (a) {
 	return {$: 'Attrs', a: a};
 };
@@ -7547,6 +7539,7 @@ var $rundis$elm_bootstrap$Bootstrap$Card$Internal$Attrs = function (a) {
 var $rundis$elm_bootstrap$Bootstrap$Card$attrs = function (attrs_) {
 	return $rundis$elm_bootstrap$Bootstrap$Card$Internal$Attrs(attrs_);
 };
+var $elm$html$Html$audio = _VirtualDom_node('audio');
 var $rundis$elm_bootstrap$Bootstrap$Card$Config = function (a) {
 	return {$: 'Config', a: a};
 };
@@ -7861,47 +7854,32 @@ var $rundis$elm_bootstrap$Bootstrap$Card$config = function (options) {
 	return $rundis$elm_bootstrap$Bootstrap$Card$Config(
 		{blocks: _List_Nil, footer: $elm$core$Maybe$Nothing, header: $elm$core$Maybe$Nothing, imgBottom: $elm$core$Maybe$Nothing, imgTop: $elm$core$Maybe$Nothing, options: options});
 };
+var $elm$html$Html$Attributes$controls = $elm$html$Html$Attributes$boolProperty('controls');
 var $rundis$elm_bootstrap$Bootstrap$Card$Internal$BlockItem = function (a) {
 	return {$: 'BlockItem', a: a};
 };
 var $rundis$elm_bootstrap$Bootstrap$Card$Block$custom = function (element) {
 	return $rundis$elm_bootstrap$Bootstrap$Card$Internal$BlockItem(element);
 };
-var $author$project$Song$getTitle = function (song) {
+var $elm$html$Html$Attributes$height = function (n) {
+	return A2(
+		_VirtualDom_attribute,
+		'height',
+		$elm$core$String$fromInt(n));
+};
+var $author$project$Song$imageSrc = function (song) {
 	switch (song.$) {
 		case 'Seasonal':
-			return 'Seasonal';
+			return '../assets/images/leaf_changing_color.jpg';
 		case 'Isswttd':
-			return 'I Should Start Writing These Things Down';
+			return '../assets/images/isswttd_david_recording.jpg';
 		case 'HopeAndOlney':
-			return 'Hope and Olney';
+			return '../assets/images/pond_late_summer.jpg';
 		default:
-			return 'Never a Closer';
+			return '../assets/images/never_a_closer.jpg';
 	}
 };
-var $rundis$elm_bootstrap$Bootstrap$Card$Header = function (a) {
-	return {$: 'Header', a: a};
-};
-var $rundis$elm_bootstrap$Bootstrap$Card$headerPrivate = F4(
-	function (elemFn, attributes, children, _v0) {
-		var conf = _v0.a;
-		return $rundis$elm_bootstrap$Bootstrap$Card$Config(
-			_Utils_update(
-				conf,
-				{
-					header: $elm$core$Maybe$Just(
-						$rundis$elm_bootstrap$Bootstrap$Card$Header(
-							A2(
-								elemFn,
-								A2(
-									$elm$core$List$cons,
-									$elm$html$Html$Attributes$class('card-header'),
-									attributes),
-								children)))
-				}));
-	});
-var $rundis$elm_bootstrap$Bootstrap$Card$header = $rundis$elm_bootstrap$Bootstrap$Card$headerPrivate($elm$html$Html$div);
-var $elm$html$Html$iframe = _VirtualDom_node('iframe');
+var $elm$html$Html$img = _VirtualDom_node('img');
 var $elm$virtual_dom$VirtualDom$Normal = function (a) {
 	return {$: 'Normal', a: a};
 };
@@ -7937,9 +7915,32 @@ var $elm$html$Html$Attributes$src = function (url) {
 		'src',
 		_VirtualDom_noJavaScriptOrHtmlUri(url));
 };
-var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
-var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
-var $elm$html$Html$h2 = _VirtualDom_node('h2');
+var $rundis$elm_bootstrap$Bootstrap$Card$Block$text = F2(
+	function (attributes, children) {
+		return $rundis$elm_bootstrap$Bootstrap$Card$Internal$BlockItem(
+			A2(
+				$elm$html$Html$p,
+				_Utils_ap(
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$class('card-text')
+						]),
+					attributes),
+				children));
+	});
+var $author$project$Song$title = function (song) {
+	switch (song.$) {
+		case 'Seasonal':
+			return 'Seasonal';
+		case 'Isswttd':
+			return 'I Should Start Writing These Things Down';
+		case 'HopeAndOlney':
+			return 'Hope and Olney';
+		default:
+			return 'Never a Closer';
+	}
+};
+var $elm$html$Html$h4 = _VirtualDom_node('h4');
 var $rundis$elm_bootstrap$Bootstrap$Card$Block$title = F3(
 	function (elemFn, attributes, children) {
 		return $rundis$elm_bootstrap$Bootstrap$Card$Internal$BlockItem(
@@ -7951,7 +7952,7 @@ var $rundis$elm_bootstrap$Bootstrap$Card$Block$title = F3(
 					attributes),
 				children));
 	});
-var $rundis$elm_bootstrap$Bootstrap$Card$Block$titleH2 = $rundis$elm_bootstrap$Bootstrap$Card$Block$title($elm$html$Html$h2);
+var $rundis$elm_bootstrap$Bootstrap$Card$Block$titleH4 = $rundis$elm_bootstrap$Bootstrap$Card$Block$title($elm$html$Html$h4);
 var $rundis$elm_bootstrap$Bootstrap$Card$Internal$applyModifier = F2(
 	function (option, options) {
 		switch (option.$) {
@@ -8105,6 +8106,12 @@ var $rundis$elm_bootstrap$Bootstrap$Card$view = function (_v0) {
 							conf.imgBottom)
 						])))));
 };
+var $elm$html$Html$Attributes$width = function (n) {
+	return A2(
+		_VirtualDom_attribute,
+		'width',
+		$elm$core$String$fromInt(n));
+};
 var $author$project$Main$viewSong = function (song) {
 	return A2(
 		$rundis$elm_bootstrap$Bootstrap$Grid$col,
@@ -8118,12 +8125,37 @@ var $author$project$Main$viewSong = function (song) {
 					_List_fromArray(
 						[
 							A2(
-							$rundis$elm_bootstrap$Bootstrap$Card$Block$titleH2,
+							$rundis$elm_bootstrap$Bootstrap$Card$Block$titleH4,
 							_List_Nil,
 							_List_fromArray(
 								[
 									$elm$html$Html$text(
-									$author$project$Song$getTitle(song))
+									$author$project$Song$title(song))
+								])),
+							A2(
+							$rundis$elm_bootstrap$Bootstrap$Card$Block$text,
+							_List_Nil,
+							_List_fromArray(
+								[
+									A2(
+									$elm$html$Html$img,
+									_List_fromArray(
+										[
+											$elm$html$Html$Attributes$src(
+											$author$project$Song$imageSrc(song)),
+											$elm$html$Html$Attributes$width(250),
+											$elm$html$Html$Attributes$height(250)
+										]),
+									_List_Nil),
+									A2(
+									$elm$html$Html$audio,
+									_List_fromArray(
+										[
+											$elm$html$Html$Attributes$src(
+											$author$project$Song$previewLink(song)),
+											$elm$html$Html$Attributes$controls(true)
+										]),
+									_List_Nil)
 								])),
 							$rundis$elm_bootstrap$Bootstrap$Card$Block$custom(
 							A2(
@@ -8143,30 +8175,11 @@ var $author$project$Main$viewSong = function (song) {
 										$elm$html$Html$text('Download')
 									])))
 						]),
-					A3(
-						$rundis$elm_bootstrap$Bootstrap$Card$header,
-						_List_Nil,
+					$rundis$elm_bootstrap$Bootstrap$Card$config(
 						_List_fromArray(
 							[
-								A2(
-								$elm$html$Html$iframe,
-								_List_fromArray(
-									[
-										$elm$html$Html$Attributes$src(
-										$author$project$Song$previewLink(song)),
-										A2($elm$html$Html$Attributes$attribute, 'frameborder', '0')
-									]),
-								_List_Nil)
-							]),
-						$rundis$elm_bootstrap$Bootstrap$Card$config(
-							_List_fromArray(
-								[
-									$rundis$elm_bootstrap$Bootstrap$Card$attrs(
-									_List_fromArray(
-										[
-											A2($elm$html$Html$Attributes$style, 'width', '20rem')
-										]))
-								])))))
+								$rundis$elm_bootstrap$Bootstrap$Card$attrs(_List_Nil)
+							]))))
 			]));
 };
 var $author$project$Main$viewCurrentPage = function (model) {
@@ -8417,6 +8430,8 @@ var $rundis$elm_bootstrap$Bootstrap$Navbar$shouldHideMenu = F2(
 			$rundis$elm_bootstrap$Bootstrap$Navbar$sizeToComparable(winMedia),
 			$rundis$elm_bootstrap$Bootstrap$Navbar$sizeToComparable(options.toggleAt)) > 0;
 	});
+var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
+var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
 var $rundis$elm_bootstrap$Bootstrap$Navbar$Shown = {$: 'Shown'};
 var $rundis$elm_bootstrap$Bootstrap$Navbar$StartDown = {$: 'StartDown'};
 var $rundis$elm_bootstrap$Bootstrap$Navbar$StartUp = {$: 'StartUp'};

@@ -7,8 +7,8 @@ import Bootstrap.Grid as Grid
 import Bootstrap.Navbar as Navbar
 import Browser
 import Browser.Navigation as Navigation
-import Html exposing (Html, div, h1, iframe, p, text)
-import Html.Attributes exposing (attribute, class, href, src, style)
+import Html
+import Html.Attributes exposing (class, controls, href, src, style)
 import Html.Events exposing (onClick)
 import Song
 import Url
@@ -106,7 +106,7 @@ view : Model -> Browser.Document Msg
 view model =
     { title = "Honest Living"
     , body =
-        [ div []
+        [ Html.div []
             [ viewNavbar model
             , viewCurrentPage model
             ]
@@ -114,32 +114,29 @@ view model =
     }
 
 
-viewNavbar : Model -> Html Msg
+viewNavbar : Model -> Html.Html Msg
 viewNavbar model =
     Grid.container
         []
         [ Navbar.config NavbarMsg
             |> Navbar.withAnimation
             |> Navbar.container
-            |> Navbar.brand [ href "/Home" ] [ text "Honest Living" ]
+            |> Navbar.brand [ href "/Home" ] [ Html.text "Honest Living" ]
             |> Navbar.items
-                [ Navbar.itemLink [ href "/About" ] [ text "About" ]
-                , Navbar.itemLink [ href "/Photos" ] [ text "Photos" ]
-                , Navbar.itemLink [ href "/Videos" ] [ text "Videos" ]
+                [ Navbar.itemLink [ href "/About" ] [ Html.text "About" ]
+                , Navbar.itemLink [ href "/Photos" ] [ Html.text "Photos" ]
+                , Navbar.itemLink [ href "/Videos" ] [ Html.text "Videos" ]
                 ]
             |> Navbar.view model.navbarState
         ]
 
 
-viewCurrentPage : Model -> Html Msg
+viewCurrentPage : Model -> Html.Html Msg
 viewCurrentPage model =
     case toRoute model.url of
         Home ->
             Grid.container []
-                [ Grid.row []
-                    [ Grid.col []
-                        [ h1 [] [ text "Songs" ] ]
-                    ]
+                [ Grid.row [] [ Grid.col [] [ Html.h1 [] [ Html.text "Songs" ] ] ]
                 , Grid.row []
                     [ viewSong Song.Seasonal
                     , viewSong Song.HopeAndOlney
@@ -149,33 +146,31 @@ viewCurrentPage model =
                 ]
 
         About ->
-            div [ class "jumbotron" ]
-                [ h1 [] [ text "About" ]
-                , p [] [ text "Strings/Vocals: David Marcotte\nDrums: Nick Rotondo" ]
-                , p [] [ text "Two dudes from Providence, Rhode Island who slang mostly instrumental hits from 2015 to 2017." ]
+            Html.div [ class "jumbotron" ]
+                [ Html.h1 [] [ Html.text "About" ]
+                , Html.p [] [ Html.text "Strings/Vocals: David Marcotte\nDrums: Nick Rotondo" ]
+                , Html.p [] [ Html.text "Two dudes from Providence, Rhode Island who slang mostly instrumental hits from 2015 to 2017." ]
                 ]
 
         Photos ->
-            div [ class "jumbotron" ] [ text "Photos Coming Soon!" ]
+            Html.div [ class "jumbotron" ] [ Html.text "Photos Coming Soon!" ]
 
         Videos ->
-            div [ class "jumbotron" ] [ text "Videos Coming Soon!" ]
+            Html.div [ class "jumbotron" ] [ Html.text "Videos Coming Soon!" ]
 
 
 viewSong : Song.Song -> Grid.Column Msg
 viewSong song =
     Grid.col []
-        [ Card.config [ Card.attrs [ style "width" "20rem" ] ]
-            |> Card.header []
-                -- TODO: Song.getImage //// Create assets folder for band pics, song photos, etc.
-                [ iframe
-                    [ src (Song.previewLink song), attribute "frameborder" "0" ]
-                    []
-                ]
+        [ Card.config [ Card.attrs [] ]
             |> Card.block []
-                [ Block.titleH2 [] [ text (Song.getTitle song) ]
+                [ Block.titleH4 [] [ Html.text (Song.title song) ]
+                , Block.text []
+                    [ Html.img [ src (Song.imageSrc song), Html.Attributes.width 250, Html.Attributes.height 250 ] []
+                    , Html.audio [ src (Song.previewLink song), controls True ] []
+                    ]
                 , Block.custom <|
-                    Button.button [ Button.primary, Button.attrs [ onClick (Download song) ] ] [ text "Download" ]
+                    Button.button [ Button.primary, Button.attrs [ onClick (Download song) ] ] [ Html.text "Download" ]
                 ]
             |> Card.view
         ]
