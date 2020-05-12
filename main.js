@@ -6019,10 +6019,6 @@ var $author$project$Main$update = F2(
 		}
 	});
 var $elm$html$Html$div = _VirtualDom_node('div');
-var $author$project$Song$HopeAndOlney = {$: 'HopeAndOlney'};
-var $author$project$Song$Isswttd = {$: 'Isswttd'};
-var $author$project$Song$NeverACloser = {$: 'NeverACloser'};
-var $author$project$Song$Seasonal = {$: 'Seasonal'};
 var $elm$json$Json$Encode$string = _Json_wrap;
 var $elm$html$Html$Attributes$stringProperty = F2(
 	function (key, string) {
@@ -6031,15 +6027,32 @@ var $elm$html$Html$Attributes$stringProperty = F2(
 			key,
 			$elm$json$Json$Encode$string(string));
 	});
-var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
-var $rundis$elm_bootstrap$Bootstrap$Grid$Column = function (a) {
-	return {$: 'Column', a: a};
+var $elm$html$Html$Attributes$href = function (url) {
+	return A2(
+		$elm$html$Html$Attributes$stringProperty,
+		'href',
+		_VirtualDom_noJavaScriptUri(url));
 };
-var $rundis$elm_bootstrap$Bootstrap$Grid$col = F2(
-	function (options, children) {
-		return $rundis$elm_bootstrap$Bootstrap$Grid$Column(
-			{children: children, options: options});
-	});
+var $elm$virtual_dom$VirtualDom$node = function (tag) {
+	return _VirtualDom_node(
+		_VirtualDom_noScript(tag));
+};
+var $elm$html$Html$node = $elm$virtual_dom$VirtualDom$node;
+var $elm$html$Html$Attributes$rel = _VirtualDom_attribute('rel');
+var $rundis$elm_bootstrap$Bootstrap$CDN$stylesheet = A3(
+	$elm$html$Html$node,
+	'link',
+	_List_fromArray(
+		[
+			$elm$html$Html$Attributes$rel('stylesheet'),
+			$elm$html$Html$Attributes$href('https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css')
+		]),
+	_List_Nil);
+var $author$project$Song$HopeAndOlney = {$: 'HopeAndOlney'};
+var $author$project$Song$Isswttd = {$: 'Isswttd'};
+var $author$project$Song$NeverACloser = {$: 'NeverACloser'};
+var $author$project$Song$Seasonal = {$: 'Seasonal'};
+var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
 var $rundis$elm_bootstrap$Bootstrap$Grid$container = F2(
 	function (attributes, children) {
 		return A2(
@@ -7533,162 +7546,7 @@ var $rundis$elm_bootstrap$Bootstrap$Internal$Button$Attrs = function (a) {
 var $rundis$elm_bootstrap$Bootstrap$Button$attrs = function (attrs_) {
 	return $rundis$elm_bootstrap$Bootstrap$Internal$Button$Attrs(attrs_);
 };
-var $rundis$elm_bootstrap$Bootstrap$Card$Internal$Attrs = function (a) {
-	return {$: 'Attrs', a: a};
-};
-var $rundis$elm_bootstrap$Bootstrap$Card$attrs = function (attrs_) {
-	return $rundis$elm_bootstrap$Bootstrap$Card$Internal$Attrs(attrs_);
-};
 var $elm$html$Html$audio = _VirtualDom_node('audio');
-var $rundis$elm_bootstrap$Bootstrap$Card$Config = function (a) {
-	return {$: 'Config', a: a};
-};
-var $rundis$elm_bootstrap$Bootstrap$Card$Internal$CardBlock = function (a) {
-	return {$: 'CardBlock', a: a};
-};
-var $rundis$elm_bootstrap$Bootstrap$Card$Internal$applyBlockModifier = F2(
-	function (option, options) {
-		switch (option.$) {
-			case 'AlignedBlock':
-				var align = option.a;
-				return _Utils_update(
-					options,
-					{
-						aligned: $elm$core$Maybe$Just(align)
-					});
-			case 'BlockColoring':
-				var role = option.a;
-				return _Utils_update(
-					options,
-					{
-						coloring: $elm$core$Maybe$Just(role)
-					});
-			case 'BlockTextColoring':
-				var color = option.a;
-				return _Utils_update(
-					options,
-					{
-						textColoring: $elm$core$Maybe$Just(color)
-					});
-			default:
-				var attrs = option.a;
-				return _Utils_update(
-					options,
-					{
-						attributes: _Utils_ap(options.attributes, attrs)
-					});
-		}
-	});
-var $rundis$elm_bootstrap$Bootstrap$Card$Internal$defaultBlockOptions = {aligned: $elm$core$Maybe$Nothing, attributes: _List_Nil, coloring: $elm$core$Maybe$Nothing, textColoring: $elm$core$Maybe$Nothing};
-var $rundis$elm_bootstrap$Bootstrap$Internal$Role$toClass = F2(
-	function (prefix, role) {
-		return $elm$html$Html$Attributes$class(
-			prefix + ('-' + function () {
-				switch (role.$) {
-					case 'Primary':
-						return 'primary';
-					case 'Secondary':
-						return 'secondary';
-					case 'Success':
-						return 'success';
-					case 'Info':
-						return 'info';
-					case 'Warning':
-						return 'warning';
-					case 'Danger':
-						return 'danger';
-					case 'Light':
-						return 'light';
-					default:
-						return 'dark';
-				}
-			}()));
-	});
-var $rundis$elm_bootstrap$Bootstrap$Internal$Text$textColorClass = function (color) {
-	if (color.$ === 'White') {
-		return $elm$html$Html$Attributes$class('text-white');
-	} else {
-		var role = color.a;
-		return A2($rundis$elm_bootstrap$Bootstrap$Internal$Role$toClass, 'text', role);
-	}
-};
-var $rundis$elm_bootstrap$Bootstrap$Card$Internal$blockAttributes = function (modifiers) {
-	var options = A3($elm$core$List$foldl, $rundis$elm_bootstrap$Bootstrap$Card$Internal$applyBlockModifier, $rundis$elm_bootstrap$Bootstrap$Card$Internal$defaultBlockOptions, modifiers);
-	return _Utils_ap(
-		_List_fromArray(
-			[
-				$elm$html$Html$Attributes$class('card-body')
-			]),
-		_Utils_ap(
-			function () {
-				var _v0 = options.aligned;
-				if (_v0.$ === 'Just') {
-					var align = _v0.a;
-					return _List_fromArray(
-						[
-							$rundis$elm_bootstrap$Bootstrap$Internal$Text$textAlignClass(align)
-						]);
-				} else {
-					return _List_Nil;
-				}
-			}(),
-			_Utils_ap(
-				function () {
-					var _v1 = options.coloring;
-					if (_v1.$ === 'Just') {
-						var role = _v1.a;
-						return _List_fromArray(
-							[
-								A2($rundis$elm_bootstrap$Bootstrap$Internal$Role$toClass, 'bg', role)
-							]);
-					} else {
-						return _List_Nil;
-					}
-				}(),
-				_Utils_ap(
-					function () {
-						var _v2 = options.textColoring;
-						if (_v2.$ === 'Just') {
-							var color = _v2.a;
-							return _List_fromArray(
-								[
-									$rundis$elm_bootstrap$Bootstrap$Internal$Text$textColorClass(color)
-								]);
-						} else {
-							return _List_Nil;
-						}
-					}(),
-					options.attributes))));
-};
-var $rundis$elm_bootstrap$Bootstrap$Card$Internal$block = F2(
-	function (options, items) {
-		return $rundis$elm_bootstrap$Bootstrap$Card$Internal$CardBlock(
-			A2(
-				$elm$html$Html$div,
-				$rundis$elm_bootstrap$Bootstrap$Card$Internal$blockAttributes(options),
-				A2(
-					$elm$core$List$map,
-					function (_v0) {
-						var e = _v0.a;
-						return e;
-					},
-					items)));
-	});
-var $rundis$elm_bootstrap$Bootstrap$Card$block = F3(
-	function (options, items, _v0) {
-		var conf = _v0.a;
-		return $rundis$elm_bootstrap$Bootstrap$Card$Config(
-			_Utils_update(
-				conf,
-				{
-					blocks: _Utils_ap(
-						conf.blocks,
-						_List_fromArray(
-							[
-								A2($rundis$elm_bootstrap$Bootstrap$Card$Internal$block, options, items)
-							]))
-				}));
-	});
 var $elm$html$Html$button = _VirtualDom_node('button');
 var $elm$core$Maybe$andThen = F2(
 	function (callback, maybeValue) {
@@ -7850,17 +7708,15 @@ var $rundis$elm_bootstrap$Bootstrap$Button$button = F2(
 			$rundis$elm_bootstrap$Bootstrap$Internal$Button$buttonAttributes(options),
 			children);
 	});
-var $rundis$elm_bootstrap$Bootstrap$Card$config = function (options) {
-	return $rundis$elm_bootstrap$Bootstrap$Card$Config(
-		{blocks: _List_Nil, footer: $elm$core$Maybe$Nothing, header: $elm$core$Maybe$Nothing, imgBottom: $elm$core$Maybe$Nothing, imgTop: $elm$core$Maybe$Nothing, options: options});
+var $rundis$elm_bootstrap$Bootstrap$Grid$Column = function (a) {
+	return {$: 'Column', a: a};
 };
+var $rundis$elm_bootstrap$Bootstrap$Grid$col = F2(
+	function (options, children) {
+		return $rundis$elm_bootstrap$Bootstrap$Grid$Column(
+			{children: children, options: options});
+	});
 var $elm$html$Html$Attributes$controls = $elm$html$Html$Attributes$boolProperty('controls');
-var $rundis$elm_bootstrap$Bootstrap$Card$Internal$BlockItem = function (a) {
-	return {$: 'BlockItem', a: a};
-};
-var $rundis$elm_bootstrap$Bootstrap$Card$Block$custom = function (element) {
-	return $rundis$elm_bootstrap$Bootstrap$Card$Internal$BlockItem(element);
-};
 var $elm$html$Html$Attributes$height = function (n) {
 	return A2(
 		_VirtualDom_attribute,
@@ -7906,7 +7762,7 @@ var $author$project$Song$previewLink = function (song) {
 		case 'HopeAndOlney':
 			return '../assets/songs/hope_and_olney.mp3';
 		default:
-			return '../assets/songs/never_a_closer.jpg';
+			return '../assets/songs/never_a_closer.mp3';
 	}
 };
 var $rundis$elm_bootstrap$Bootstrap$Internal$Button$Coloring = function (a) {
@@ -7924,19 +7780,8 @@ var $elm$html$Html$Attributes$src = function (url) {
 		'src',
 		_VirtualDom_noJavaScriptOrHtmlUri(url));
 };
-var $rundis$elm_bootstrap$Bootstrap$Card$Block$text = F2(
-	function (attributes, children) {
-		return $rundis$elm_bootstrap$Bootstrap$Card$Internal$BlockItem(
-			A2(
-				$elm$html$Html$p,
-				_Utils_ap(
-					_List_fromArray(
-						[
-							$elm$html$Html$Attributes$class('card-text')
-						]),
-					attributes),
-				children));
-	});
+var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
+var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
 var $author$project$Song$title = function (song) {
 	switch (song.$) {
 		case 'Seasonal':
@@ -7948,172 +7793,6 @@ var $author$project$Song$title = function (song) {
 		default:
 			return 'Never a Closer';
 	}
-};
-var $elm$html$Html$h4 = _VirtualDom_node('h4');
-var $rundis$elm_bootstrap$Bootstrap$Card$Block$title = F3(
-	function (elemFn, attributes, children) {
-		return $rundis$elm_bootstrap$Bootstrap$Card$Internal$BlockItem(
-			A2(
-				elemFn,
-				A2(
-					$elm$core$List$cons,
-					$elm$html$Html$Attributes$class('card-title'),
-					attributes),
-				children));
-	});
-var $rundis$elm_bootstrap$Bootstrap$Card$Block$titleH4 = $rundis$elm_bootstrap$Bootstrap$Card$Block$title($elm$html$Html$h4);
-var $rundis$elm_bootstrap$Bootstrap$Card$Internal$applyModifier = F2(
-	function (option, options) {
-		switch (option.$) {
-			case 'Aligned':
-				var align = option.a;
-				return _Utils_update(
-					options,
-					{
-						aligned: $elm$core$Maybe$Just(align)
-					});
-			case 'Coloring':
-				var coloring = option.a;
-				return _Utils_update(
-					options,
-					{
-						coloring: $elm$core$Maybe$Just(coloring)
-					});
-			case 'TextColoring':
-				var coloring = option.a;
-				return _Utils_update(
-					options,
-					{
-						textColoring: $elm$core$Maybe$Just(coloring)
-					});
-			default:
-				var attrs = option.a;
-				return _Utils_update(
-					options,
-					{
-						attributes: _Utils_ap(options.attributes, attrs)
-					});
-		}
-	});
-var $rundis$elm_bootstrap$Bootstrap$Card$Internal$defaultOptions = {aligned: $elm$core$Maybe$Nothing, attributes: _List_Nil, coloring: $elm$core$Maybe$Nothing, textColoring: $elm$core$Maybe$Nothing};
-var $rundis$elm_bootstrap$Bootstrap$Card$Internal$cardAttributes = function (modifiers) {
-	var options = A3($elm$core$List$foldl, $rundis$elm_bootstrap$Bootstrap$Card$Internal$applyModifier, $rundis$elm_bootstrap$Bootstrap$Card$Internal$defaultOptions, modifiers);
-	return _Utils_ap(
-		_List_fromArray(
-			[
-				$elm$html$Html$Attributes$class('card')
-			]),
-		_Utils_ap(
-			function () {
-				var _v0 = options.coloring;
-				if (_v0.$ === 'Just') {
-					if (_v0.a.$ === 'Roled') {
-						var role = _v0.a.a;
-						return _List_fromArray(
-							[
-								A2($rundis$elm_bootstrap$Bootstrap$Internal$Role$toClass, 'bg', role)
-							]);
-					} else {
-						var role = _v0.a.a;
-						return _List_fromArray(
-							[
-								A2($rundis$elm_bootstrap$Bootstrap$Internal$Role$toClass, 'border', role)
-							]);
-					}
-				} else {
-					return _List_Nil;
-				}
-			}(),
-			_Utils_ap(
-				function () {
-					var _v1 = options.textColoring;
-					if (_v1.$ === 'Just') {
-						var color = _v1.a;
-						return _List_fromArray(
-							[
-								$rundis$elm_bootstrap$Bootstrap$Internal$Text$textColorClass(color)
-							]);
-					} else {
-						return _List_Nil;
-					}
-				}(),
-				_Utils_ap(
-					function () {
-						var _v2 = options.aligned;
-						if (_v2.$ === 'Just') {
-							var align = _v2.a;
-							return _List_fromArray(
-								[
-									$rundis$elm_bootstrap$Bootstrap$Internal$Text$textAlignClass(align)
-								]);
-						} else {
-							return _List_Nil;
-						}
-					}(),
-					options.attributes))));
-};
-var $rundis$elm_bootstrap$Bootstrap$Card$Internal$renderBlocks = function (blocks) {
-	return A2(
-		$elm$core$List$map,
-		function (block_) {
-			if (block_.$ === 'CardBlock') {
-				var e = block_.a;
-				return e;
-			} else {
-				var e = block_.a;
-				return e;
-			}
-		},
-		blocks);
-};
-var $rundis$elm_bootstrap$Bootstrap$Card$view = function (_v0) {
-	var conf = _v0.a;
-	return A2(
-		$elm$html$Html$div,
-		$rundis$elm_bootstrap$Bootstrap$Card$Internal$cardAttributes(conf.options),
-		_Utils_ap(
-			A2(
-				$elm$core$List$filterMap,
-				$elm$core$Basics$identity,
-				_List_fromArray(
-					[
-						A2(
-						$elm$core$Maybe$map,
-						function (_v1) {
-							var e = _v1.a;
-							return e;
-						},
-						conf.header),
-						A2(
-						$elm$core$Maybe$map,
-						function (_v2) {
-							var e = _v2.a;
-							return e;
-						},
-						conf.imgTop)
-					])),
-			_Utils_ap(
-				$rundis$elm_bootstrap$Bootstrap$Card$Internal$renderBlocks(conf.blocks),
-				A2(
-					$elm$core$List$filterMap,
-					$elm$core$Basics$identity,
-					_List_fromArray(
-						[
-							A2(
-							$elm$core$Maybe$map,
-							function (_v3) {
-								var e = _v3.a;
-								return e;
-							},
-							conf.footer),
-							A2(
-							$elm$core$Maybe$map,
-							function (_v4) {
-								var e = _v4.a;
-								return e;
-							},
-							conf.imgBottom)
-						])))));
 };
 var $elm$html$Html$Attributes$width = function (n) {
 	return A2(
@@ -8127,47 +7806,58 @@ var $author$project$Main$viewSong = function (song) {
 		_List_Nil,
 		_List_fromArray(
 			[
-				$rundis$elm_bootstrap$Bootstrap$Card$view(
-				A3(
-					$rundis$elm_bootstrap$Bootstrap$Card$block,
-					_List_Nil,
-					_List_fromArray(
-						[
-							A2(
-							$rundis$elm_bootstrap$Bootstrap$Card$Block$titleH4,
-							_List_Nil,
-							_List_fromArray(
-								[
-									$elm$html$Html$text(
-									$author$project$Song$title(song))
-								])),
-							A2(
-							$rundis$elm_bootstrap$Bootstrap$Card$Block$text,
-							_List_Nil,
-							_List_fromArray(
-								[
-									A2(
-									$elm$html$Html$img,
-									_List_fromArray(
-										[
-											$elm$html$Html$Attributes$src(
-											$author$project$Song$imageSrc(song)),
-											$elm$html$Html$Attributes$width(250),
-											$elm$html$Html$Attributes$height(250)
-										]),
-									_List_Nil),
-									A2(
-									$elm$html$Html$audio,
-									_List_fromArray(
-										[
-											$elm$html$Html$Attributes$src(
-											$author$project$Song$previewLink(song)),
-											$elm$html$Html$Attributes$controls(true)
-										]),
-									_List_Nil)
-								])),
-							$rundis$elm_bootstrap$Bootstrap$Card$Block$custom(
-							A2(
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						A2($elm$html$Html$Attributes$style, 'border', '1px solid blue'),
+						A2($elm$html$Html$Attributes$style, 'display', 'flex'),
+						A2($elm$html$Html$Attributes$style, 'flex-direction', 'column')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$img,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$src(
+								$author$project$Song$imageSrc(song)),
+								$elm$html$Html$Attributes$width(250),
+								$elm$html$Html$Attributes$height(250)
+							]),
+						_List_Nil),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								A2($elm$html$Html$Attributes$style, 'position', 'absolute'),
+								A2($elm$html$Html$Attributes$style, 'color', 'white')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text(
+								$author$project$Song$title(song))
+							])),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								A2($elm$html$Html$Attributes$style, 'border', '1px solid yellow'),
+								A2($elm$html$Html$Attributes$style, 'display', 'flex'),
+								A2($elm$html$Html$Attributes$style, 'flex-direction', 'row')
+							]),
+						_List_fromArray(
+							[
+								A2(
+								$elm$html$Html$audio,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$src(
+										$author$project$Song$previewLink(song)),
+										$elm$html$Html$Attributes$controls(true)
+									]),
+								_List_Nil),
+								A2(
 								$rundis$elm_bootstrap$Bootstrap$Button$button,
 								_List_fromArray(
 									[
@@ -8182,13 +7872,9 @@ var $author$project$Main$viewSong = function (song) {
 								_List_fromArray(
 									[
 										$elm$html$Html$text('Download')
-									])))
-						]),
-					$rundis$elm_bootstrap$Bootstrap$Card$config(
-						_List_fromArray(
-							[
-								$rundis$elm_bootstrap$Bootstrap$Card$attrs(_List_Nil)
-							]))))
+									]))
+							]))
+					]))
 			]));
 };
 var $author$project$Main$viewCurrentPage = function (model) {
@@ -8200,25 +7886,6 @@ var $author$project$Main$viewCurrentPage = function (model) {
 				_List_Nil,
 				_List_fromArray(
 					[
-						A2(
-						$rundis$elm_bootstrap$Bootstrap$Grid$row,
-						_List_Nil,
-						_List_fromArray(
-							[
-								A2(
-								$rundis$elm_bootstrap$Bootstrap$Grid$col,
-								_List_Nil,
-								_List_fromArray(
-									[
-										A2(
-										$elm$html$Html$h1,
-										_List_Nil,
-										_List_fromArray(
-											[
-												$elm$html$Html$text('Songs')
-											]))
-									]))
-							])),
 						A2(
 						$rundis$elm_bootstrap$Bootstrap$Grid$row,
 						_List_Nil,
@@ -8367,12 +8034,6 @@ var $rundis$elm_bootstrap$Bootstrap$Navbar$container = function (conf) {
 		},
 		conf);
 };
-var $elm$html$Html$Attributes$href = function (url) {
-	return A2(
-		$elm$html$Html$Attributes$stringProperty,
-		'href',
-		_VirtualDom_noJavaScriptUri(url));
-};
 var $rundis$elm_bootstrap$Bootstrap$Navbar$Item = function (a) {
 	return {$: 'Item', a: a};
 };
@@ -8439,8 +8100,6 @@ var $rundis$elm_bootstrap$Bootstrap$Navbar$shouldHideMenu = F2(
 			$rundis$elm_bootstrap$Bootstrap$Navbar$sizeToComparable(winMedia),
 			$rundis$elm_bootstrap$Bootstrap$Navbar$sizeToComparable(options.toggleAt)) > 0;
 	});
-var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
-var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
 var $rundis$elm_bootstrap$Bootstrap$Navbar$Shown = {$: 'Shown'};
 var $rundis$elm_bootstrap$Bootstrap$Navbar$StartDown = {$: 'StartDown'};
 var $rundis$elm_bootstrap$Bootstrap$Navbar$StartUp = {$: 'StartUp'};
@@ -8665,6 +8324,30 @@ var $rundis$elm_bootstrap$Bootstrap$Navbar$fixOption = function (fix) {
 		return 'fixed-bottom';
 	}
 };
+var $rundis$elm_bootstrap$Bootstrap$Internal$Role$toClass = F2(
+	function (prefix, role) {
+		return $elm$html$Html$Attributes$class(
+			prefix + ('-' + function () {
+				switch (role.$) {
+					case 'Primary':
+						return 'primary';
+					case 'Secondary':
+						return 'secondary';
+					case 'Success':
+						return 'success';
+					case 'Info':
+						return 'info';
+					case 'Warning':
+						return 'warning';
+					case 'Danger':
+						return 'danger';
+					case 'Light':
+						return 'light';
+					default:
+						return 'dark';
+				}
+			}()));
+	});
 var $elm$core$String$concat = function (strings) {
 	return A2($elm$core$String$join, '', strings);
 };
@@ -9187,6 +8870,7 @@ var $author$project$Main$view = function (model) {
 				_List_Nil,
 				_List_fromArray(
 					[
+						$rundis$elm_bootstrap$Bootstrap$CDN$stylesheet,
 						$author$project$Main$viewNavbar(model),
 						$author$project$Main$viewCurrentPage(model)
 					]))

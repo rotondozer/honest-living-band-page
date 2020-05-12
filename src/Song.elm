@@ -75,7 +75,7 @@ previewLink song =
             "../assets/songs/hope_and_olney.mp3"
 
         NeverACloser ->
-            "../assets/songs/never_a_closer.jpg"
+            "../assets/songs/never_a_closer.mp3"
 
 
 downloadLink : Song -> String

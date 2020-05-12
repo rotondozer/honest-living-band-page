@@ -1,14 +1,13 @@
 module Main exposing (init, main)
 
 import Bootstrap.Button as Button
-import Bootstrap.Card as Card
-import Bootstrap.Card.Block as Block
+import Bootstrap.CDN as CDN
 import Bootstrap.Grid as Grid
 import Bootstrap.Navbar as Navbar
 import Browser
 import Browser.Navigation as Navigation
 import Html
-import Html.Attributes exposing (class, controls, href, src, style)
+import Html.Attributes exposing (class, controls, height, href, src, style, width)
 import Html.Events exposing (onClick)
 import Song
 import Url
@@ -107,7 +106,8 @@ view model =
     { title = "Honest Living"
     , body =
         [ Html.div []
-            [ viewNavbar model
+            [ CDN.stylesheet -- TODO remove dev stylesheet
+            , viewNavbar model
             , viewCurrentPage model
             ]
         ]
@@ -136,8 +136,7 @@ viewCurrentPage model =
     case toRoute model.url of
         Home ->
             Grid.container []
-                [ Grid.row [] [ Grid.col [] [ Html.h1 [] [ Html.text "Songs" ] ] ]
-                , Grid.row []
+                [ Grid.row []
                     [ viewSong Song.Seasonal
                     , viewSong Song.HopeAndOlney
                     , viewSong Song.Isswttd
@@ -162,17 +161,26 @@ viewCurrentPage model =
 viewSong : Song.Song -> Grid.Column Msg
 viewSong song =
     Grid.col []
-        [ Card.config [ Card.attrs [] ]
-            |> Card.block []
-                [ Block.titleH4 [] [ Html.text (Song.title song) ]
-                , Block.text []
-                    [ Html.img [ src (Song.imageSrc song), Html.Attributes.width 250, Html.Attributes.height 250 ] []
-                    , Html.audio [ src (Song.previewLink song), controls True ] []
-                    ]
-                , Block.custom <|
-                    Button.button [ Button.primary, Button.attrs [ onClick (Download song) ] ] [ Html.text "Download" ]
+        [ Html.div
+            [ style "border" "1px solid blue" -- TODO remove dev border
+            , style "display" "flex"
+            , style "flex-direction" "column"
+            ]
+            [ Html.img
+                [ src (Song.imageSrc song), width 250, height 250 ]
+                []
+            , Html.div [ style "position" "absolute", style "color" "white" ] [ Html.text (Song.title song) ]
+            , Html.div
+                [ style "border" "1px solid yellow" -- TODO remove dev border
+                , style "display" "flex"
+                , style "flex-direction" "row"
                 ]
-            |> Card.view
+                [ Html.audio [ src (Song.previewLink song), controls True ] []
+                , Button.button
+                    [ Button.primary, Button.attrs [ onClick (Download song) ] ]
+                    [ Html.text "Download" ]
+                ]
+            ]
         ]
 
 
