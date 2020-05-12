@@ -64,7 +64,18 @@ imageSrc song =
 
 previewLink : Song -> String
 previewLink song =
-    "https://drive.google.com/file/d/" ++ getId song ++ "/preview"
+    case song of
+        Seasonal ->
+            "../assets/songs/seasonal.mp3"
+
+        Isswttd ->
+            "../assets/songs/i_should_start_writing_these_things_down.mp3"
+
+        HopeAndOlney ->
+            "../assets/songs/hope_and_olney.mp3"
+
+        NeverACloser ->
+            "../assets/songs/never_a_closer.jpg"
 
 
 downloadLink : Song -> String

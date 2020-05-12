@@ -7898,7 +7898,16 @@ var $elm$html$Html$Events$onClick = function (msg) {
 		$elm$json$Json$Decode$succeed(msg));
 };
 var $author$project$Song$previewLink = function (song) {
-	return 'https://drive.google.com/file/d/' + ($author$project$Song$getId(song) + '/preview');
+	switch (song.$) {
+		case 'Seasonal':
+			return '../assets/songs/seasonal.mp3';
+		case 'Isswttd':
+			return '../assets/songs/i_should_start_writing_these_things_down.mp3';
+		case 'HopeAndOlney':
+			return '../assets/songs/hope_and_olney.mp3';
+		default:
+			return '../assets/songs/never_a_closer.jpg';
+	}
 };
 var $rundis$elm_bootstrap$Bootstrap$Internal$Button$Coloring = function (a) {
 	return {$: 'Coloring', a: a};
