@@ -100,8 +100,7 @@ view model =
     { title = "Honest Living"
     , body =
         [ Html.div [ style "color" "#AAAAAA", style "background-color" "#272B30" ]
-            [ CDN.stylesheet -- TODO remove dev stylesheet
-            , viewNavbar model
+            [ viewNavbar model
             , viewCurrentPage model
             ]
         ]
