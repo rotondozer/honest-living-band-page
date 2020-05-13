@@ -6,7 +6,7 @@ import Bootstrap.Navbar as Navbar
 import Browser
 import Browser.Navigation as Navigation
 import Html
-import Html.Attributes exposing (class, controls, height, href, src, style, width)
+import Html.Attributes exposing (class, controls, href, src, style)
 import Song
 import Url
 import Url.Parser as Parser
@@ -99,7 +99,7 @@ view : Model -> Browser.Document Msg
 view model =
     { title = "Honest Living"
     , body =
-        [ Html.div [ style "background-color" "#272B30", style "font-family" "'Amatic SC', cursive" ]
+        [ Html.div [ style "background-color" "#272B30", style "font-family" "'Amatic SC', monospace" ]
             [ CDN.stylesheet -- Does Elm have something akin to `if (__DEV__)`?
             , viewNavbar model
             , viewCurrentPage model
@@ -133,9 +133,11 @@ viewCurrentPage model =
             Grid.container []
                 [ Grid.row []
                     [ viewSong Song.Seasonal
-                    , viewSong Song.HopeAndOlney
-                    , viewSong Song.Isswttd
                     , viewSong Song.NeverACloser
+                    ]
+                , Grid.row []
+                    [ viewSong Song.HopeAndOlney
+                    , viewSong Song.Isswttd
                     ]
                 ]
 
@@ -158,17 +160,18 @@ viewSong song =
     Grid.col []
         [ Html.div
             [ style "display" "flex"
+            , style "flex" "1"
             , style "flex-direction" "column"
             , style "justify-content" "space-between"
             , style "align-items" "center"
             , style "padding" "10px"
             , style "margin" "5px"
-            , style "border" "1px solid #946e38"
+            , style "border" "2px solid #946e38"
             , style "border-radius" "3px"
             , style "background-image" ("url(" ++ Song.imageSrc song ++ ")")
             , style "background-size" "100% 100%"
-            , style "height" "400px"
-            , style "width" "400px"
+            , style "height" "auto"
+            , style "min-height" "300px"
             ]
             [ Html.div [ style "color" "white", style "align-self" "flex-end" ] [ Html.text (Song.title song) ]
             , Html.audio [ src (Song.audioSrc song), controls True ] [] -- Audio has the option to download

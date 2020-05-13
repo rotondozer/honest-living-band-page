@@ -7589,20 +7589,21 @@ var $author$project$Main$viewSong = function (song) {
 				_List_fromArray(
 					[
 						A2($elm$html$Html$Attributes$style, 'display', 'flex'),
+						A2($elm$html$Html$Attributes$style, 'flex', '1'),
 						A2($elm$html$Html$Attributes$style, 'flex-direction', 'column'),
 						A2($elm$html$Html$Attributes$style, 'justify-content', 'space-between'),
 						A2($elm$html$Html$Attributes$style, 'align-items', 'center'),
 						A2($elm$html$Html$Attributes$style, 'padding', '10px'),
 						A2($elm$html$Html$Attributes$style, 'margin', '5px'),
-						A2($elm$html$Html$Attributes$style, 'border', '1px solid #946e38'),
+						A2($elm$html$Html$Attributes$style, 'border', '2px solid #946e38'),
 						A2($elm$html$Html$Attributes$style, 'border-radius', '3px'),
 						A2(
 						$elm$html$Html$Attributes$style,
 						'background-image',
 						'url(' + ($author$project$Song$imageSrc(song) + ')')),
 						A2($elm$html$Html$Attributes$style, 'background-size', '100% 100%'),
-						A2($elm$html$Html$Attributes$style, 'height', '400px'),
-						A2($elm$html$Html$Attributes$style, 'width', '400px')
+						A2($elm$html$Html$Attributes$style, 'height', 'auto'),
+						A2($elm$html$Html$Attributes$style, 'min-height', '300px')
 					]),
 				_List_fromArray(
 					[
@@ -7645,9 +7646,15 @@ var $author$project$Main$viewCurrentPage = function (model) {
 						_List_fromArray(
 							[
 								$author$project$Main$viewSong($author$project$Song$Seasonal),
-								$author$project$Main$viewSong($author$project$Song$HopeAndOlney),
-								$author$project$Main$viewSong($author$project$Song$Isswttd),
 								$author$project$Main$viewSong($author$project$Song$NeverACloser)
+							])),
+						A2(
+						$rundis$elm_bootstrap$Bootstrap$Grid$row,
+						_List_Nil,
+						_List_fromArray(
+							[
+								$author$project$Main$viewSong($author$project$Song$HopeAndOlney),
+								$author$project$Main$viewSong($author$project$Song$Isswttd)
 							]))
 					]));
 		case 'About':
@@ -8681,7 +8688,7 @@ var $author$project$Main$view = function (model) {
 				_List_fromArray(
 					[
 						A2($elm$html$Html$Attributes$style, 'background-color', '#272B30'),
-						A2($elm$html$Html$Attributes$style, 'font-family', '\'Amatic SC\', cursive')
+						A2($elm$html$Html$Attributes$style, 'font-family', '\'Amatic SC\', monospace')
 					]),
 				_List_fromArray(
 					[
