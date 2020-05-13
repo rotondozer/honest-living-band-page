@@ -173,7 +173,7 @@ viewSong song =
             , style "height" "auto"
             , style "min-height" "300px"
             ]
-            [ Html.div [ style "color" "white", style "align-self" "flex-end" ] [ Html.text (Song.title song) ]
+            [ Html.div [ style "color" "white", style "text-shadow" "2px 2px 2px #272B30", style "align-self" "flex-end" ] [ Html.text (Song.title song) ]
             , Html.audio [ src (Song.audioSrc song), controls True ] [] -- Audio has the option to download
             ]
         ]

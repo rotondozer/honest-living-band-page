@@ -7612,6 +7612,7 @@ var $author$project$Main$viewSong = function (song) {
 						_List_fromArray(
 							[
 								A2($elm$html$Html$Attributes$style, 'color', 'white'),
+								A2($elm$html$Html$Attributes$style, 'text-shadow', '2px 2px 2px #272B30'),
 								A2($elm$html$Html$Attributes$style, 'align-self', 'flex-end')
 							]),
 						_List_fromArray(
