@@ -1,4 +1,4 @@
-module Song exposing (Song(..), imageSrc, previewLink, title)
+module Song exposing (Song(..), audioSrc, imageSrc, title)
 
 -- Songs are stored in a personal google drive.
 -- https://drive.google.com/open?id=1qKTDdmhHrC7_2p2l1IQta7d_YIJOyz3W Seasonal
@@ -46,8 +46,8 @@ imageSrc song =
             "../assets/images/never_a_closer.jpg"
 
 
-previewLink : Song -> String
-previewLink song =
+audioSrc : Song -> String
+audioSrc song =
     case song of
         Seasonal ->
             "../assets/songs/seasonal.mp3"

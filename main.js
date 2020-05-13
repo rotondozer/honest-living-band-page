@@ -7519,6 +7519,18 @@ var $author$project$Main$toRoute = function (url) {
 		A2($elm$url$Url$Parser$parse, $author$project$Main$routeParser, url));
 };
 var $elm$html$Html$audio = _VirtualDom_node('audio');
+var $author$project$Song$audioSrc = function (song) {
+	switch (song.$) {
+		case 'Seasonal':
+			return '../assets/songs/seasonal.mp3';
+		case 'Isswttd':
+			return '../assets/songs/i_should_start_writing_these_things_down.mp3';
+		case 'HopeAndOlney':
+			return '../assets/songs/hope_and_olney.mp3';
+		default:
+			return '../assets/songs/never_a_closer.mp3';
+	}
+};
 var $rundis$elm_bootstrap$Bootstrap$Grid$Column = function (a) {
 	return {$: 'Column', a: a};
 };
@@ -7536,12 +7548,6 @@ var $elm$html$Html$Attributes$boolProperty = F2(
 			$elm$json$Json$Encode$bool(bool));
 	});
 var $elm$html$Html$Attributes$controls = $elm$html$Html$Attributes$boolProperty('controls');
-var $elm$html$Html$Attributes$height = function (n) {
-	return A2(
-		_VirtualDom_attribute,
-		'height',
-		$elm$core$String$fromInt(n));
-};
 var $author$project$Song$imageSrc = function (song) {
 	switch (song.$) {
 		case 'Seasonal':
@@ -7552,19 +7558,6 @@ var $author$project$Song$imageSrc = function (song) {
 			return '../assets/images/pond_late_summer.jpg';
 		default:
 			return '../assets/images/never_a_closer.jpg';
-	}
-};
-var $elm$html$Html$img = _VirtualDom_node('img');
-var $author$project$Song$previewLink = function (song) {
-	switch (song.$) {
-		case 'Seasonal':
-			return '../assets/songs/seasonal.mp3';
-		case 'Isswttd':
-			return '../assets/songs/i_should_start_writing_these_things_down.mp3';
-		case 'HopeAndOlney':
-			return '../assets/songs/hope_and_olney.mp3';
-		default:
-			return '../assets/songs/never_a_closer.mp3';
 	}
 };
 var $elm$html$Html$Attributes$src = function (url) {
@@ -7585,12 +7578,6 @@ var $author$project$Song$title = function (song) {
 			return 'Never a Closer';
 	}
 };
-var $elm$html$Html$Attributes$width = function (n) {
-	return A2(
-		_VirtualDom_attribute,
-		'width',
-		$elm$core$String$fromInt(n));
-};
 var $author$project$Main$viewSong = function (song) {
 	return A2(
 		$rundis$elm_bootstrap$Bootstrap$Grid$col,
@@ -7602,26 +7589,29 @@ var $author$project$Main$viewSong = function (song) {
 				_List_fromArray(
 					[
 						A2($elm$html$Html$Attributes$style, 'display', 'flex'),
-						A2($elm$html$Html$Attributes$style, 'flex-direction', 'column')
+						A2($elm$html$Html$Attributes$style, 'flex-direction', 'column'),
+						A2($elm$html$Html$Attributes$style, 'justify-content', 'space-between'),
+						A2($elm$html$Html$Attributes$style, 'align-items', 'center'),
+						A2($elm$html$Html$Attributes$style, 'padding', '10px'),
+						A2($elm$html$Html$Attributes$style, 'margin', '5px'),
+						A2($elm$html$Html$Attributes$style, 'border', '1px solid #946e38'),
+						A2($elm$html$Html$Attributes$style, 'border-radius', '3px'),
+						A2(
+						$elm$html$Html$Attributes$style,
+						'background-image',
+						'url(' + ($author$project$Song$imageSrc(song) + ')')),
+						A2($elm$html$Html$Attributes$style, 'background-size', '100% 100%'),
+						A2($elm$html$Html$Attributes$style, 'height', '400px'),
+						A2($elm$html$Html$Attributes$style, 'width', '400px')
 					]),
 				_List_fromArray(
 					[
 						A2(
-						$elm$html$Html$img,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$src(
-								$author$project$Song$imageSrc(song)),
-								$elm$html$Html$Attributes$width(250),
-								$elm$html$Html$Attributes$height(250)
-							]),
-						_List_Nil),
-						A2(
 						$elm$html$Html$div,
 						_List_fromArray(
 							[
-								A2($elm$html$Html$Attributes$style, 'position', 'absolute'),
-								A2($elm$html$Html$Attributes$style, 'color', 'white')
+								A2($elm$html$Html$Attributes$style, 'color', 'white'),
+								A2($elm$html$Html$Attributes$style, 'align-self', 'flex-end')
 							]),
 						_List_fromArray(
 							[
@@ -7633,7 +7623,7 @@ var $author$project$Main$viewSong = function (song) {
 						_List_fromArray(
 							[
 								$elm$html$Html$Attributes$src(
-								$author$project$Song$previewLink(song)),
+								$author$project$Song$audioSrc(song)),
 								$elm$html$Html$Attributes$controls(true)
 							]),
 						_List_Nil)
@@ -8690,8 +8680,8 @@ var $author$project$Main$view = function (model) {
 				$elm$html$Html$div,
 				_List_fromArray(
 					[
-						A2($elm$html$Html$Attributes$style, 'color', '#AAAAAA'),
-						A2($elm$html$Html$Attributes$style, 'background-color', '#272B30')
+						A2($elm$html$Html$Attributes$style, 'background-color', '#272B30'),
+						A2($elm$html$Html$Attributes$style, 'font-family', '\'Amatic SC\', cursive')
 					]),
 				_List_fromArray(
 					[

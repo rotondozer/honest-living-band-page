@@ -99,8 +99,9 @@ view : Model -> Browser.Document Msg
 view model =
     { title = "Honest Living"
     , body =
-        [ Html.div [ style "color" "#AAAAAA", style "background-color" "#272B30" ]
-            [ viewNavbar model
+        [ Html.div [ style "background-color" "#272B30", style "font-family" "'Amatic SC', cursive" ]
+            [ CDN.stylesheet -- Does Elm have something akin to `if (__DEV__)`?
+            , viewNavbar model
             , viewCurrentPage model
             ]
         ]
@@ -156,10 +157,21 @@ viewSong : Song.Song -> Grid.Column Msg
 viewSong song =
     Grid.col []
         [ Html.div
-            [ style "display" "flex", style "flex-direction" "column" ]
-            [ Html.img [ src (Song.imageSrc song), width 250, height 250 ] []
-            , Html.div [ style "position" "absolute", style "color" "white" ] [ Html.text (Song.title song) ]
-            , Html.audio [ src (Song.previewLink song), controls True ] [] -- Audio has the option to download
+            [ style "display" "flex"
+            , style "flex-direction" "column"
+            , style "justify-content" "space-between"
+            , style "align-items" "center"
+            , style "padding" "10px"
+            , style "margin" "5px"
+            , style "border" "1px solid #946e38"
+            , style "border-radius" "3px"
+            , style "background-image" ("url(" ++ Song.imageSrc song ++ ")")
+            , style "background-size" "100% 100%"
+            , style "height" "400px"
+            , style "width" "400px"
+            ]
+            [ Html.div [ style "color" "white", style "align-self" "flex-end" ] [ Html.text (Song.title song) ]
+            , Html.audio [ src (Song.audioSrc song), controls True ] [] -- Audio has the option to download
             ]
         ]
 
