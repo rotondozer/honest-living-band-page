@@ -6,7 +6,7 @@ import Bootstrap.Navbar as Navbar
 import Browser
 import Browser.Navigation as Navigation
 import Html
-import Html.Attributes exposing (class, controls, href, src, style)
+import Html.Attributes exposing (class, controls, download, href, src, style)
 import Song
 import Url
 import Url.Parser as Parser
@@ -157,6 +157,7 @@ viewCurrentPage model =
 
 viewSong : Song.Song -> Grid.Column Msg
 viewSong song =
+    -- TODO: Move these styles to stylesheet
     Grid.col []
         [ Html.div
             [ style "display" "flex"
@@ -173,8 +174,27 @@ viewSong song =
             , style "height" "auto"
             , style "min-height" "300px"
             ]
-            [ Html.div [ style "color" "white", style "text-shadow" "2px 2px 2px #272B30", style "align-self" "flex-end" ] [ Html.text (Song.title song) ]
-            , Html.audio [ src (Song.audioSrc song), controls True ] [] -- Audio has the option to download
+            [ Html.div
+                [ style "color" "white"
+                , style "text-shadow" "1px 1px 2px #272B30"
+                , style "align-self" "flex-end"
+                ]
+                [ Html.text (Song.title song) ]
+            , Html.div [ style "display" "flex" ]
+                [ Html.audio [ src (Song.audioSrc song), controls True, style "flex" "85" ] []
+                , Html.a
+                    [ href (Song.audioSrc song)
+                    , download (Song.title song) -- <-- I don't think this is actually used
+                    , style "flex" "15"
+                    , style "margin" "3px"
+                    , style "background-image" "url(../assets/download_icon.png)"
+                    , style "background-size" "100% 100%"
+                    , style "background-color" "rgb(255, 255, 255, 0.3)"
+                    , style "border" "1px solid #946e38"
+                    , style "border-radius" "25px"
+                    ]
+                    []
+                ]
             ]
         ]
 
