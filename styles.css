@@ -1,5 +1,15 @@
 html, body {
     height: "100%";
     width: "100%";
+    background-color: #272B30; /* Visible when scrolling to top or bottom, this appears behind the Elm app */
+}
+
+.headline {
+    font-family: 'Oswald', sans-serif;
+    margin-bottom: 50px;
+}
+
+.app-container {
+    font-family: 'Amatic SC', monospace; /* Primary font */
     background-color: #272B30;
 }

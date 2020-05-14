@@ -99,7 +99,7 @@ view : Model -> Browser.Document Msg
 view model =
     { title = "Honest Living"
     , body =
-        [ Html.div [ style "background-color" "#272B30", style "font-family" "'Amatic SC', monospace" ]
+        [ Html.div [ class "app-container" ]
             [ CDN.stylesheet -- Does Elm have something akin to `if (__DEV__)`?
             , viewNavbar model
             , viewCurrentPage model
@@ -142,10 +142,24 @@ viewCurrentPage model =
                 ]
 
         About ->
-            Html.div [ class "jumbotron" ]
-                [ Html.h1 [] [ Html.text "About" ]
-                , Html.p [] [ Html.text "Strings/Vocals: David Marcotte\nDrums: Nick Rotondo" ]
-                , Html.p [] [ Html.text "Two dudes from Providence, Rhode Island who slang mostly instrumental hits from 2015 to 2017." ]
+            Grid.container []
+                [ Html.div [ class "jumbotron" ]
+                    [ Html.h3 [ class "headline" ] [ Html.text "Heavily inspired by mid 90s - early 2000s emo" ]
+                    , Html.h4 [] [ Html.text "Guitar: David Marcotte" ]
+                    , Html.h4 [] [ Html.text "Drums: Nick Rotondo" ]
+                    , Html.h4 [ style "margin-bottom" "30px" ] [ Html.text "Home: Providence,  Rhode Island" ]
+                    , Html.p []
+                        [ Html.text "Twinkley riffs in weird time signatures \\\\\\\\"
+                        , Html.text " American Football inspired open guitar tuning \\\\\\\\"
+                        , Html.text " half time all the time \\\\\\\\"
+                        , Html.text " quiet/loud/quiet/loud \\\\\\\\"
+                        , Html.text " sometimes chugging and palm muted stuff \\\\\\\\"
+                        , Html.text " lots of nick and david geeking out when they do that cool thing at the same time."
+                        , Html.hr [] []
+                        , Html.text "We recorded one EP together in 2016, which was never actually released. This here is the rough EP - just as we would perform it live."
+                        , Html.text "There is a more polished version of the EP that also has David playing bass and singing! We'll get that up here soon, too."
+                        ]
+                    ]
                 ]
 
         Photos ->
