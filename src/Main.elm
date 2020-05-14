@@ -136,8 +136,8 @@ viewCurrentPage model =
                     , viewSong Song.NeverACloser
                     ]
                 , Grid.row []
-                    [ viewSong Song.HopeAndOlney
-                    , viewSong Song.Isswttd
+                    [ viewSong Song.Isswttd
+                    , viewSong Song.HopeAndOlney
                     ]
                 ]
 
