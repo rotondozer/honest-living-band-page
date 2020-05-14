@@ -7518,6 +7518,7 @@ var $author$project$Main$toRoute = function (url) {
 		$author$project$Main$Home,
 		A2($elm$url$Url$Parser$parse, $author$project$Main$routeParser, url));
 };
+var $elm$html$Html$a = _VirtualDom_node('a');
 var $elm$html$Html$audio = _VirtualDom_node('audio');
 var $author$project$Song$audioSrc = function (song) {
 	switch (song.$) {
@@ -7548,6 +7549,9 @@ var $elm$html$Html$Attributes$boolProperty = F2(
 			$elm$json$Json$Encode$bool(bool));
 	});
 var $elm$html$Html$Attributes$controls = $elm$html$Html$Attributes$boolProperty('controls');
+var $elm$html$Html$Attributes$download = function (fileName) {
+	return A2($elm$html$Html$Attributes$stringProperty, 'download', fileName);
+};
 var $author$project$Song$imageSrc = function (song) {
 	switch (song.$) {
 		case 'Seasonal':
@@ -7612,7 +7616,7 @@ var $author$project$Main$viewSong = function (song) {
 						_List_fromArray(
 							[
 								A2($elm$html$Html$Attributes$style, 'color', 'white'),
-								A2($elm$html$Html$Attributes$style, 'text-shadow', '2px 2px 2px #272B30'),
+								A2($elm$html$Html$Attributes$style, 'text-shadow', '1px 1px 2px #272B30'),
 								A2($elm$html$Html$Attributes$style, 'align-self', 'flex-end')
 							]),
 						_List_fromArray(
@@ -7621,14 +7625,41 @@ var $author$project$Main$viewSong = function (song) {
 								$author$project$Song$title(song))
 							])),
 						A2(
-						$elm$html$Html$audio,
+						$elm$html$Html$div,
 						_List_fromArray(
 							[
-								$elm$html$Html$Attributes$src(
-								$author$project$Song$audioSrc(song)),
-								$elm$html$Html$Attributes$controls(true)
+								A2($elm$html$Html$Attributes$style, 'display', 'flex')
 							]),
-						_List_Nil)
+						_List_fromArray(
+							[
+								A2(
+								$elm$html$Html$audio,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$src(
+										$author$project$Song$audioSrc(song)),
+										$elm$html$Html$Attributes$controls(true),
+										A2($elm$html$Html$Attributes$style, 'flex', '85')
+									]),
+								_List_Nil),
+								A2(
+								$elm$html$Html$a,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$href(
+										$author$project$Song$audioSrc(song)),
+										$elm$html$Html$Attributes$download(
+										$author$project$Song$title(song)),
+										A2($elm$html$Html$Attributes$style, 'flex', '15'),
+										A2($elm$html$Html$Attributes$style, 'margin', '3px'),
+										A2($elm$html$Html$Attributes$style, 'background-image', 'url(../assets/download_icon.png)'),
+										A2($elm$html$Html$Attributes$style, 'background-size', '100% 100%'),
+										A2($elm$html$Html$Attributes$style, 'background-color', 'rgb(255, 255, 255, 0.3)'),
+										A2($elm$html$Html$Attributes$style, 'border', '1px solid #946e38'),
+										A2($elm$html$Html$Attributes$style, 'border-radius', '25px')
+									]),
+								_List_Nil)
+							]))
 					]))
 			]));
 };
@@ -7716,7 +7747,6 @@ var $author$project$Main$viewCurrentPage = function (model) {
 var $rundis$elm_bootstrap$Bootstrap$Navbar$Brand = function (a) {
 	return {$: 'Brand', a: a};
 };
-var $elm$html$Html$a = _VirtualDom_node('a');
 var $rundis$elm_bootstrap$Bootstrap$Navbar$Config = function (a) {
 	return {$: 'Config', a: a};
 };
