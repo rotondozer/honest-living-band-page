@@ -1,3 +1,15 @@
+<!-- THIS IS A HACKY SOLUTION TO FIX RELOADING -->
+
+<!-- When a user reloads the app on a route, it 404s because there isn't anything being served
+    at honestlivingband.com/MyRoute. GH pages looks for a 404.html to load in this case, so we
+    hack around the problem by copy pasting index.html!
+
+    A more comprehensive solution can be found here https://github.com/rafrex/spa-github-pages
+    This repo uses the 404.html to run a redirect script.
+
+    TODO: Use a redirect script or something more clever than copy/pasting index.html.
+ -->
+
 <!DOCTYPE HTML>
 <html>
 
