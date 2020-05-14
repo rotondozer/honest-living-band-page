@@ -116,7 +116,7 @@ viewNavbar model =
             |> Navbar.withAnimation
             |> Navbar.dark
             |> Navbar.container
-            |> Navbar.brand [ href "/Home" ] [ Html.text "Honest Living" ]
+            |> Navbar.brand [ href "/" ] [ Html.text "Honest Living" ]
             |> Navbar.items
                 [ Navbar.itemLink [ href "/About" ] [ Html.text "About" ]
                 , Navbar.itemLink [ href "/Photos" ] [ Html.text "Photos" ]
@@ -180,7 +180,7 @@ viewSong song =
                 , style "align-self" "flex-end"
                 ]
                 [ Html.text (Song.title song) ]
-            , Html.div [ style "display" "flex" ]
+            , Html.div [ style "display" "flex", style "align-items" "center" ]
                 [ Html.audio [ src (Song.audioSrc song), controls True, style "flex" "85" ] []
                 , Html.a
                     [ href (Song.audioSrc song)
