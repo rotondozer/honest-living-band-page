@@ -7628,7 +7628,8 @@ var $author$project$Main$viewSong = function (song) {
 						$elm$html$Html$div,
 						_List_fromArray(
 							[
-								A2($elm$html$Html$Attributes$style, 'display', 'flex')
+								A2($elm$html$Html$Attributes$style, 'display', 'flex'),
+								A2($elm$html$Html$Attributes$style, 'align-items', 'center')
 							]),
 						_List_fromArray(
 							[
@@ -8700,7 +8701,7 @@ var $author$project$Main$viewNavbar = function (model) {
 						$rundis$elm_bootstrap$Bootstrap$Navbar$brand,
 						_List_fromArray(
 							[
-								$elm$html$Html$Attributes$href('/Home')
+								$elm$html$Html$Attributes$href('/')
 							]),
 						_List_fromArray(
 							[
