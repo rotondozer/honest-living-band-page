@@ -7656,7 +7656,9 @@ var $author$project$Main$viewSong = function (song) {
 										A2($elm$html$Html$Attributes$style, 'background-size', '100% 100%'),
 										A2($elm$html$Html$Attributes$style, 'background-color', 'rgb(255, 255, 255, 0.3)'),
 										A2($elm$html$Html$Attributes$style, 'border', '1px solid #946e38'),
-										A2($elm$html$Html$Attributes$style, 'border-radius', '25px')
+										A2($elm$html$Html$Attributes$style, 'height', '50px'),
+										A2($elm$html$Html$Attributes$style, 'width', '50px'),
+										A2($elm$html$Html$Attributes$style, 'border-radius', '50px')
 									]),
 								_List_Nil)
 							]))
