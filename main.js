@@ -5997,9 +5997,6 @@ var $author$project$Main$update = F2(
 					$elm$core$Platform$Cmd$none);
 		}
 	});
-var $elm$html$Html$div = _VirtualDom_node('div');
-var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
-var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
 var $elm$json$Json$Encode$string = _Json_wrap;
 var $elm$html$Html$Attributes$stringProperty = F2(
 	function (key, string) {
@@ -6008,6 +6005,8 @@ var $elm$html$Html$Attributes$stringProperty = F2(
 			key,
 			$elm$json$Json$Encode$string(string));
 	});
+var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
+var $elm$html$Html$div = _VirtualDom_node('div');
 var $elm$html$Html$Attributes$href = function (url) {
 	return A2(
 		$elm$html$Html$Attributes$stringProperty,
@@ -6033,7 +6032,6 @@ var $author$project$Song$HopeAndOlney = {$: 'HopeAndOlney'};
 var $author$project$Song$Isswttd = {$: 'Isswttd'};
 var $author$project$Song$NeverACloser = {$: 'NeverACloser'};
 var $author$project$Song$Seasonal = {$: 'Seasonal'};
-var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
 var $rundis$elm_bootstrap$Bootstrap$Grid$container = F2(
 	function (attributes, children) {
 		return A2(
@@ -6046,7 +6044,9 @@ var $rundis$elm_bootstrap$Bootstrap$Grid$container = F2(
 				attributes),
 			children);
 	});
-var $elm$html$Html$h1 = _VirtualDom_node('h1');
+var $elm$html$Html$h3 = _VirtualDom_node('h3');
+var $elm$html$Html$h4 = _VirtualDom_node('h4');
+var $elm$html$Html$hr = _VirtualDom_node('hr');
 var $elm$html$Html$p = _VirtualDom_node('p');
 var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$Col = {$: 'Col'};
 var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$Width = F2(
@@ -6872,6 +6872,8 @@ var $rundis$elm_bootstrap$Bootstrap$Grid$row = F2(
 			$rundis$elm_bootstrap$Bootstrap$Grid$Internal$rowAttributes(options),
 			A2($elm$core$List$map, $rundis$elm_bootstrap$Bootstrap$Grid$renderCol, cols));
 	});
+var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
+var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
 var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
 var $author$project$Main$Home = {$: 'Home'};
@@ -7694,33 +7696,67 @@ var $author$project$Main$viewCurrentPage = function (model) {
 					]));
 		case 'About':
 			return A2(
-				$elm$html$Html$div,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$class('jumbotron')
-					]),
+				$rundis$elm_bootstrap$Bootstrap$Grid$container,
+				_List_Nil,
 				_List_fromArray(
 					[
 						A2(
-						$elm$html$Html$h1,
-						_List_Nil,
+						$elm$html$Html$div,
 						_List_fromArray(
 							[
-								$elm$html$Html$text('About')
-							])),
-						A2(
-						$elm$html$Html$p,
-						_List_Nil,
+								$elm$html$Html$Attributes$class('jumbotron')
+							]),
 						_List_fromArray(
 							[
-								$elm$html$Html$text('Strings/Vocals: David Marcotte\nDrums: Nick Rotondo')
-							])),
-						A2(
-						$elm$html$Html$p,
-						_List_Nil,
-						_List_fromArray(
-							[
-								$elm$html$Html$text('Two dudes from Providence, Rhode Island who slang mostly instrumental hits from 2015 to 2017.')
+								A2(
+								$elm$html$Html$h3,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class('headline')
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text('Heavily inspired by mid 90s - early 2000s emo')
+									])),
+								A2(
+								$elm$html$Html$h4,
+								_List_Nil,
+								_List_fromArray(
+									[
+										$elm$html$Html$text('Guitar: David Marcotte')
+									])),
+								A2(
+								$elm$html$Html$h4,
+								_List_Nil,
+								_List_fromArray(
+									[
+										$elm$html$Html$text('Drums: Nick Rotondo')
+									])),
+								A2(
+								$elm$html$Html$h4,
+								_List_fromArray(
+									[
+										A2($elm$html$Html$Attributes$style, 'margin-bottom', '30px')
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text('Home: Providence,  Rhode Island')
+									])),
+								A2(
+								$elm$html$Html$p,
+								_List_Nil,
+								_List_fromArray(
+									[
+										$elm$html$Html$text('Twinkley riffs in weird time signatures \\\\\\\\'),
+										$elm$html$Html$text(' American Football inspired open guitar tuning \\\\\\\\'),
+										$elm$html$Html$text(' half time all the time \\\\\\\\'),
+										$elm$html$Html$text(' quiet/loud/quiet/loud \\\\\\\\'),
+										$elm$html$Html$text(' sometimes chugging and palm muted stuff \\\\\\\\'),
+										$elm$html$Html$text(' lots of nick and david geeking out when they do that cool thing at the same time.'),
+										A2($elm$html$Html$hr, _List_Nil, _List_Nil),
+										$elm$html$Html$text('We recorded one EP together in 2016, which was never actually released. This here is the rough EP - just as we would perform it live.'),
+										$elm$html$Html$text('There is a more polished version of the EP that also has David playing bass and singing! We\'ll get that up here soon, too.')
+									]))
 							]))
 					]));
 		case 'Photos':
@@ -8721,8 +8757,7 @@ var $author$project$Main$view = function (model) {
 				$elm$html$Html$div,
 				_List_fromArray(
 					[
-						A2($elm$html$Html$Attributes$style, 'background-color', '#272B30'),
-						A2($elm$html$Html$Attributes$style, 'font-family', '\'Amatic SC\', monospace')
+						$elm$html$Html$Attributes$class('app-container')
 					]),
 				_List_fromArray(
 					[
