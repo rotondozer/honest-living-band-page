@@ -2,11 +2,13 @@ module Main exposing (init, main)
 
 import Bootstrap.CDN as CDN
 import Bootstrap.Grid as Grid
+import Bootstrap.Modal as Modal
 import Bootstrap.Navbar as Navbar
 import Browser
 import Browser.Navigation as Navigation
 import Html
 import Html.Attributes exposing (class, controls, download, href, src, style)
+import Html.Events exposing (onClick)
 import Song
 import Url
 import Url.Parser as Parser
@@ -42,6 +44,7 @@ init _ url key =
     ( { url = url
       , key = key
       , navbarState = navbarState
+      , photoModalSrc = Maybe.Nothing
       }
     , navbarCmd
     )
@@ -51,6 +54,7 @@ type alias Model =
     { url : Url.Url
     , key : Navigation.Key
     , navbarState : Navbar.State
+    , photoModalSrc : Maybe String
     }
 
 
@@ -62,6 +66,7 @@ type Msg
     = LinkClicked Browser.UrlRequest
     | UrlChanged Url.Url
     | NavbarMsg Navbar.State
+    | TogglePhotoModal (Maybe.Maybe String)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -80,6 +85,9 @@ update msg model =
 
         NavbarMsg state ->
             ( { model | navbarState = state }, Cmd.none )
+
+        TogglePhotoModal photoSrc ->
+            ( { model | photoModalSrc = photoSrc }, Cmd.none )
 
 
 
@@ -163,7 +171,23 @@ viewCurrentPage model =
                 ]
 
         Photos ->
-            Grid.container [] (List.map viewPhotoThumbnail bandPics)
+            Grid.container []
+                (List.concat
+                    [ List.map viewPhotoThumbnail bandPhotos
+                    , [ Modal.config (TogglePhotoModal Maybe.Nothing)
+                            |> Modal.scrollableBody True
+                            |> Modal.body []
+                                [ Html.img
+                                    [ src (photoModalSrc model)
+                                    , style "height" "auto"
+                                    , style "max-width" "100%"
+                                    ]
+                                    []
+                                ]
+                            |> Modal.view (photoModalVisibility model)
+                      ]
+                    ]
+                )
 
         Videos ->
             Grid.container [] [ Html.div [ class "jumbotron" ] [ Html.text "Videos Coming Soon!" ] ]
@@ -218,7 +242,8 @@ viewSong song =
 viewPhotoThumbnail : String -> Html.Html Msg
 viewPhotoThumbnail src_ =
     Html.button
-        [ style "background-image" ("url(../assets/images/" ++ src_ ++ ")")
+        [ onClick (TogglePhotoModal (Maybe.Just src_))
+        , style "background-image" ("url(../assets/images/" ++ src_ ++ ")")
         , style "background-size" "100% 100%"
         , style "height" "auto"
         , style "min-height" "300px"
@@ -228,11 +253,11 @@ viewPhotoThumbnail src_ =
 
 
 
--- BAND PICS
+-- BAND PHOTOS
 
 
-bandPics : List String
-bandPics =
+bandPhotos : List String
+bandPhotos =
     [ "as220_black_and_white.jpg"
     , "davids_axes.jpg"
     , "dusk_blurry_and_reddish.jpg"
@@ -245,6 +270,26 @@ bandPics =
     , "smithfield_barn.jpg"
     , "nick_recording.jpg"
     ]
+
+
+photoModalVisibility : Model -> Modal.Visibility
+photoModalVisibility model =
+    case model.photoModalSrc of
+        Just _ ->
+            Modal.shown
+
+        Nothing ->
+            Modal.hidden
+
+
+photoModalSrc : Model -> String
+photoModalSrc model =
+    case model.photoModalSrc of
+        Just src ->
+            "../assets/images/" ++ src
+
+        Nothing ->
+            ""
 
 
 
