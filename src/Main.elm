@@ -174,17 +174,7 @@ viewCurrentPage model =
             Grid.container []
                 (List.concat
                     [ List.map viewPhotoThumbnail bandPhotos
-                    , [ Modal.config (TogglePhotoModal Maybe.Nothing)
-                            |> Modal.scrollableBody True
-                            |> Modal.body []
-                                [ Html.img
-                                    [ src (photoModalSrc model)
-                                    , style "height" "auto"
-                                    , style "max-width" "100%"
-                                    ]
-                                    []
-                                ]
-                            |> Modal.view (photoModalVisibility model)
+                    , [ viewPhotoModal model
                       ]
                     ]
                 )
@@ -250,6 +240,21 @@ viewPhotoThumbnail src_ =
         , style "width" "33%"
         ]
         []
+
+
+viewPhotoModal : Model -> Html.Html Msg
+viewPhotoModal model =
+    Modal.config (TogglePhotoModal Maybe.Nothing)
+        |> Modal.scrollableBody True
+        |> Modal.body []
+            [ Html.img
+                [ src (photoModalSrc model)
+                , style "height" "auto"
+                , style "max-width" "100%"
+                ]
+                []
+            ]
+        |> Modal.view (photoModalVisibility model)
 
 
 
