@@ -217,7 +217,14 @@ viewSong song =
 
 viewPhotoThumbnail : String -> Html.Html Msg
 viewPhotoThumbnail src_ =
-    Html.img [ src ("assets/images/" ++ src_), style "height" "auto", style "width" "33%" ] []
+    Html.button
+        [ style "background-image" ("url(../assets/images/" ++ src_ ++ ")")
+        , style "background-size" "100% 100%"
+        , style "height" "auto"
+        , style "min-height" "300px"
+        , style "width" "33%"
+        ]
+        []
 
 
 
