@@ -201,7 +201,7 @@ viewSong song =
                     , download (Song.title song) -- <-- I don't think this is actually used for the download
                     , style "flex" "15"
                     , style "margin" "3px"
-                    , style "background-image" "url(../assets/download_icon.png)"
+                    , style "background-image" "url(../assets/icons/download_icon.png)"
                     , style "background-size" "100% 100%"
                     , style "background-color" "rgb(255, 255, 255, 0.3)"
                     , style "border" "1px solid #946e38"
