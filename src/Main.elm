@@ -149,7 +149,7 @@ viewCurrentPage model =
                     , Html.h4 [] [ Html.text "Drums: Nick Rotondo" ]
                     , Html.h4 [ style "margin-bottom" "30px" ] [ Html.text "Home: Providence,  Rhode Island" ]
                     , Html.p []
-                        [ Html.text "Twinkley riffs in weird time signatures \\\\\\\\"
+                        [ Html.text "Twinkley riffs in weird time signatures \\\\\\\\" -- these render as `\\\\`
                         , Html.text " American Football inspired open guitar tuning \\\\\\\\"
                         , Html.text " half time all the time \\\\\\\\"
                         , Html.text " quiet/loud/quiet/loud \\\\\\\\"
@@ -163,10 +163,10 @@ viewCurrentPage model =
                 ]
 
         Photos ->
-            Html.div [ class "jumbotron" ] [ Html.text "Photos Coming Soon!" ]
+            Grid.container [] (List.map viewPhotoThumbnail bandPics)
 
         Videos ->
-            Html.div [ class "jumbotron" ] [ Html.text "Videos Coming Soon!" ]
+            Grid.container [] [ Html.div [ class "jumbotron" ] [ Html.text "Videos Coming Soon!" ] ]
 
 
 viewSong : Song.Song -> Grid.Column Msg
@@ -213,6 +213,31 @@ viewSong song =
                 ]
             ]
         ]
+
+
+viewPhotoThumbnail : String -> Html.Html Msg
+viewPhotoThumbnail src_ =
+    Html.img [ src ("assets/images/" ++ src_), style "height" "auto", style "width" "33%" ] []
+
+
+
+-- BAND PICS
+
+
+bandPics : List String
+bandPics =
+    [ "as220_black_and_white.jpg"
+    , "davids_axes.jpg"
+    , "dusk_blurry_and_reddish.jpg"
+    , "louie_sticker.jpg"
+    , "nick_david_blurry_beer.jpg"
+    , "nick_david_mass_pike.jpg"
+    , "setlist_w_tunings.jpg"
+    , "practice_black_white_from_behind_drums.jpg"
+    , "practice_flannels_and_stick_motion.jpg"
+    , "smithfield_barn.jpg"
+    , "nick_recording.jpg"
+    ]
 
 
 
