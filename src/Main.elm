@@ -44,7 +44,7 @@ init _ url key =
     ( { url = url
       , key = key
       , navbarState = navbarState
-      , photoModalSrc = Maybe.Nothing
+      , photoModal = Hidden
       }
     , navbarCmd
     )
@@ -54,7 +54,7 @@ type alias Model =
     { url : Url.Url
     , key : Navigation.Key
     , navbarState : Navbar.State
-    , photoModalSrc : Maybe String
+    , photoModal : PhotoModal
     }
 
 
@@ -66,7 +66,7 @@ type Msg
     = LinkClicked Browser.UrlRequest
     | UrlChanged Url.Url
     | NavbarMsg Navbar.State
-    | TogglePhotoModal (Maybe.Maybe String)
+    | TogglePhotoModal PhotoModal
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -86,8 +86,8 @@ update msg model =
         NavbarMsg state ->
             ( { model | navbarState = state }, Cmd.none )
 
-        TogglePhotoModal photoSrc ->
-            ( { model | photoModalSrc = photoSrc }, Cmd.none )
+        TogglePhotoModal photoModalVisibility ->
+            ( { model | photoModal = photoModalVisibility }, Cmd.none )
 
 
 
@@ -172,11 +172,8 @@ viewCurrentPage model =
 
         Photos ->
             Grid.container []
-                (List.concat
-                    [ List.map viewPhotoThumbnail bandPhotos
-                    , [ viewPhotoModal model
-                      ]
-                    ]
+                (List.map viewPhotoThumbnail bandPhotos
+                    ++ List.singleton (viewPhotoModal model)
                 )
 
         Videos ->
@@ -229,11 +226,27 @@ viewSong song =
         ]
 
 
+bandPhotos : List String
+bandPhotos =
+    [ "as220_black_and_white.jpg"
+    , "davids_axes.jpg"
+    , "dusk_blurry_and_reddish.jpg"
+    , "louie_sticker.jpg"
+    , "nick_david_blurry_beer.jpg"
+    , "setlist_w_tunings.jpg"
+    , "practice_black_white_from_behind_drums.jpg"
+    , "nick_david_mass_pike.jpg"
+    , "practice_flannels_and_stick_motion.jpg"
+    , "smithfield_barn.jpg"
+    , "nick_recording.jpg"
+    ]
+
+
 viewPhotoThumbnail : String -> Html.Html Msg
-viewPhotoThumbnail src_ =
+viewPhotoThumbnail src =
     Html.button
-        [ onClick (TogglePhotoModal (Maybe.Just src_))
-        , style "background-image" ("url(../assets/images/" ++ src_ ++ ")")
+        [ onClick (TogglePhotoModal (Shown src))
+        , style "background-image" ("url(../assets/images/" ++ src ++ ")")
         , style "background-size" "100% 100%"
         , style "height" "auto"
         , style "min-height" "300px"
@@ -244,56 +257,45 @@ viewPhotoThumbnail src_ =
 
 viewPhotoModal : Model -> Html.Html Msg
 viewPhotoModal model =
-    Modal.config (TogglePhotoModal Maybe.Nothing)
+    Modal.config (TogglePhotoModal Hidden)
         |> Modal.scrollableBody True
         |> Modal.body []
             [ Html.img
-                [ src (photoModalSrc model)
+                [ src (photoModalSrc model.photoModal)
                 , style "height" "auto"
                 , style "max-width" "100%"
                 ]
                 []
             ]
-        |> Modal.view (photoModalVisibility model)
+        |> Modal.view (toModalVisibility model.photoModal)
 
 
 
 -- BAND PHOTOS
 
 
-bandPhotos : List String
-bandPhotos =
-    [ "as220_black_and_white.jpg"
-    , "davids_axes.jpg"
-    , "dusk_blurry_and_reddish.jpg"
-    , "louie_sticker.jpg"
-    , "nick_david_blurry_beer.jpg"
-    , "nick_david_mass_pike.jpg"
-    , "setlist_w_tunings.jpg"
-    , "practice_black_white_from_behind_drums.jpg"
-    , "practice_flannels_and_stick_motion.jpg"
-    , "smithfield_barn.jpg"
-    , "nick_recording.jpg"
-    ]
+type PhotoModal
+    = Shown String
+    | Hidden
 
 
-photoModalVisibility : Model -> Modal.Visibility
-photoModalVisibility model =
-    case model.photoModalSrc of
-        Just _ ->
+toModalVisibility : PhotoModal -> Modal.Visibility
+toModalVisibility photoModal =
+    case photoModal of
+        Shown _ ->
             Modal.shown
 
-        Nothing ->
+        Hidden ->
             Modal.hidden
 
 
-photoModalSrc : Model -> String
-photoModalSrc model =
-    case model.photoModalSrc of
-        Just src ->
+photoModalSrc : PhotoModal -> String
+photoModalSrc photoModal =
+    case photoModal of
+        Shown src ->
             "../assets/images/" ++ src
 
-        Nothing ->
+        Hidden ->
             ""
 
 
