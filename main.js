@@ -6032,6 +6032,8 @@ var $author$project$Song$HopeAndOlney = {$: 'HopeAndOlney'};
 var $author$project$Song$Isswttd = {$: 'Isswttd'};
 var $author$project$Song$NeverACloser = {$: 'NeverACloser'};
 var $author$project$Song$Seasonal = {$: 'Seasonal'};
+var $author$project$Main$bandPics = _List_fromArray(
+	['as220_black_and_white.jpg', 'davids_axes.jpg', 'dusk_blurry_and_reddish.jpg', 'louie_sticker.jpg', 'nick_david_blurry_beer.jpg', 'nick_david_mass_pike.jpg', 'setlist_w_tunings.jpg', 'practice_black_white_from_behind_drums.jpg', 'practice_flannels_and_stick_motion.jpg', 'smithfield_barn.jpg', 'nick_recording.jpg']);
 var $rundis$elm_bootstrap$Bootstrap$Grid$container = F2(
 	function (attributes, children) {
 		return A2(
@@ -7520,6 +7522,20 @@ var $author$project$Main$toRoute = function (url) {
 		$author$project$Main$Home,
 		A2($elm$url$Url$Parser$parse, $author$project$Main$routeParser, url));
 };
+var $elm$html$Html$button = _VirtualDom_node('button');
+var $author$project$Main$viewPhotoThumbnail = function (src_) {
+	return A2(
+		$elm$html$Html$button,
+		_List_fromArray(
+			[
+				A2($elm$html$Html$Attributes$style, 'background-image', 'url(../assets/images/' + (src_ + ')')),
+				A2($elm$html$Html$Attributes$style, 'background-size', '100% 100%'),
+				A2($elm$html$Html$Attributes$style, 'height', 'auto'),
+				A2($elm$html$Html$Attributes$style, 'min-height', '300px'),
+				A2($elm$html$Html$Attributes$style, 'width', '33%')
+			]),
+		_List_Nil);
+};
 var $elm$html$Html$a = _VirtualDom_node('a');
 var $elm$html$Html$audio = _VirtualDom_node('audio');
 var $author$project$Song$audioSrc = function (song) {
@@ -7655,7 +7671,7 @@ var $author$project$Main$viewSong = function (song) {
 										$author$project$Song$title(song)),
 										A2($elm$html$Html$Attributes$style, 'flex', '15'),
 										A2($elm$html$Html$Attributes$style, 'margin', '3px'),
-										A2($elm$html$Html$Attributes$style, 'background-image', 'url(../assets/download_icon.png)'),
+										A2($elm$html$Html$Attributes$style, 'background-image', 'url(../assets/icons/download_icon.png)'),
 										A2($elm$html$Html$Attributes$style, 'background-size', '100% 100%'),
 										A2($elm$html$Html$Attributes$style, 'background-color', 'rgb(255, 255, 255, 0.3)'),
 										A2($elm$html$Html$Attributes$style, 'border', '1px solid #946e38'),
@@ -7690,8 +7706,8 @@ var $author$project$Main$viewCurrentPage = function (model) {
 						_List_Nil,
 						_List_fromArray(
 							[
-								$author$project$Main$viewSong($author$project$Song$HopeAndOlney),
-								$author$project$Main$viewSong($author$project$Song$Isswttd)
+								$author$project$Main$viewSong($author$project$Song$Isswttd),
+								$author$project$Main$viewSong($author$project$Song$HopeAndOlney)
 							]))
 					]));
 		case 'About':
@@ -7761,25 +7777,25 @@ var $author$project$Main$viewCurrentPage = function (model) {
 					]));
 		case 'Photos':
 			return A2(
-				$elm$html$Html$div,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$class('jumbotron')
-					]),
-				_List_fromArray(
-					[
-						$elm$html$Html$text('Photos Coming Soon!')
-					]));
+				$rundis$elm_bootstrap$Bootstrap$Grid$container,
+				_List_Nil,
+				A2($elm$core$List$map, $author$project$Main$viewPhotoThumbnail, $author$project$Main$bandPics));
 		default:
 			return A2(
-				$elm$html$Html$div,
+				$rundis$elm_bootstrap$Bootstrap$Grid$container,
+				_List_Nil,
 				_List_fromArray(
 					[
-						$elm$html$Html$Attributes$class('jumbotron')
-					]),
-				_List_fromArray(
-					[
-						$elm$html$Html$text('Videos Coming Soon!')
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('jumbotron')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Videos Coming Soon!')
+							]))
 					]));
 	}
 };
@@ -7903,7 +7919,6 @@ var $rundis$elm_bootstrap$Bootstrap$Navbar$items = F2(
 			},
 			config_);
 	});
-var $elm$html$Html$button = _VirtualDom_node('button');
 var $rundis$elm_bootstrap$Bootstrap$Navbar$maybeBrand = function (brand_) {
 	if (brand_.$ === 'Just') {
 		var b = brand_.a.a;
