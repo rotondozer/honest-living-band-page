@@ -1,7 +1,7 @@
 module Main exposing (init, main)
 
-import Bootstrap.CDN as CDN
 import Bootstrap.Grid as Grid
+import Bootstrap.Grid.Col as Col
 import Bootstrap.Modal as Modal
 import Bootstrap.Navbar as Navbar
 import Browser
@@ -108,8 +108,7 @@ view model =
     { title = "Honest Living"
     , body =
         [ Html.div [ class "app-container" ]
-            [ CDN.stylesheet -- Does Elm have something akin to `if (__DEV__)`?
-            , viewNavbar model
+            [ viewNavbar model
             , viewCurrentPage model
             ]
         ]
@@ -172,9 +171,11 @@ viewCurrentPage model =
 
         Photos ->
             Grid.container []
-                (List.map viewPhotoThumbnail bandPhotos
-                    ++ List.singleton (viewPhotoModal model)
-                )
+                [ Grid.row []
+                    (List.map viewPhotoThumbnail bandPhotos
+                        ++ List.singleton (viewPhotoModal model.photoModal)
+                    )
+                ]
 
         Videos ->
             Grid.container [] [ Html.div [ class "jumbotron" ] [ Html.text "Videos Coming Soon!" ] ]
@@ -242,32 +243,34 @@ bandPhotos =
     ]
 
 
-viewPhotoThumbnail : String -> Html.Html Msg
-viewPhotoThumbnail src =
-    Html.button
-        [ onClick (TogglePhotoModal (Shown src))
-        , style "background-image" ("url(../assets/images/" ++ src ++ ")")
-        , style "background-size" "100% 100%"
-        , style "height" "auto"
-        , style "min-height" "300px"
-        , style "width" "33%"
-        ]
-        []
-
-
-viewPhotoModal : Model -> Html.Html Msg
-viewPhotoModal model =
-    Modal.config (TogglePhotoModal Hidden)
-        |> Modal.scrollableBody True
-        |> Modal.body []
-            [ Html.img
-                [ src (photoModalSrc model.photoModal)
-                , style "height" "auto"
-                , style "max-width" "100%"
-                ]
-                []
+viewPhotoThumbnail : String -> Grid.Column Msg
+viewPhotoThumbnail src_ =
+    Grid.col [ Col.sm6 ]
+        [ Html.img
+            [ src ("../assets/images/" ++ src_)
+            , onClick (TogglePhotoModal (Shown src_))
+            , style "height" "auto"
+            , style "max-width" "100%"
             ]
-        |> Modal.view (toModalVisibility model.photoModal)
+            []
+        ]
+
+
+viewPhotoModal : PhotoModal -> Grid.Column Msg
+viewPhotoModal photoModal =
+    Grid.col []
+        [ Modal.config (TogglePhotoModal Hidden)
+            |> Modal.scrollableBody True
+            |> Modal.body []
+                [ Html.img
+                    [ src (photoModalSrc photoModal)
+                    , style "height" "auto"
+                    , style "max-width" "100%"
+                    ]
+                    []
+                ]
+            |> Modal.view (toModalVisibility photoModal)
+        ]
 
 
 
