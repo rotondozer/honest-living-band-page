@@ -1,12 +1,14 @@
 module Main exposing (init, main)
 
-import Bootstrap.CDN as CDN
 import Bootstrap.Grid as Grid
+import Bootstrap.Grid.Col as Col
+import Bootstrap.Modal as Modal
 import Bootstrap.Navbar as Navbar
 import Browser
 import Browser.Navigation as Navigation
 import Html
 import Html.Attributes exposing (class, controls, download, href, src, style)
+import Html.Events exposing (onClick)
 import Song
 import Url
 import Url.Parser as Parser
@@ -42,6 +44,7 @@ init _ url key =
     ( { url = url
       , key = key
       , navbarState = navbarState
+      , photoModal = Hidden
       }
     , navbarCmd
     )
@@ -51,6 +54,7 @@ type alias Model =
     { url : Url.Url
     , key : Navigation.Key
     , navbarState : Navbar.State
+    , photoModal : PhotoModal
     }
 
 
@@ -62,6 +66,7 @@ type Msg
     = LinkClicked Browser.UrlRequest
     | UrlChanged Url.Url
     | NavbarMsg Navbar.State
+    | TogglePhotoModal PhotoModal
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -80,6 +85,9 @@ update msg model =
 
         NavbarMsg state ->
             ( { model | navbarState = state }, Cmd.none )
+
+        TogglePhotoModal photoModalVisibility ->
+            ( { model | photoModal = photoModalVisibility }, Cmd.none )
 
 
 
@@ -100,8 +108,7 @@ view model =
     { title = "Honest Living"
     , body =
         [ Html.div [ class "app-container" ]
-            [ CDN.stylesheet -- Does Elm have something akin to `if (__DEV__)`?
-            , viewNavbar model
+            [ viewNavbar model
             , viewCurrentPage model
             ]
         ]
@@ -163,7 +170,12 @@ viewCurrentPage model =
                 ]
 
         Photos ->
-            Grid.container [] (List.map viewPhotoThumbnail bandPics)
+            Grid.container []
+                [ Grid.row []
+                    ((bandPhotos |> List.map viewPhotoThumbnail)
+                        ++ (model.photoModal |> viewPhotoModal |> List.singleton)
+                    )
+                ]
 
         Videos ->
             Grid.container [] [ Html.div [ class "jumbotron" ] [ Html.text "Videos Coming Soon!" ] ]
@@ -171,80 +183,91 @@ viewCurrentPage model =
 
 viewSong : Song.Song -> Grid.Column Msg
 viewSong song =
-    -- TODO: Move these styles to stylesheet
     Grid.col []
         [ Html.div
-            [ style "display" "flex"
-            , style "flex" "1"
-            , style "flex-direction" "column"
-            , style "justify-content" "space-between"
-            , style "align-items" "center"
-            , style "padding" "10px"
-            , style "margin" "5px"
-            , style "border" "2px solid #946e38"
-            , style "border-radius" "3px"
-            , style "background-image" ("url(" ++ Song.imageSrc song ++ ")")
-            , style "background-size" "100% 100%"
-            , style "height" "auto"
-            , style "min-height" "300px"
-            ]
-            [ Html.div
-                [ style "color" "white"
-                , style "text-shadow" "1px 1px 2px #272B30"
-                , style "align-self" "flex-end"
-                ]
-                [ Html.text (Song.title song) ]
-            , Html.div [ style "display" "flex", style "align-items" "center" ]
-                [ Html.audio [ src (Song.audioSrc song), controls True, style "flex" "85" ] []
+            [ class "song-container", style "background-image" ("url(" ++ Song.imageSrc song ++ ")") ]
+            [ Html.div [ class "song-title" ] [ Html.text (Song.title song) ]
+            , Html.div [ class "audio-player-container" ]
+                [ Html.audio
+                    [ src (Song.audioSrc song), controls True, class "audio-player" ]
+                    []
                 , Html.a
-                    [ href (Song.audioSrc song)
-                    , download (Song.title song) -- <-- I don't think this is actually used for the download
-                    , style "flex" "15"
-                    , style "margin" "3px"
-                    , style "background-image" "url(../assets/icons/download_icon.png)"
-                    , style "background-size" "100% 100%"
-                    , style "background-color" "rgb(255, 255, 255, 0.3)"
-                    , style "border" "1px solid #946e38"
-                    , style "height" "50px"
-                    , style "width" "50px"
-                    , style "border-radius" "50px"
-                    ]
+                    [ href (Song.audioSrc song), download (Song.title song), class "download-icon-button" ]
                     []
                 ]
             ]
         ]
 
 
-viewPhotoThumbnail : String -> Html.Html Msg
-viewPhotoThumbnail src_ =
-    Html.button
-        [ style "background-image" ("url(../assets/images/" ++ src_ ++ ")")
-        , style "background-size" "100% 100%"
-        , style "height" "auto"
-        , style "min-height" "300px"
-        , style "width" "33%"
+viewPhotoThumbnail : String -> Grid.Column Msg
+viewPhotoThumbnail imageSrc =
+    Grid.col [ Col.sm6 ]
+        [ Html.img
+            [ src ("../assets/images/" ++ imageSrc)
+            , onClick (TogglePhotoModal (Shown imageSrc))
+            , class "photo"
+            ]
+            []
         ]
-        []
+
+
+viewPhotoModal : PhotoModal -> Grid.Column Msg
+viewPhotoModal photoModal =
+    Grid.col []
+        [ Modal.config (TogglePhotoModal Hidden)
+            |> Modal.scrollableBody True
+            |> Modal.body []
+                [ Html.img
+                    [ src (photoModalSrc photoModal), class "photo" ]
+                    []
+                ]
+            |> Modal.view (toModalVisibility photoModal)
+        ]
 
 
 
--- BAND PICS
+-- BAND PHOTOS
 
 
-bandPics : List String
-bandPics =
+type PhotoModal
+    = Shown String
+    | Hidden
+
+
+bandPhotos : List String
+bandPhotos =
     [ "as220_black_and_white.jpg"
     , "davids_axes.jpg"
     , "dusk_blurry_and_reddish.jpg"
     , "louie_sticker.jpg"
     , "nick_david_blurry_beer.jpg"
-    , "nick_david_mass_pike.jpg"
     , "setlist_w_tunings.jpg"
     , "practice_black_white_from_behind_drums.jpg"
+    , "nick_david_mass_pike.jpg"
     , "practice_flannels_and_stick_motion.jpg"
     , "smithfield_barn.jpg"
     , "nick_recording.jpg"
     ]
+
+
+toModalVisibility : PhotoModal -> Modal.Visibility
+toModalVisibility photoModal =
+    case photoModal of
+        Shown _ ->
+            Modal.shown
+
+        Hidden ->
+            Modal.hidden
+
+
+photoModalSrc : PhotoModal -> String
+photoModalSrc photoModal =
+    case photoModal of
+        Shown src ->
+            "../assets/images/" ++ src
+
+        Hidden ->
+            ""
 
 
 
