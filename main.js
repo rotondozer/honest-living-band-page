@@ -5167,6 +5167,7 @@ var $elm$core$Task$perform = F2(
 				A2($elm$core$Task$map, toMessage, task)));
 	});
 var $elm$browser$Browser$application = _Browser_application;
+var $author$project$Main$Hidden = {$: 'Hidden'};
 var $author$project$Main$NavbarMsg = function (a) {
 	return {$: 'NavbarMsg', a: a};
 };
@@ -5215,7 +5216,7 @@ var $author$project$Main$init = F3(
 		var navbarState = _v1.a;
 		var navbarCmd = _v1.b;
 		return _Utils_Tuple2(
-			{key: key, navbarState: navbarState, url: url},
+			{key: key, navbarState: navbarState, photoModal: $author$project$Main$Hidden, url: url},
 			navbarCmd);
 	});
 var $rundis$elm_bootstrap$Bootstrap$Navbar$AnimatingDown = {$: 'AnimatingDown'};
@@ -5988,12 +5989,19 @@ var $author$project$Main$update = F2(
 						model,
 						{url: url}),
 					$elm$core$Platform$Cmd$none);
-			default:
+			case 'NavbarMsg':
 				var state = msg.a;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{navbarState: state}),
+					$elm$core$Platform$Cmd$none);
+			default:
+				var photoModalVisibility = msg.a;
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{photoModal: photoModalVisibility}),
 					$elm$core$Platform$Cmd$none);
 		}
 	});
@@ -6007,33 +6015,12 @@ var $elm$html$Html$Attributes$stringProperty = F2(
 	});
 var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
 var $elm$html$Html$div = _VirtualDom_node('div');
-var $elm$html$Html$Attributes$href = function (url) {
-	return A2(
-		$elm$html$Html$Attributes$stringProperty,
-		'href',
-		_VirtualDom_noJavaScriptUri(url));
-};
-var $elm$virtual_dom$VirtualDom$node = function (tag) {
-	return _VirtualDom_node(
-		_VirtualDom_noScript(tag));
-};
-var $elm$html$Html$node = $elm$virtual_dom$VirtualDom$node;
-var $elm$html$Html$Attributes$rel = _VirtualDom_attribute('rel');
-var $rundis$elm_bootstrap$Bootstrap$CDN$stylesheet = A3(
-	$elm$html$Html$node,
-	'link',
-	_List_fromArray(
-		[
-			$elm$html$Html$Attributes$rel('stylesheet'),
-			$elm$html$Html$Attributes$href('https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css')
-		]),
-	_List_Nil);
 var $author$project$Song$HopeAndOlney = {$: 'HopeAndOlney'};
 var $author$project$Song$Isswttd = {$: 'Isswttd'};
 var $author$project$Song$NeverACloser = {$: 'NeverACloser'};
 var $author$project$Song$Seasonal = {$: 'Seasonal'};
-var $author$project$Main$bandPics = _List_fromArray(
-	['as220_black_and_white.jpg', 'davids_axes.jpg', 'dusk_blurry_and_reddish.jpg', 'louie_sticker.jpg', 'nick_david_blurry_beer.jpg', 'nick_david_mass_pike.jpg', 'setlist_w_tunings.jpg', 'practice_black_white_from_behind_drums.jpg', 'practice_flannels_and_stick_motion.jpg', 'smithfield_barn.jpg', 'nick_recording.jpg']);
+var $author$project$Main$bandPhotos = _List_fromArray(
+	['as220_black_and_white.jpg', 'davids_axes.jpg', 'dusk_blurry_and_reddish.jpg', 'louie_sticker.jpg', 'nick_david_blurry_beer.jpg', 'setlist_w_tunings.jpg', 'practice_black_white_from_behind_drums.jpg', 'nick_david_mass_pike.jpg', 'practice_flannels_and_stick_motion.jpg', 'smithfield_barn.jpg', 'nick_recording.jpg']);
 var $rundis$elm_bootstrap$Bootstrap$Grid$container = F2(
 	function (attributes, children) {
 		return A2(
@@ -6874,6 +6861,10 @@ var $rundis$elm_bootstrap$Bootstrap$Grid$row = F2(
 			$rundis$elm_bootstrap$Bootstrap$Grid$Internal$rowAttributes(options),
 			A2($elm$core$List$map, $rundis$elm_bootstrap$Bootstrap$Grid$renderCol, cols));
 	});
+var $elm$core$List$singleton = function (value) {
+	return _List_fromArray(
+		[value]);
+};
 var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
 var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
 var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
@@ -7522,19 +7513,538 @@ var $author$project$Main$toRoute = function (url) {
 		$author$project$Main$Home,
 		A2($elm$url$Url$Parser$parse, $author$project$Main$routeParser, url));
 };
+var $author$project$Main$TogglePhotoModal = function (a) {
+	return {$: 'TogglePhotoModal', a: a};
+};
+var $rundis$elm_bootstrap$Bootstrap$Modal$Body = function (a) {
+	return {$: 'Body', a: a};
+};
+var $rundis$elm_bootstrap$Bootstrap$Modal$Config = function (a) {
+	return {$: 'Config', a: a};
+};
+var $rundis$elm_bootstrap$Bootstrap$Modal$body = F3(
+	function (attributes, children, _v0) {
+		var conf = _v0.a;
+		return $rundis$elm_bootstrap$Bootstrap$Modal$Config(
+			_Utils_update(
+				conf,
+				{
+					body: $elm$core$Maybe$Just(
+						$rundis$elm_bootstrap$Bootstrap$Modal$Body(
+							{attributes: attributes, children: children}))
+				}));
+	});
+var $rundis$elm_bootstrap$Bootstrap$Grid$Column = function (a) {
+	return {$: 'Column', a: a};
+};
+var $rundis$elm_bootstrap$Bootstrap$Grid$col = F2(
+	function (options, children) {
+		return $rundis$elm_bootstrap$Bootstrap$Grid$Column(
+			{children: children, options: options});
+	});
+var $rundis$elm_bootstrap$Bootstrap$Modal$config = function (closeMsg) {
+	return $rundis$elm_bootstrap$Bootstrap$Modal$Config(
+		{
+			body: $elm$core$Maybe$Nothing,
+			closeMsg: closeMsg,
+			footer: $elm$core$Maybe$Nothing,
+			header: $elm$core$Maybe$Nothing,
+			options: {attrs: _List_Nil, centered: true, hideOnBackdropClick: true, modalSize: $elm$core$Maybe$Nothing, scrollableBody: false},
+			withAnimation: $elm$core$Maybe$Nothing
+		});
+};
+var $elm$html$Html$img = _VirtualDom_node('img');
+var $author$project$Main$photoModalSrc = function (photoModal) {
+	if (photoModal.$ === 'Shown') {
+		var src = photoModal.a;
+		return '../assets/images/' + src;
+	} else {
+		return '';
+	}
+};
+var $rundis$elm_bootstrap$Bootstrap$Modal$scrollableBody = F2(
+	function (scrollable, _v0) {
+		var conf = _v0.a;
+		var options = conf.options;
+		return $rundis$elm_bootstrap$Bootstrap$Modal$Config(
+			_Utils_update(
+				conf,
+				{
+					options: _Utils_update(
+						options,
+						{scrollableBody: scrollable})
+				}));
+	});
+var $elm$html$Html$Attributes$src = function (url) {
+	return A2(
+		$elm$html$Html$Attributes$stringProperty,
+		'src',
+		_VirtualDom_noJavaScriptOrHtmlUri(url));
+};
+var $rundis$elm_bootstrap$Bootstrap$Modal$Hide = {$: 'Hide'};
+var $rundis$elm_bootstrap$Bootstrap$Modal$hidden = $rundis$elm_bootstrap$Bootstrap$Modal$Hide;
+var $rundis$elm_bootstrap$Bootstrap$Modal$Show = {$: 'Show'};
+var $rundis$elm_bootstrap$Bootstrap$Modal$shown = $rundis$elm_bootstrap$Bootstrap$Modal$Show;
+var $author$project$Main$toModalVisibility = function (photoModal) {
+	if (photoModal.$ === 'Shown') {
+		return $rundis$elm_bootstrap$Bootstrap$Modal$shown;
+	} else {
+		return $rundis$elm_bootstrap$Bootstrap$Modal$hidden;
+	}
+};
+var $elm$virtual_dom$VirtualDom$attribute = F2(
+	function (key, value) {
+		return A2(
+			_VirtualDom_attribute,
+			_VirtualDom_noOnOrFormAction(key),
+			_VirtualDom_noJavaScriptOrHtmlUri(value));
+	});
+var $elm$html$Html$Attributes$attribute = $elm$virtual_dom$VirtualDom$attribute;
+var $elm$core$List$filter = F2(
+	function (isGood, list) {
+		return A3(
+			$elm$core$List$foldr,
+			F2(
+				function (x, xs) {
+					return isGood(x) ? A2($elm$core$List$cons, x, xs) : xs;
+				}),
+			_List_Nil,
+			list);
+	});
+var $elm$core$Tuple$second = function (_v0) {
+	var y = _v0.b;
+	return y;
+};
+var $elm$html$Html$Attributes$classList = function (classes) {
+	return $elm$html$Html$Attributes$class(
+		A2(
+			$elm$core$String$join,
+			' ',
+			A2(
+				$elm$core$List$map,
+				$elm$core$Tuple$first,
+				A2($elm$core$List$filter, $elm$core$Tuple$second, classes))));
+};
+var $rundis$elm_bootstrap$Bootstrap$Modal$StartClose = {$: 'StartClose'};
+var $rundis$elm_bootstrap$Bootstrap$Modal$getCloseMsg = function (config_) {
+	var _v0 = config_.withAnimation;
+	if (_v0.$ === 'Just') {
+		var animationMsg = _v0.a;
+		return animationMsg($rundis$elm_bootstrap$Bootstrap$Modal$StartClose);
+	} else {
+		return config_.closeMsg;
+	}
+};
+var $rundis$elm_bootstrap$Bootstrap$Modal$isFade = function (conf) {
+	return A2(
+		$elm$core$Maybe$withDefault,
+		false,
+		A2(
+			$elm$core$Maybe$map,
+			function (_v0) {
+				return true;
+			},
+			conf.withAnimation));
+};
+var $elm$virtual_dom$VirtualDom$Normal = function (a) {
+	return {$: 'Normal', a: a};
+};
+var $elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
+var $elm$html$Html$Events$on = F2(
+	function (event, decoder) {
+		return A2(
+			$elm$virtual_dom$VirtualDom$on,
+			event,
+			$elm$virtual_dom$VirtualDom$Normal(decoder));
+	});
+var $elm$html$Html$Events$onClick = function (msg) {
+	return A2(
+		$elm$html$Html$Events$on,
+		'click',
+		$elm$json$Json$Decode$succeed(msg));
+};
+var $rundis$elm_bootstrap$Bootstrap$Modal$backdrop = F2(
+	function (visibility, conf) {
+		var attributes = function () {
+			switch (visibility.$) {
+				case 'Show':
+					return _Utils_ap(
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$classList(
+								_List_fromArray(
+									[
+										_Utils_Tuple2('modal-backdrop', true),
+										_Utils_Tuple2(
+										'fade',
+										$rundis$elm_bootstrap$Bootstrap$Modal$isFade(conf)),
+										_Utils_Tuple2('show', true)
+									]))
+							]),
+						conf.options.hideOnBackdropClick ? _List_fromArray(
+							[
+								$elm$html$Html$Events$onClick(
+								$rundis$elm_bootstrap$Bootstrap$Modal$getCloseMsg(conf))
+							]) : _List_Nil);
+				case 'StartClose':
+					return _List_fromArray(
+						[
+							$elm$html$Html$Attributes$classList(
+							_List_fromArray(
+								[
+									_Utils_Tuple2('modal-backdrop', true),
+									_Utils_Tuple2('fade', true),
+									_Utils_Tuple2('show', true)
+								]))
+						]);
+				case 'FadeClose':
+					return _List_fromArray(
+						[
+							$elm$html$Html$Attributes$classList(
+							_List_fromArray(
+								[
+									_Utils_Tuple2('modal-backdrop', true),
+									_Utils_Tuple2('fade', true),
+									_Utils_Tuple2('show', false)
+								]))
+						]);
+				default:
+					return _List_fromArray(
+						[
+							$elm$html$Html$Attributes$classList(
+							_List_fromArray(
+								[
+									_Utils_Tuple2('modal-backdrop', false),
+									_Utils_Tuple2(
+									'fade',
+									$rundis$elm_bootstrap$Bootstrap$Modal$isFade(conf)),
+									_Utils_Tuple2('show', false)
+								]))
+						]);
+			}
+		}();
+		return _List_fromArray(
+			[
+				A2($elm$html$Html$div, attributes, _List_Nil)
+			]);
+	});
+var $elm$json$Json$Decode$andThen = _Json_andThen;
+var $elm$json$Json$Decode$at = F2(
+	function (fields, decoder) {
+		return A3($elm$core$List$foldr, $elm$json$Json$Decode$field, decoder, fields);
+	});
+var $elm$json$Json$Decode$string = _Json_decodeString;
+var $rundis$elm_bootstrap$Bootstrap$Utilities$DomHelper$className = A2(
+	$elm$json$Json$Decode$at,
+	_List_fromArray(
+		['className']),
+	$elm$json$Json$Decode$string);
+var $elm$json$Json$Decode$fail = _Json_fail;
+var $rundis$elm_bootstrap$Bootstrap$Utilities$DomHelper$target = function (decoder) {
+	return A2($elm$json$Json$Decode$field, 'target', decoder);
+};
+var $rundis$elm_bootstrap$Bootstrap$Modal$containerClickDecoder = function (closeMsg) {
+	return A2(
+		$elm$json$Json$Decode$andThen,
+		function (c) {
+			return A2($elm$core$String$contains, 'elm-bootstrap-modal', c) ? $elm$json$Json$Decode$succeed(closeMsg) : $elm$json$Json$Decode$fail('ignoring');
+		},
+		$rundis$elm_bootstrap$Bootstrap$Utilities$DomHelper$target($rundis$elm_bootstrap$Bootstrap$Utilities$DomHelper$className));
+};
+var $rundis$elm_bootstrap$Bootstrap$Modal$display = F2(
+	function (visibility, conf) {
+		switch (visibility.$) {
+			case 'Show':
+				return _List_fromArray(
+					[
+						A2($elm$html$Html$Attributes$style, 'pointer-events', 'none'),
+						A2($elm$html$Html$Attributes$style, 'display', 'block'),
+						$elm$html$Html$Attributes$classList(
+						_List_fromArray(
+							[
+								_Utils_Tuple2('modal', true),
+								_Utils_Tuple2(
+								'fade',
+								$rundis$elm_bootstrap$Bootstrap$Modal$isFade(conf)),
+								_Utils_Tuple2('show', true)
+							]))
+					]);
+			case 'StartClose':
+				return _List_fromArray(
+					[
+						A2($elm$html$Html$Attributes$style, 'pointer-events', 'none'),
+						A2($elm$html$Html$Attributes$style, 'display', 'block'),
+						$elm$html$Html$Attributes$classList(
+						_List_fromArray(
+							[
+								_Utils_Tuple2('modal', true),
+								_Utils_Tuple2('fade', true),
+								_Utils_Tuple2('show', true)
+							]))
+					]);
+			case 'FadeClose':
+				return _List_fromArray(
+					[
+						A2($elm$html$Html$Attributes$style, 'pointer-events', 'none'),
+						A2($elm$html$Html$Attributes$style, 'display', 'block'),
+						$elm$html$Html$Attributes$classList(
+						_List_fromArray(
+							[
+								_Utils_Tuple2('modal', true),
+								_Utils_Tuple2('fade', true),
+								_Utils_Tuple2('show', false)
+							])),
+						A2(
+						$elm$html$Html$Events$on,
+						'transitionend',
+						$elm$json$Json$Decode$succeed(conf.closeMsg))
+					]);
+			default:
+				return _List_fromArray(
+					[
+						A2($elm$html$Html$Attributes$style, 'height', '0px'),
+						A2($elm$html$Html$Attributes$style, 'display', 'block'),
+						$elm$html$Html$Attributes$classList(
+						_List_fromArray(
+							[
+								_Utils_Tuple2('modal', true),
+								_Utils_Tuple2(
+								'fade',
+								$rundis$elm_bootstrap$Bootstrap$Modal$isFade(conf)),
+								_Utils_Tuple2('show', false)
+							]))
+					]);
+		}
+	});
+var $rundis$elm_bootstrap$Bootstrap$Modal$modalClass = function (size) {
+	var _v0 = $rundis$elm_bootstrap$Bootstrap$General$Internal$screenSizeOption(size);
+	if (_v0.$ === 'Just') {
+		var s = _v0.a;
+		return _List_fromArray(
+			[
+				$elm$html$Html$Attributes$class('modal-' + s)
+			]);
+	} else {
+		return _List_Nil;
+	}
+};
+var $rundis$elm_bootstrap$Bootstrap$Modal$modalAttributes = function (options) {
+	return _Utils_ap(
+		options.attrs,
+		_Utils_ap(
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$classList(
+					_List_fromArray(
+						[
+							_Utils_Tuple2('modal-dialog', true),
+							_Utils_Tuple2('modal-dialog-centered', options.centered),
+							_Utils_Tuple2('modal-dialog-scrollable', options.scrollableBody)
+						])),
+					A2($elm$html$Html$Attributes$style, 'pointer-events', 'auto')
+				]),
+			A2(
+				$elm$core$Maybe$withDefault,
+				_List_Nil,
+				A2($elm$core$Maybe$map, $rundis$elm_bootstrap$Bootstrap$Modal$modalClass, options.modalSize))));
+};
+var $elm$core$Basics$negate = function (n) {
+	return -n;
+};
+var $rundis$elm_bootstrap$Bootstrap$Modal$renderBody = function (maybeBody) {
+	if (maybeBody.$ === 'Just') {
+		var cfg = maybeBody.a.a;
+		return $elm$core$Maybe$Just(
+			A2(
+				$elm$html$Html$div,
+				A2(
+					$elm$core$List$cons,
+					$elm$html$Html$Attributes$class('modal-body'),
+					cfg.attributes),
+				cfg.children));
+	} else {
+		return $elm$core$Maybe$Nothing;
+	}
+};
+var $rundis$elm_bootstrap$Bootstrap$Modal$renderFooter = function (maybeFooter) {
+	if (maybeFooter.$ === 'Just') {
+		var cfg = maybeFooter.a.a;
+		return $elm$core$Maybe$Just(
+			A2(
+				$elm$html$Html$div,
+				A2(
+					$elm$core$List$cons,
+					$elm$html$Html$Attributes$class('modal-footer'),
+					cfg.attributes),
+				cfg.children));
+	} else {
+		return $elm$core$Maybe$Nothing;
+	}
+};
 var $elm$html$Html$button = _VirtualDom_node('button');
-var $author$project$Main$viewPhotoThumbnail = function (src_) {
+var $rundis$elm_bootstrap$Bootstrap$Modal$closeButton = function (closeMsg) {
 	return A2(
 		$elm$html$Html$button,
 		_List_fromArray(
 			[
-				A2($elm$html$Html$Attributes$style, 'background-image', 'url(../assets/images/' + (src_ + ')')),
-				A2($elm$html$Html$Attributes$style, 'background-size', '100% 100%'),
-				A2($elm$html$Html$Attributes$style, 'height', 'auto'),
-				A2($elm$html$Html$Attributes$style, 'min-height', '300px'),
-				A2($elm$html$Html$Attributes$style, 'width', '33%')
+				$elm$html$Html$Attributes$class('close'),
+				$elm$html$Html$Events$onClick(closeMsg)
 			]),
-		_List_Nil);
+		_List_fromArray(
+			[
+				$elm$html$Html$text('×')
+			]));
+};
+var $rundis$elm_bootstrap$Bootstrap$Modal$renderHeader = function (conf_) {
+	var _v0 = conf_.header;
+	if (_v0.$ === 'Just') {
+		var cfg = _v0.a.a;
+		return $elm$core$Maybe$Just(
+			A2(
+				$elm$html$Html$div,
+				A2(
+					$elm$core$List$cons,
+					$elm$html$Html$Attributes$class('modal-header'),
+					cfg.attributes),
+				_Utils_ap(
+					cfg.children,
+					_List_fromArray(
+						[
+							$rundis$elm_bootstrap$Bootstrap$Modal$closeButton(
+							$rundis$elm_bootstrap$Bootstrap$Modal$getCloseMsg(conf_))
+						]))));
+	} else {
+		return $elm$core$Maybe$Nothing;
+	}
+};
+var $elm$html$Html$Attributes$tabindex = function (n) {
+	return A2(
+		_VirtualDom_attribute,
+		'tabIndex',
+		$elm$core$String$fromInt(n));
+};
+var $rundis$elm_bootstrap$Bootstrap$Modal$view = F2(
+	function (visibility, _v0) {
+		var conf = _v0.a;
+		return A2(
+			$elm$html$Html$div,
+			_List_Nil,
+			_Utils_ap(
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$div,
+						_Utils_ap(
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$tabindex(-1)
+								]),
+							A2($rundis$elm_bootstrap$Bootstrap$Modal$display, visibility, conf)),
+						_List_fromArray(
+							[
+								A2(
+								$elm$html$Html$div,
+								_Utils_ap(
+									_List_fromArray(
+										[
+											A2($elm$html$Html$Attributes$attribute, 'role', 'document'),
+											$elm$html$Html$Attributes$class('elm-bootstrap-modal')
+										]),
+									_Utils_ap(
+										$rundis$elm_bootstrap$Bootstrap$Modal$modalAttributes(conf.options),
+										conf.options.hideOnBackdropClick ? _List_fromArray(
+											[
+												A2(
+												$elm$html$Html$Events$on,
+												'click',
+												$rundis$elm_bootstrap$Bootstrap$Modal$containerClickDecoder(conf.closeMsg))
+											]) : _List_Nil)),
+								_List_fromArray(
+									[
+										A2(
+										$elm$html$Html$div,
+										_List_fromArray(
+											[
+												$elm$html$Html$Attributes$class('modal-content')
+											]),
+										A2(
+											$elm$core$List$filterMap,
+											$elm$core$Basics$identity,
+											_List_fromArray(
+												[
+													$rundis$elm_bootstrap$Bootstrap$Modal$renderHeader(conf),
+													$rundis$elm_bootstrap$Bootstrap$Modal$renderBody(conf.body),
+													$rundis$elm_bootstrap$Bootstrap$Modal$renderFooter(conf.footer)
+												])))
+									]))
+							]))
+					]),
+				A2($rundis$elm_bootstrap$Bootstrap$Modal$backdrop, visibility, conf)));
+	});
+var $author$project$Main$viewPhotoModal = function (photoModal) {
+	return A2(
+		$rundis$elm_bootstrap$Bootstrap$Grid$col,
+		_List_Nil,
+		_List_fromArray(
+			[
+				A2(
+				$rundis$elm_bootstrap$Bootstrap$Modal$view,
+				$author$project$Main$toModalVisibility(photoModal),
+				A3(
+					$rundis$elm_bootstrap$Bootstrap$Modal$body,
+					_List_Nil,
+					_List_fromArray(
+						[
+							A2(
+							$elm$html$Html$img,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$src(
+									$author$project$Main$photoModalSrc(photoModal)),
+									$elm$html$Html$Attributes$class('photo')
+								]),
+							_List_Nil)
+						]),
+					A2(
+						$rundis$elm_bootstrap$Bootstrap$Modal$scrollableBody,
+						true,
+						$rundis$elm_bootstrap$Bootstrap$Modal$config(
+							$author$project$Main$TogglePhotoModal($author$project$Main$Hidden)))))
+			]));
+};
+var $author$project$Main$Shown = function (a) {
+	return {$: 'Shown', a: a};
+};
+var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$Col6 = {$: 'Col6'};
+var $rundis$elm_bootstrap$Bootstrap$General$Internal$SM = {$: 'SM'};
+var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$ColWidth = function (a) {
+	return {$: 'ColWidth', a: a};
+};
+var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$width = F2(
+	function (size, count) {
+		return $rundis$elm_bootstrap$Bootstrap$Grid$Internal$ColWidth(
+			A2($rundis$elm_bootstrap$Bootstrap$Grid$Internal$Width, size, count));
+	});
+var $rundis$elm_bootstrap$Bootstrap$Grid$Col$sm6 = A2($rundis$elm_bootstrap$Bootstrap$Grid$Internal$width, $rundis$elm_bootstrap$Bootstrap$General$Internal$SM, $rundis$elm_bootstrap$Bootstrap$Grid$Internal$Col6);
+var $author$project$Main$viewPhotoThumbnail = function (imageSrc) {
+	return A2(
+		$rundis$elm_bootstrap$Bootstrap$Grid$col,
+		_List_fromArray(
+			[$rundis$elm_bootstrap$Bootstrap$Grid$Col$sm6]),
+		_List_fromArray(
+			[
+				A2(
+				$elm$html$Html$img,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$src('../assets/images/' + imageSrc),
+						$elm$html$Html$Events$onClick(
+						$author$project$Main$TogglePhotoModal(
+							$author$project$Main$Shown(imageSrc))),
+						$elm$html$Html$Attributes$class('photo')
+					]),
+				_List_Nil)
+			]));
 };
 var $elm$html$Html$a = _VirtualDom_node('a');
 var $elm$html$Html$audio = _VirtualDom_node('audio');
@@ -7550,14 +8060,6 @@ var $author$project$Song$audioSrc = function (song) {
 			return '../assets/songs/never_a_closer.mp3';
 	}
 };
-var $rundis$elm_bootstrap$Bootstrap$Grid$Column = function (a) {
-	return {$: 'Column', a: a};
-};
-var $rundis$elm_bootstrap$Bootstrap$Grid$col = F2(
-	function (options, children) {
-		return $rundis$elm_bootstrap$Bootstrap$Grid$Column(
-			{children: children, options: options});
-	});
 var $elm$json$Json$Encode$bool = _Json_wrap;
 var $elm$html$Html$Attributes$boolProperty = F2(
 	function (key, bool) {
@@ -7570,6 +8072,12 @@ var $elm$html$Html$Attributes$controls = $elm$html$Html$Attributes$boolProperty(
 var $elm$html$Html$Attributes$download = function (fileName) {
 	return A2($elm$html$Html$Attributes$stringProperty, 'download', fileName);
 };
+var $elm$html$Html$Attributes$href = function (url) {
+	return A2(
+		$elm$html$Html$Attributes$stringProperty,
+		'href',
+		_VirtualDom_noJavaScriptUri(url));
+};
 var $author$project$Song$imageSrc = function (song) {
 	switch (song.$) {
 		case 'Seasonal':
@@ -7581,12 +8089,6 @@ var $author$project$Song$imageSrc = function (song) {
 		default:
 			return '../assets/images/never_a_closer.jpg';
 	}
-};
-var $elm$html$Html$Attributes$src = function (url) {
-	return A2(
-		$elm$html$Html$Attributes$stringProperty,
-		'src',
-		_VirtualDom_noJavaScriptOrHtmlUri(url));
 };
 var $author$project$Song$title = function (song) {
 	switch (song.$) {
@@ -7610,22 +8112,11 @@ var $author$project$Main$viewSong = function (song) {
 				$elm$html$Html$div,
 				_List_fromArray(
 					[
-						A2($elm$html$Html$Attributes$style, 'display', 'flex'),
-						A2($elm$html$Html$Attributes$style, 'flex', '1'),
-						A2($elm$html$Html$Attributes$style, 'flex-direction', 'column'),
-						A2($elm$html$Html$Attributes$style, 'justify-content', 'space-between'),
-						A2($elm$html$Html$Attributes$style, 'align-items', 'center'),
-						A2($elm$html$Html$Attributes$style, 'padding', '10px'),
-						A2($elm$html$Html$Attributes$style, 'margin', '5px'),
-						A2($elm$html$Html$Attributes$style, 'border', '2px solid #946e38'),
-						A2($elm$html$Html$Attributes$style, 'border-radius', '3px'),
+						$elm$html$Html$Attributes$class('song-container'),
 						A2(
 						$elm$html$Html$Attributes$style,
 						'background-image',
-						'url(' + ($author$project$Song$imageSrc(song) + ')')),
-						A2($elm$html$Html$Attributes$style, 'background-size', '100% 100%'),
-						A2($elm$html$Html$Attributes$style, 'height', 'auto'),
-						A2($elm$html$Html$Attributes$style, 'min-height', '300px')
+						'url(' + ($author$project$Song$imageSrc(song) + ')'))
 					]),
 				_List_fromArray(
 					[
@@ -7633,9 +8124,7 @@ var $author$project$Main$viewSong = function (song) {
 						$elm$html$Html$div,
 						_List_fromArray(
 							[
-								A2($elm$html$Html$Attributes$style, 'color', 'white'),
-								A2($elm$html$Html$Attributes$style, 'text-shadow', '1px 1px 2px #272B30'),
-								A2($elm$html$Html$Attributes$style, 'align-self', 'flex-end')
+								$elm$html$Html$Attributes$class('song-title')
 							]),
 						_List_fromArray(
 							[
@@ -7646,8 +8135,7 @@ var $author$project$Main$viewSong = function (song) {
 						$elm$html$Html$div,
 						_List_fromArray(
 							[
-								A2($elm$html$Html$Attributes$style, 'display', 'flex'),
-								A2($elm$html$Html$Attributes$style, 'align-items', 'center')
+								$elm$html$Html$Attributes$class('audio-player-container')
 							]),
 						_List_fromArray(
 							[
@@ -7658,7 +8146,7 @@ var $author$project$Main$viewSong = function (song) {
 										$elm$html$Html$Attributes$src(
 										$author$project$Song$audioSrc(song)),
 										$elm$html$Html$Attributes$controls(true),
-										A2($elm$html$Html$Attributes$style, 'flex', '85')
+										$elm$html$Html$Attributes$class('audio-player')
 									]),
 								_List_Nil),
 								A2(
@@ -7669,15 +8157,7 @@ var $author$project$Main$viewSong = function (song) {
 										$author$project$Song$audioSrc(song)),
 										$elm$html$Html$Attributes$download(
 										$author$project$Song$title(song)),
-										A2($elm$html$Html$Attributes$style, 'flex', '15'),
-										A2($elm$html$Html$Attributes$style, 'margin', '3px'),
-										A2($elm$html$Html$Attributes$style, 'background-image', 'url(../assets/icons/download_icon.png)'),
-										A2($elm$html$Html$Attributes$style, 'background-size', '100% 100%'),
-										A2($elm$html$Html$Attributes$style, 'background-color', 'rgb(255, 255, 255, 0.3)'),
-										A2($elm$html$Html$Attributes$style, 'border', '1px solid #946e38'),
-										A2($elm$html$Html$Attributes$style, 'height', '50px'),
-										A2($elm$html$Html$Attributes$style, 'width', '50px'),
-										A2($elm$html$Html$Attributes$style, 'border-radius', '50px')
+										$elm$html$Html$Attributes$class('download-icon-button')
 									]),
 								_List_Nil)
 							]))
@@ -7779,7 +8259,16 @@ var $author$project$Main$viewCurrentPage = function (model) {
 			return A2(
 				$rundis$elm_bootstrap$Bootstrap$Grid$container,
 				_List_Nil,
-				A2($elm$core$List$map, $author$project$Main$viewPhotoThumbnail, $author$project$Main$bandPics));
+				_List_fromArray(
+					[
+						A2(
+						$rundis$elm_bootstrap$Bootstrap$Grid$row,
+						_List_Nil,
+						_Utils_ap(
+							A2($elm$core$List$map, $author$project$Main$viewPhotoThumbnail, $author$project$Main$bandPhotos),
+							$elm$core$List$singleton(
+								$author$project$Main$viewPhotoModal(model.photoModal))))
+					]));
 		default:
 			return A2(
 				$rundis$elm_bootstrap$Bootstrap$Grid$container,
@@ -7929,17 +8418,6 @@ var $rundis$elm_bootstrap$Bootstrap$Navbar$maybeBrand = function (brand_) {
 	}
 };
 var $elm$core$Basics$not = _Basics_not;
-var $elm$virtual_dom$VirtualDom$Normal = function (a) {
-	return {$: 'Normal', a: a};
-};
-var $elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
-var $elm$html$Html$Events$on = F2(
-	function (event, decoder) {
-		return A2(
-			$elm$virtual_dom$VirtualDom$on,
-			event,
-			$elm$virtual_dom$VirtualDom$Normal(decoder));
-	});
 var $rundis$elm_bootstrap$Bootstrap$Navbar$sizeToComparable = function (size) {
 	switch (size.$) {
 		case 'XS':
@@ -7956,7 +8434,6 @@ var $rundis$elm_bootstrap$Bootstrap$Navbar$sizeToComparable = function (size) {
 };
 var $rundis$elm_bootstrap$Bootstrap$General$Internal$LG = {$: 'LG'};
 var $rundis$elm_bootstrap$Bootstrap$General$Internal$MD = {$: 'MD'};
-var $rundis$elm_bootstrap$Bootstrap$General$Internal$SM = {$: 'SM'};
 var $rundis$elm_bootstrap$Bootstrap$General$Internal$XL = {$: 'XL'};
 var $rundis$elm_bootstrap$Bootstrap$Navbar$toScreenSize = function (windowWidth) {
 	return (windowWidth <= 576) ? $rundis$elm_bootstrap$Bootstrap$General$Internal$XS : ((windowWidth <= 768) ? $rundis$elm_bootstrap$Bootstrap$General$Internal$SM : ((windowWidth <= 992) ? $rundis$elm_bootstrap$Bootstrap$General$Internal$MD : ((windowWidth <= 1200) ? $rundis$elm_bootstrap$Bootstrap$General$Internal$LG : $rundis$elm_bootstrap$Bootstrap$General$Internal$XL)));
@@ -8156,31 +8633,6 @@ var $rundis$elm_bootstrap$Bootstrap$Navbar$menuWrapperAttributes = F2(
 		}
 	});
 var $elm$html$Html$nav = _VirtualDom_node('nav');
-var $elm$core$List$filter = F2(
-	function (isGood, list) {
-		return A3(
-			$elm$core$List$foldr,
-			F2(
-				function (x, xs) {
-					return isGood(x) ? A2($elm$core$List$cons, x, xs) : xs;
-				}),
-			_List_Nil,
-			list);
-	});
-var $elm$core$Tuple$second = function (_v0) {
-	var y = _v0.b;
-	return y;
-};
-var $elm$html$Html$Attributes$classList = function (classes) {
-	return $elm$html$Html$Attributes$class(
-		A2(
-			$elm$core$String$join,
-			' ',
-			A2(
-				$elm$core$List$map,
-				$elm$core$Tuple$first,
-				A2($elm$core$List$filter, $elm$core$Tuple$second, classes))));
-};
 var $rundis$elm_bootstrap$Bootstrap$Navbar$expandOption = function (size) {
 	var toClass = function (sz) {
 		return $elm$html$Html$Attributes$class(
@@ -8536,21 +8988,11 @@ var $rundis$elm_bootstrap$Bootstrap$Navbar$renderNav = F3(
 				navItems));
 	});
 var $elm$html$Html$span = _VirtualDom_node('span');
-var $elm$json$Json$Decode$andThen = _Json_andThen;
-var $elm$json$Json$Decode$at = F2(
-	function (fields, decoder) {
-		return A3($elm$core$List$foldr, $elm$json$Json$Decode$field, decoder, fields);
-	});
 var $elm$json$Json$Decode$decodeValue = _Json_run;
-var $elm$json$Json$Decode$fail = _Json_fail;
 var $elm$json$Json$Decode$float = _Json_decodeFloat;
 var $elm$json$Json$Decode$oneOf = _Json_oneOf;
 var $rundis$elm_bootstrap$Bootstrap$Utilities$DomHelper$parentElement = function (decoder) {
 	return A2($elm$json$Json$Decode$field, 'parentElement', decoder);
-};
-var $elm$json$Json$Decode$string = _Json_decodeString;
-var $rundis$elm_bootstrap$Bootstrap$Utilities$DomHelper$target = function (decoder) {
-	return A2($elm$json$Json$Decode$field, 'target', decoder);
 };
 var $elm$json$Json$Decode$value = _Json_decodeValue;
 var $rundis$elm_bootstrap$Bootstrap$Navbar$heightDecoder = function () {
@@ -8776,7 +9218,6 @@ var $author$project$Main$view = function (model) {
 					]),
 				_List_fromArray(
 					[
-						$rundis$elm_bootstrap$Bootstrap$CDN$stylesheet,
 						$author$project$Main$viewNavbar(model),
 						$author$project$Main$viewCurrentPage(model)
 					]))
