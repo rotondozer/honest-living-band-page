@@ -13,3 +13,50 @@ html, body {
     font-family: 'Amatic SC', monospace; /* Primary font */
     background-color: #272B30;
 }
+
+.song-container {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin: 5px;
+    border: 2px solid #946e38;
+    border-radius: 3px;
+    background-size: 100% 100%;
+    height: auto;
+    min-height: 300px;
+}
+
+.song-title {
+    color: #FFFFFF;
+    text-shadow: 1px 1px 2px #272B30;
+    align-self: flex-end !important;
+}
+
+.audio-player-container {
+    display: flex;
+    align-items: center;
+}
+
+.audio-player {
+    flex: 85; /* Out of 100 */
+}
+
+.download-icon-button {
+    flex: 15; /* Out of 100 */
+    margin: 3px;
+    background-image: url("./assets/icons/download_icon.png");
+    background-size: 100% 100%;
+    background-color: rgb(255, 255, 255, 0.3);
+    border: 1px solid #946e38;
+    height: 50px;
+    width: 50px;
+    border-radius: 50px;
+}
+
+.photo {
+    height: auto;
+    max-width: 100%;
+}

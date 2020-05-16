@@ -183,44 +183,16 @@ viewCurrentPage model =
 
 viewSong : Song.Song -> Grid.Column Msg
 viewSong song =
-    -- TODO: Move these styles to stylesheet
     Grid.col []
         [ Html.div
-            [ style "display" "flex"
-            , style "flex" "1"
-            , style "flex-direction" "column"
-            , style "justify-content" "space-between"
-            , style "align-items" "center"
-            , style "padding" "10px"
-            , style "margin" "5px"
-            , style "border" "2px solid #946e38"
-            , style "border-radius" "3px"
-            , style "background-image" ("url(" ++ Song.imageSrc song ++ ")")
-            , style "background-size" "100% 100%"
-            , style "height" "auto"
-            , style "min-height" "300px"
-            ]
-            [ Html.div
-                [ style "color" "white"
-                , style "text-shadow" "1px 1px 2px #272B30"
-                , style "align-self" "flex-end"
-                ]
-                [ Html.text (Song.title song) ]
-            , Html.div [ style "display" "flex", style "align-items" "center" ]
-                [ Html.audio [ src (Song.audioSrc song), controls True, style "flex" "85" ] []
+            [ class "song-container", style "background-image" ("url(" ++ Song.imageSrc song ++ ")") ]
+            [ Html.div [ class "song-title" ] [ Html.text (Song.title song) ]
+            , Html.div [ class "audio-player-container" ]
+                [ Html.audio
+                    [ src (Song.audioSrc song), controls True, class "audio-player" ]
+                    []
                 , Html.a
-                    [ href (Song.audioSrc song)
-                    , download (Song.title song) -- <-- I don't think this is actually used for the download
-                    , style "flex" "15"
-                    , style "margin" "3px"
-                    , style "background-image" "url(../assets/icons/download_icon.png)"
-                    , style "background-size" "100% 100%"
-                    , style "background-color" "rgb(255, 255, 255, 0.3)"
-                    , style "border" "1px solid #946e38"
-                    , style "height" "50px"
-                    , style "width" "50px"
-                    , style "border-radius" "50px"
-                    ]
+                    [ href (Song.audioSrc song), download (Song.title song), class "download-icon-button" ]
                     []
                 ]
             ]
@@ -244,13 +216,12 @@ bandPhotos =
 
 
 viewPhotoThumbnail : String -> Grid.Column Msg
-viewPhotoThumbnail src_ =
+viewPhotoThumbnail imageSrc =
     Grid.col [ Col.sm6 ]
         [ Html.img
-            [ src ("../assets/images/" ++ src_)
-            , onClick (TogglePhotoModal (Shown src_))
-            , style "height" "auto"
-            , style "max-width" "100%"
+            [ src ("../assets/images/" ++ imageSrc)
+            , onClick (TogglePhotoModal (Shown imageSrc))
+            , class "photo"
             ]
             []
         ]
@@ -263,10 +234,7 @@ viewPhotoModal photoModal =
             |> Modal.scrollableBody True
             |> Modal.body []
                 [ Html.img
-                    [ src (photoModalSrc photoModal)
-                    , style "height" "auto"
-                    , style "max-width" "100%"
-                    ]
+                    [ src (photoModalSrc photoModal), class "photo" ]
                     []
                 ]
             |> Modal.view (toModalVisibility photoModal)
