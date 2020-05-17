@@ -5167,7 +5167,7 @@ var $elm$core$Task$perform = F2(
 				A2($elm$core$Task$map, toMessage, task)));
 	});
 var $elm$browser$Browser$application = _Browser_application;
-var $author$project$Main$Hidden = {$: 'Hidden'};
+var $author$project$PhotoModal$Hidden = {$: 'Hidden'};
 var $author$project$Main$NavbarMsg = function (a) {
 	return {$: 'NavbarMsg', a: a};
 };
@@ -5216,7 +5216,7 @@ var $author$project$Main$init = F3(
 		var navbarState = _v1.a;
 		var navbarCmd = _v1.b;
 		return _Utils_Tuple2(
-			{key: key, navbarState: navbarState, photoModal: $author$project$Main$Hidden, url: url},
+			{key: key, navbarState: navbarState, photoModal: $author$project$PhotoModal$Hidden, url: url},
 			navbarCmd);
 	});
 var $rundis$elm_bootstrap$Bootstrap$Navbar$AnimatingDown = {$: 'AnimatingDown'};
@@ -6019,8 +6019,6 @@ var $author$project$Song$HopeAndOlney = {$: 'HopeAndOlney'};
 var $author$project$Song$Isswttd = {$: 'Isswttd'};
 var $author$project$Song$NeverACloser = {$: 'NeverACloser'};
 var $author$project$Song$Seasonal = {$: 'Seasonal'};
-var $author$project$Main$bandPhotos = _List_fromArray(
-	['as220_black_and_white.jpg', 'davids_axes.jpg', 'dusk_blurry_and_reddish.jpg', 'louie_sticker.jpg', 'nick_david_blurry_beer.jpg', 'setlist_w_tunings.jpg', 'practice_black_white_from_behind_drums.jpg', 'nick_david_mass_pike.jpg', 'practice_flannels_and_stick_motion.jpg', 'smithfield_barn.jpg', 'nick_recording.jpg']);
 var $rundis$elm_bootstrap$Bootstrap$Grid$container = F2(
 	function (attributes, children) {
 		return A2(
@@ -6037,6 +6035,8 @@ var $elm$html$Html$h3 = _VirtualDom_node('h3');
 var $elm$html$Html$h4 = _VirtualDom_node('h4');
 var $elm$html$Html$hr = _VirtualDom_node('hr');
 var $elm$html$Html$p = _VirtualDom_node('p');
+var $author$project$PhotoModal$photos = _List_fromArray(
+	['as220_black_and_white.jpg', 'davids_axes.jpg', 'dusk_blurry_and_reddish.jpg', 'louie_sticker.jpg', 'nick_david_blurry_beer.jpg', 'setlist_w_tunings.jpg', 'practice_black_white_from_behind_drums.jpg', 'nick_david_mass_pike.jpg', 'practice_flannels_and_stick_motion.jpg', 'smithfield_barn.jpg', 'nick_recording.jpg']);
 var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$Col = {$: 'Col'};
 var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$Width = F2(
 	function (screenSize, columnCount) {
@@ -7553,8 +7553,7 @@ var $rundis$elm_bootstrap$Bootstrap$Modal$config = function (closeMsg) {
 			withAnimation: $elm$core$Maybe$Nothing
 		});
 };
-var $elm$html$Html$img = _VirtualDom_node('img');
-var $author$project$Main$photoModalSrc = function (photoModal) {
+var $author$project$PhotoModal$imageSrc = function (photoModal) {
 	if (photoModal.$ === 'Shown') {
 		var src = photoModal.a;
 		return '../assets/images/' + src;
@@ -7562,6 +7561,7 @@ var $author$project$Main$photoModalSrc = function (photoModal) {
 		return '';
 	}
 };
+var $elm$html$Html$img = _VirtualDom_node('img');
 var $rundis$elm_bootstrap$Bootstrap$Modal$scrollableBody = F2(
 	function (scrollable, _v0) {
 		var conf = _v0.a;
@@ -7585,7 +7585,7 @@ var $rundis$elm_bootstrap$Bootstrap$Modal$Hide = {$: 'Hide'};
 var $rundis$elm_bootstrap$Bootstrap$Modal$hidden = $rundis$elm_bootstrap$Bootstrap$Modal$Hide;
 var $rundis$elm_bootstrap$Bootstrap$Modal$Show = {$: 'Show'};
 var $rundis$elm_bootstrap$Bootstrap$Modal$shown = $rundis$elm_bootstrap$Bootstrap$Modal$Show;
-var $author$project$Main$toModalVisibility = function (photoModal) {
+var $author$project$PhotoModal$toModalVisibility = function (photoModal) {
 	if (photoModal.$ === 'Shown') {
 		return $rundis$elm_bootstrap$Bootstrap$Modal$shown;
 	} else {
@@ -7989,7 +7989,7 @@ var $author$project$Main$viewPhotoModal = function (photoModal) {
 			[
 				A2(
 				$rundis$elm_bootstrap$Bootstrap$Modal$view,
-				$author$project$Main$toModalVisibility(photoModal),
+				$author$project$PhotoModal$toModalVisibility(photoModal),
 				A3(
 					$rundis$elm_bootstrap$Bootstrap$Modal$body,
 					_List_Nil,
@@ -8000,7 +8000,7 @@ var $author$project$Main$viewPhotoModal = function (photoModal) {
 							_List_fromArray(
 								[
 									$elm$html$Html$Attributes$src(
-									$author$project$Main$photoModalSrc(photoModal)),
+									$author$project$PhotoModal$imageSrc(photoModal)),
 									$elm$html$Html$Attributes$class('photo')
 								]),
 							_List_Nil)
@@ -8009,10 +8009,10 @@ var $author$project$Main$viewPhotoModal = function (photoModal) {
 						$rundis$elm_bootstrap$Bootstrap$Modal$scrollableBody,
 						true,
 						$rundis$elm_bootstrap$Bootstrap$Modal$config(
-							$author$project$Main$TogglePhotoModal($author$project$Main$Hidden)))))
+							$author$project$Main$TogglePhotoModal($author$project$PhotoModal$Hidden)))))
 			]));
 };
-var $author$project$Main$Shown = function (a) {
+var $author$project$PhotoModal$Shown = function (a) {
 	return {$: 'Shown', a: a};
 };
 var $rundis$elm_bootstrap$Bootstrap$Grid$Internal$Col6 = {$: 'Col6'};
@@ -8040,7 +8040,7 @@ var $author$project$Main$viewPhotoThumbnail = function (imageSrc) {
 						$elm$html$Html$Attributes$src('../assets/images/' + imageSrc),
 						$elm$html$Html$Events$onClick(
 						$author$project$Main$TogglePhotoModal(
-							$author$project$Main$Shown(imageSrc))),
+							$author$project$PhotoModal$Shown(imageSrc))),
 						$elm$html$Html$Attributes$class('photo')
 					]),
 				_List_Nil)
@@ -8265,7 +8265,7 @@ var $author$project$Main$viewCurrentPage = function (model) {
 						$rundis$elm_bootstrap$Bootstrap$Grid$row,
 						_List_Nil,
 						_Utils_ap(
-							A2($elm$core$List$map, $author$project$Main$viewPhotoThumbnail, $author$project$Main$bandPhotos),
+							A2($elm$core$List$map, $author$project$Main$viewPhotoThumbnail, $author$project$PhotoModal$photos),
 							$elm$core$List$singleton(
 								$author$project$Main$viewPhotoModal(model.photoModal))))
 					]));
@@ -9198,6 +9198,14 @@ var $author$project$Main$viewNavbar = function (model) {
 							]),
 						_List_fromArray(
 							[
+								A2(
+								$elm$html$Html$img,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$src('../assets/icons/favicon.ico'),
+										A2($elm$html$Html$Attributes$style, 'width', '40px')
+									]),
+								_List_Nil),
 								$elm$html$Html$text('Honest Living')
 							]),
 						$rundis$elm_bootstrap$Bootstrap$Navbar$container(
