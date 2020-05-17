@@ -1,11 +1,5 @@
 module Song exposing (Song(..), audioSrc, imageSrc, title)
 
--- Songs are stored in a personal google drive.
--- https://drive.google.com/open?id=1qKTDdmhHrC7_2p2l1IQta7d_YIJOyz3W Seasonal
--- https://drive.google.com/open?id=1L7YOr9L4gvARk6orSxbdkLflOWXfNKZF isswttd
--- https://drive.google.com/open?id=1xMRM-0heaytWptb66yFG0jyofXGI2AXD Hope and Olney
--- 1XHvfbaR5zQliqErhuTRua6UGfJoUinDt Closer
-
 
 type Song
     = Seasonal

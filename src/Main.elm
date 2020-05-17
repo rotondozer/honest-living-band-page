@@ -9,6 +9,7 @@ import Browser.Navigation as Navigation
 import Html
 import Html.Attributes exposing (class, controls, download, href, src, style)
 import Html.Events exposing (onClick)
+import PhotoModal
 import Song
 import Url
 import Url.Parser as Parser
@@ -44,7 +45,7 @@ init _ url key =
     ( { url = url
       , key = key
       , navbarState = navbarState
-      , photoModal = Hidden
+      , photoModal = PhotoModal.Hidden
       }
     , navbarCmd
     )
@@ -54,7 +55,7 @@ type alias Model =
     { url : Url.Url
     , key : Navigation.Key
     , navbarState : Navbar.State
-    , photoModal : PhotoModal
+    , photoModal : PhotoModal.PhotoModal
     }
 
 
@@ -66,7 +67,7 @@ type Msg
     = LinkClicked Browser.UrlRequest
     | UrlChanged Url.Url
     | NavbarMsg Navbar.State
-    | TogglePhotoModal PhotoModal
+    | TogglePhotoModal PhotoModal.PhotoModal
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -123,7 +124,10 @@ viewNavbar model =
             |> Navbar.withAnimation
             |> Navbar.dark
             |> Navbar.container
-            |> Navbar.brand [ href "/" ] [ Html.text "Honest Living" ]
+            |> Navbar.brand [ href "/" ]
+                [ Html.img [ src "../assets/icons/favicon.ico", style "width" "40px" ] []
+                , Html.text "Honest Living"
+                ]
             |> Navbar.items
                 [ Navbar.itemLink [ href "/About" ] [ Html.text "About" ]
                 , Navbar.itemLink [ href "/Photos" ] [ Html.text "Photos" ]
@@ -172,7 +176,7 @@ viewCurrentPage model =
         Photos ->
             Grid.container []
                 [ Grid.row []
-                    ((bandPhotos |> List.map viewPhotoThumbnail)
+                    ((PhotoModal.photos |> List.map viewPhotoThumbnail)
                         ++ (model.photoModal |> viewPhotoModal |> List.singleton)
                     )
                 ]
@@ -204,70 +208,25 @@ viewPhotoThumbnail imageSrc =
     Grid.col [ Col.sm6 ]
         [ Html.img
             [ src ("../assets/images/" ++ imageSrc)
-            , onClick (TogglePhotoModal (Shown imageSrc))
+            , onClick (TogglePhotoModal (PhotoModal.Shown imageSrc))
             , class "photo"
             ]
             []
         ]
 
 
-viewPhotoModal : PhotoModal -> Grid.Column Msg
+viewPhotoModal : PhotoModal.PhotoModal -> Grid.Column Msg
 viewPhotoModal photoModal =
     Grid.col []
-        [ Modal.config (TogglePhotoModal Hidden)
+        [ Modal.config (TogglePhotoModal PhotoModal.Hidden)
             |> Modal.scrollableBody True
             |> Modal.body []
                 [ Html.img
-                    [ src (photoModalSrc photoModal), class "photo" ]
+                    [ src (PhotoModal.imageSrc photoModal), class "photo" ]
                     []
                 ]
-            |> Modal.view (toModalVisibility photoModal)
+            |> Modal.view (PhotoModal.toModalVisibility photoModal)
         ]
-
-
-
--- BAND PHOTOS
-
-
-type PhotoModal
-    = Shown String
-    | Hidden
-
-
-bandPhotos : List String
-bandPhotos =
-    [ "as220_black_and_white.jpg"
-    , "davids_axes.jpg"
-    , "dusk_blurry_and_reddish.jpg"
-    , "louie_sticker.jpg"
-    , "nick_david_blurry_beer.jpg"
-    , "setlist_w_tunings.jpg"
-    , "practice_black_white_from_behind_drums.jpg"
-    , "nick_david_mass_pike.jpg"
-    , "practice_flannels_and_stick_motion.jpg"
-    , "smithfield_barn.jpg"
-    , "nick_recording.jpg"
-    ]
-
-
-toModalVisibility : PhotoModal -> Modal.Visibility
-toModalVisibility photoModal =
-    case photoModal of
-        Shown _ ->
-            Modal.shown
-
-        Hidden ->
-            Modal.hidden
-
-
-photoModalSrc : PhotoModal -> String
-photoModalSrc photoModal =
-    case photoModal of
-        Shown src ->
-            "../assets/images/" ++ src
-
-        Hidden ->
-            ""
 
 
 
