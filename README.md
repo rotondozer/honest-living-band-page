@@ -3,13 +3,13 @@ A static site built with Elm to host the EP I recorded with my band, and share s
 
 
 ## Builds
-The `src/` directory contains all Elm files for development. Elm is compiled to `main.js` and served through `index.html` at the project root.
+The `src/` directory contains all Elm files for development. Elm is compiled to to JS and served through `index.html` at the project root.
 
-To compile into JS, run:
+Non-minified JS: `elm make src/Main.elm --output="main.js"`
+Optimized & minified JS: `bash ./optimize_build.sh src/Main.elm` (*requires uglifyjs*)
+`
 
-`elm make src/Main.elm --output=main.js`
-
-> NOTE: Do not commit dev builds. The latest `master` build is used by GitHub pages to host the public site. For this reason, only commit builds on master for the sake of deploying.
+> NOTE: For debugging, you will want the non-minified JS. Since this project does not differentiate prod vs dev environments, you will need to modify `index.html` and `404.html` to point at `main.js`
 
 ## Development
 
@@ -28,9 +28,15 @@ When that is not sufficient, you can host the html in a local http server. To do
 > We specify the port `7800` here because the default, `8000` is also used by `elm reactor`. This makes it easier to swap between the two, or have both open at the same time if necessary.
 
 ## Deploys
-This site is currently hosted by GitHub pages, using the latest build on master. For this purpose, avoid creating builds on master for development.
+This site is currently hosted by GitHub Pages, using the latest **minified** build on `master`. 
 
-To deploy, merge `dev/feature_branch` into `master`. Then on `master`, create a new build and commit that separately. Push `master` and GH Pages will serve the `index.html` file located at the root of the project.
+Just like the Elm guide, we use `uglifyjs` for minification. If uglify is not installed on your machine, run `npm install uglify-js --global`
+
+To deploy, merge `dev/feature_branch` into `master`. Then, from the project root on `master` branch run:
+
+`./optimize_build.sh src/Main.elm`
+
+and commit the generated JS files separately. Push `master` and GH Pages will serve the `index.html` file located at the root of the project.
 
 
 
